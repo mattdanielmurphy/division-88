@@ -58,8 +58,8 @@ class Grid {
 		return this.container.getBoundingClientRect().left
 	}
 	get pxYMin() {
-		return 0
-		// return this.container.getBoundingClientRect().top
+		// return 35
+		return this.container.getBoundingClientRect().top
 	}
 	get pxXMax() {
 		return this.container.getBoundingClientRect().right
@@ -395,6 +395,7 @@ class Grid {
 		let rowString = ''
 		for (let i = 0; i < this.yCells; i++) rowString += `${this.cellHeight}px `
 		this.container.style.gridTemplateRows = rowString
+		console.log(this.yCells)
 		this.container.style.height = `${this.yCells * this.cellWidth}px`
 		document.onkeydown = (e) => this.handleKeyDown(e)
 	}
