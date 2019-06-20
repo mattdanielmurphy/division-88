@@ -2,8 +2,7 @@ import React from 'react'
 import { Root, Routes, addPrefetchExcludes } from 'react-static'
 import { setConfiguration } from 'react-grid-system'
 import { Link, Router } from 'components/Router'
-import Artist from './pages/artist'
-// import Dynamic from 'containers/Dynamic'
+import Dynamic from 'containers/Dynamic'
 
 import './styles/app.scss'
 
@@ -45,9 +44,8 @@ function App() {
 			<div className="content">
 				<React.Suspense fallback={<em>Loading...</em>}>
 					<Router>
-						{/* <Dynamic path="dynamic" /> */}
 						<Routes path="*" />
-						<Artist path="/artist/:artistName" />
+						<Dynamic path="/artist/:artistName" />
 					</Router>
 				</React.Suspense>
 			</div>

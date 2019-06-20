@@ -11,6 +11,7 @@
 		"rimraf": "^2.6.3"
 	},
 	"scripts": {
+		"get-packages": "yarn && cd src && yarn && cd client && yarn",
 		"build": "babel src --out-dir functions --copy-files --ignore src/node_modules --ignore src/client/node_modules",
 		"build-modules": "babel src --out-dir functions --ignore src/node_modules --ignore src/client/node_modules",
 		"prebuild-modules": "node node_modules/rimraf/bin functions",

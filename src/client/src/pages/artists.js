@@ -8,15 +8,12 @@ export default () => (
 		<h1>Artists</h1>
 		{artists.map((artist) => (
 			<div className="artist-row">
-				{/* <Row>
-					<Col xs={12} sm={4}>
-						
-					</Col>
-				</Row> */}
 				<Row>
 					<Col xs={12} sm={4}>
 						<div>
-							<img src={artist.imgSrc} alt="" />
+							<Link to={`/artist/${artist.page}`}>
+								<img src={artist.imgSrc} alt="" />
+							</Link>
 							<div className="artist-name">
 								<Link to={`/artist/${artist.page}`}>
 									<h2>{artist.name}</h2>

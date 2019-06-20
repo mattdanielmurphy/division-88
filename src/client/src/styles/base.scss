@@ -12,6 +12,16 @@ body {
 	background: black;
 }
 
+#releases {
+	width: 500px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.spotify-iframe {
+	margin-bottom: 2rem;
+}
+
 .main-container {
 	.wrapper {
 		height: 100%;
@@ -70,7 +80,7 @@ body {
 		}
 	}
 	h2 {
-		margin: 0;
+		margin: 2rem 0 1rem 0;
 		font-size: 1.5em;
 	}
 	h3 {
@@ -193,6 +203,9 @@ header {
 
 .artist-name {
 	text-align: center;
+	a {
+		color: white;
+	}
 }
 
 .content {

@@ -1,8 +1,4 @@
 import React from 'react'
+import Artist from '../pages/artist'
 
-export default () => (
-  <div>
-    This is a dynamic page! It will not be statically exported, but is available
-    at runtime
-  </div>
-)
+export default (props) => <Artist {...props} />
