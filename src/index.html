@@ -9,11 +9,17 @@
 </head>
 
 <body>
-	<div class="grid">
+	<div id="ask-color" class="hidden">
+		<div id="color-picker-container"></div>
+		<form id='ask-color-form'>Hex: #<input id='hex-input' type="text"><input type="submit" value="Pick"><button
+				id='cancel-ask-color'>Cancel</button>
+		</form>
 	</div>
-	<!-- <div id="add-block"></div> -->
-	<!-- <button id="clear-all">Clear all</button> -->
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/web-animations/2.3.1/web-animations.min.js'></script>
+	<div id="options">
+		<button id="edit-mode-toggle">Toggle edit mode (tab)</button>
+		<button id="link">Link section to page</button>
+	</div>
+	<div id="grid"></div>
 </body>
 
 </html>

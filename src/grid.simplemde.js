@@ -1,78 +1,42 @@
 // TODO
 // 1. fix resizing bug (see screen recording on Desktop)
-let Quill = require('quill')
-let { ContentGrid } = require('./ContentGrid')
+let SimpleMDE = require('simplemde')
 
 class Grid {
 	constructor() {
 		this.xMaxCells = 9
-		this.yMaxPageCells = 9
-		this.yCells = 9
+		this.yMaxCells = 9
 
 		this.sections = { length: () => this.sections.length }
 		this.selectedSectionIndex = undefined
-		this.createGrid(this.xMaxCells, this.yMaxPageCells)
+		this.createGrid(this.xMaxCells, this.yMaxCells)
 		Object.assign(this, { dragging: false, x0: undefined, y0: undefined, sections: [] })
 		let colors = '#ffffff #6df7c1 #11adc1 #606c81 #393457 #1e8875 #5bb361 #a1e55a #f7e476 #f99252 #cb4d68 #6a3771 #c92464 #f48cb6 #f7b69e #9b9c82'.split(
 			' '
 		)
 		this.colors = this.shuffle(colors)
+		this.gridCells = []
 		this.colorGrid()
+		this.gridChanged = true
 		this.handleResizingWindow()
-		this.stopDraggingIfMouseLeavesPage()
-		this.genRowsOnScroll()
-		this.highestYCells = []
-		this.setUpClickAnywhere()
-	}
-	setUpClickAnywhere() {
-		const handleClickAnywhere = (e) => {
-			// deselect all sections
-			if (toggleEditMode.mode === 'grid') return
-			this.contentGrid.selectSection()
-			if (this.contentGrid.selectedSection) this.contentGrid.selectedSection.selected = false
-			this.contentGrid.selectedSectionIndex = undefined
-		}
-		document.body.addEventListener('click', () => handleClickAnywhere(), true)
-	}
-	get nextSectionId() {
-		this.nextSectionIdNumber = this.nextSectionIdNumber ? this.nextSectionIdNumber + 1 : 0
-		return this.nextSectionIdNumber
-	}
-	addRows() {
-		// add 3 rows
-		const cols = this.yMaxPageCells
-		const totalRows = this.yCells + 3
-		for (this.yCells; this.yCells < totalRows; this.yCells++)
-			for (let x = 0; x < cols; x++) this.createGridCell(x, this.yCells)
-
-		this.container.style.height = `${this.yCells * this.cellWidth}px`
-		this.colorGrid()
-	}
-	genRowsOnScroll() {
-		window.onscroll = (ev) => {
-			if (toggleEditMode.mode === 'grid' && window.innerHeight + window.scrollY >= document.body.offsetHeight)
-				this.addRows()
-		}
 	}
 	get pxXMin() {
 		return this.container.getBoundingClientRect().left
 	}
 	get pxYMin() {
-		return 0
-		// return this.container.getBoundingClientRect().top
+		return this.container.getBoundingClientRect().top
 	}
 	get pxXMax() {
 		return this.container.getBoundingClientRect().right
 	}
 	get pxYMax() {
-		return window.innerHeight
-		// return this.container.getBoundingClientRect().bottom
+		return this.container.getBoundingClientRect().bottom
 	}
 	get cellWidth() {
 		return this.pxWidth / this.xMaxCells
 	}
 	get cellHeight() {
-		return this.pxHeight / this.yMaxPageCells
+		return this.pxHeight / this.yMaxCells
 	}
 	get pxWidth() {
 		return this.pxXMax - this.pxXMin
@@ -109,8 +73,8 @@ class Grid {
 		this.nonSelectedSectionCells = {}
 		for (let i = 0; i < cells.length; i++) {
 			cells[i].style.backgroundColor = '#000'
-			cells[i].removeAttribute('section-index')
-			cells[i].classList.remove('selected', 'section-cell')
+			cells[i].removeAttribute('section-id')
+			cells[i].classList.remove('selected')
 		}
 
 		Object.values(this.sections).forEach((section) => {
@@ -118,11 +82,9 @@ class Grid {
 				let [ x, y ] = coordString.split(',')
 				const cell = document.getElementById(`${x},${y}`)
 				cell.style.backgroundColor = section.color
-				cell.classList.add('section-cell')
-
-				if (section.index == this.selectedSectionIndex) cell.classList.add('selected')
+				if (section.id == this.selectedSectionIndex) cell.classList.add('selected')
 				else this.nonSelectedSectionCells[`${x},${y}`] = true
-				cell.setAttribute('section-index', section.index)
+				cell.setAttribute('section-id', section.id)
 			})
 		})
 	}
@@ -149,6 +111,9 @@ class Grid {
 		const cursorX = Number(e.target.getAttribute('x'))
 		const cursorY = Number(e.target.getAttribute('y'))
 
+		if (!this.gridCells[cursorX]) this.gridCells[cursorX] = []
+		this.gridCells[cursorX][cursorY] = this.selectedSectionIndex
+
 		// only modify if expanding into legal space
 		// modify the edge that was originally dragged
 		const modifiedSection = this.selectedSection
@@ -167,11 +132,7 @@ class Grid {
 		if (this.resizingY) {
 			if (this.edgesBeingMoved.y === 1) y1 = cursorY
 			else y0 = cursorY
-			if (this.newSectionCanExistHere(x0, x1, y0, y1)) {
-				modifiedSection['y' + this.edgesBeingMoved.y] = cursorY
-				console.log(y1)
-				if (y1 > this.yMaxPageCells) this.highestYCells.push(`${x1},${y1}`)
-			}
+			if (this.newSectionCanExistHere(x0, x1, y0, y1)) modifiedSection['y' + this.edgesBeingMoved.y] = cursorY
 		}
 
 		modifiedSection.generateCells()
@@ -197,11 +158,11 @@ class Grid {
 		const [ cursorOnYEdgePos, cursorOnYEdgeId ] = this.cursorOnEdge(e, 'y')
 
 		if (cursorOnXEdgePos !== undefined && withinYBounds) {
-			edges.x = { pos: cursorOnXEdgePos, index: cursorOnXEdgeId }
+			edges.x = { pos: cursorOnXEdgePos, id: cursorOnXEdgeId }
 		}
 
 		if (cursorOnYEdgePos !== undefined && withinXBounds) {
-			edges.y = { pos: cursorOnYEdgePos, index: cursorOnYEdgeId }
+			edges.y = { pos: cursorOnYEdgePos, id: cursorOnYEdgeId }
 		}
 		return edges
 	}
@@ -235,7 +196,7 @@ class Grid {
 			x0 += xDifference
 			x1 += xDifference
 		}
-		if (y0 + yDifference >= 0 && y1 + yDifference < this.yCells) {
+		if (y0 + yDifference >= 0 && y1 + yDifference < this.yMaxCells) {
 			y0 += yDifference
 			y1 += yDifference
 		}
@@ -253,7 +214,7 @@ class Grid {
 		this.setDefaultCursor(e)
 		let edges = this.sectionEdgesHoveredOver(e)
 		if (edges.x && edges.y) {
-			if (edges.x.index === edges.y.index) this.showResizeNWSECursor(e)
+			if (edges.x.id === edges.y.id) this.showResizeNWSECursor(e)
 			else this.showResizeNESWCursor(e)
 		} else if (edges.x) this.showResizeXCursor(e)
 		else if (edges.y) this.showResizeYCursor(e)
@@ -299,12 +260,12 @@ class Grid {
 
 			this.edgesBeingMoved = {}
 			if (edges.x) {
-				this.edgesBeingMoved.x = edges.x.index
+				this.edgesBeingMoved.x = edges.x.id
 				this.resizingX = edges
 			}
 
 			if (edges.y) {
-				this.edgesBeingMoved.y = edges.y.index
+				this.edgesBeingMoved.y = edges.y.id
 				this.resizingY = edges
 			}
 		} else if (this.selectingASection) this.selectSectionByCell(this.x0, this.y1)
@@ -336,10 +297,10 @@ class Grid {
 		return document.getElementById(`${this.x0},${this.y0}`)
 	}
 	get selectingASection() {
-		return this.getCell(this.x0, this.y0).getAttribute('section-index')
+		return this.getCell(this.x0, this.y0).getAttribute('section-id')
 	}
 	selectSectionByCell(x, y) {
-		this.selectSection(Number(this.getCell(x, y).getAttribute('section-index')))
+		this.selectSection(Number(this.getCell(x, y).getAttribute('section-id')))
 	}
 	selectSection(index) {
 		this.selectedSectionIndex = index
@@ -354,17 +315,14 @@ class Grid {
 			x1,
 			y1,
 			color: this.colors.shift(),
-			index: !this.sections[0] ? 0 : this.sections.length,
-			id: this.nextSectionId
+			id: !this.sections[0] ? 0 : this.sections.length
 		})
 		this.selectedSectionIndex = !this.sections[0] ? 0 : this.sections.length
-		this.sections[sectionOptions.index] = new Section(sectionOptions)
+		this.sections[sectionOptions.id] = new Section(sectionOptions)
 		this.resizingX = true
 		this.resizingY = true
 		this.edgesBeingMoved = { y: 1, x: 1 }
 		this.colorGrid()
-		if (y1 >= this.yMaxPageCells) this.highestYCells.push(`${x1},${y1}`)
-		console.log(this.highestYCells)
 	}
 	stopDraggingIfMouseLeavesPage() {
 		this.container.onmouseleave = (e) => {
@@ -387,15 +345,26 @@ class Grid {
 		this.container.appendChild(div)
 	}
 	createGrid(rows, cols) {
-		for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) this.createGridCell(x, y)
-
+		this.stopDraggingIfMouseLeavesPage()
+		this.defaultCellArray = []
+		for (let y = 0; y < rows; y++) {
+			for (let x = 0; x < cols; x++) {
+				this.createGridCell(x, y)
+				this.defaultCellArray.push([])
+			}
+		}
+		// grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+		// grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 		let colString = ''
-		for (let i = 0; i < this.xMaxCells; i++) colString += '1fr '
-		this.container.style.gridTemplateColumns = colString
+		for (let i = 0; i < grid.xMaxCells; i++) {
+			colString += '1fr '
+		}
 		let rowString = ''
-		for (let i = 0; i < this.yCells; i++) rowString += `${this.cellHeight}px `
+		for (let i = 0; i < grid.yMaxCells; i++) {
+			rowString += '1fr '
+		}
+		this.container.style.gridTemplateColumns = colString
 		this.container.style.gridTemplateRows = rowString
-		this.container.style.height = `${this.yCells * this.cellWidth}px`
 		document.onkeydown = (e) => this.handleKeyDown(e)
 	}
 	clearContainer() {
@@ -405,7 +374,7 @@ class Grid {
 	}
 	setGridEditingMode() {
 		this.clearContainer()
-		this.createGrid(this.yCells, this.xMaxCells)
+		this.createGrid(this.yMaxCells, this.xMaxCells)
 		this.colorGrid()
 	}
 	setContentEditingMode() {
@@ -415,6 +384,7 @@ class Grid {
 	}
 	reCaclculateEdges() {
 		grid.sections.forEach((section) => {
+			console.log('recalc', section)
 			section.calculateEdges()
 		})
 	}
@@ -465,7 +435,8 @@ class Section {
 	addLink(link) {
 		grid.contentGrid.selectedSection.link = link
 		grid.contentGrid.deleteNode(grid.contentGrid.selectedSection.element)
-		grid.contentGrid.createSectionDiv()
+		grid.contentGrid.createDiv()
+		grid.contentGrid.setHTMLForAllSections()
 	}
 	handleClickLink() {
 		// const link = prompt('Enter URL')
@@ -477,13 +448,8 @@ class Section {
 	setUpOptionsButtons() {
 		document.getElementById('link').onclick = () => this.handleClickLink()
 	}
-	setUpTextEditor() {
-		let editor = document.createElement('div')
-		editor.index = 'editor'
-		this.innerContent.appendChild(editor)
-		this.quill = new Quill('#editor', {
-			theme: 'snow'
-		})
+	askContentType() {
+		console.log('ask')
 	}
 }
 
@@ -492,25 +458,8 @@ class ToggleEditMode {
 		this.setUp()
 		this.mode = 'grid'
 	}
-	trimUnusedRows() {
-		let highestRowUsed = 9
-		grid.highestYCells.forEach((cell) => {
-			cell = document.getElementById(cell)
-
-			let cellIsStillPartOfSection = cell.classList.contains('section-cell')
-			if (cellIsStillPartOfSection) {
-				let y = Number(cell.getAttribute('y'))
-				if (highestRowUsed < y) highestRowUsed = y
-			}
-		})
-		grid.yCells = highestRowUsed
-		grid.createGrid(grid.yCells, grid.xMaxCells)
-		console.log(highestRowUsed)
-	}
 	switchModes() {
-		grid.container.classList.toggle('content-mode')
 		if (this.mode === 'grid') {
-			this.trimUnusedRows()
 			this.mode = 'content'
 			grid.setContentEditingMode()
 			grid.contentGrid.selectSection(grid.selectedSection)
@@ -528,12 +477,112 @@ class ToggleEditMode {
 	}
 }
 
+class ContentGrid {
+	constructor(grid) {
+		Object.assign(this, grid)
+		this.introText = `# Headline\nBody text goes here`
+		this.createDivs()
+	}
+	get selectedSection() {
+		return this.sections[this.selectedSectionIndex]
+	}
+	createDivs() {
+		this.sections.forEach((section) => this.createDiv(section))
+		this.setHTMLForAllSections()
+	}
+	deleteNode(node) {
+		grid.container.removeChild(node)
+	}
+	setHTMLForAllSections() {
+		this.sections.forEach((section) => {
+			if (!section.html) this.renderPreview(section, section.content)
+			this.setHTML(section)
+		})
+	}
+	setHTML(section) {
+		section.innerContent.innerHTML = section.html
+	}
+	renderPreview(section = this.selectedSection, render = simplemde.value()) {
+		section.html = simplemde.options.previewRender(render)
+		this.setHTML(section)
+	}
+	selectSection(section = this.selectedSection) {
+		if (!section) return
+		this.sections.forEach((section) => section.element.classList.remove('selected'))
+		section.element.classList.add('selected')
+		this.selectedSectionIndex = section.id
+		if (!section.contentType) section.askContentType()
+		// this.setEditorToSelectedSection()
+	}
+	// setEditorToSelectedSection() {
+	// 	simplemde.value(this.selectedSection.content)
+	//   this.renderPreview()
+	// }
+	handleEdit() {
+		if (simplemde.value()) {
+			this.selectedSection.content = simplemde.value()
+			this.renderPreview()
+		}
+	}
+	handleClick(e, section) {
+		e.preventDefault()
+		this.selectSection(section)
+	}
+	createDiv(section = this.selectedSection) {
+		let div = document.createElement('div')
+
+		// if section is linked, wrap in a link tag rather than a div
+		if (section.link) {
+			div = document.createElement('a')
+			div.setAttribute('href', section.link)
+		}
+
+		div.className = 'section'
+		div.style = ` background-color: ${section.color};
+                  grid-column-start: ${section.x0 + 1};
+                  grid-column-end: ${section.x1 + 2};
+                  grid-row-start: ${section.y0 + 1};
+                  grid-row-end: ${section.y1 + 2};`
+
+		let innerContentDiv = document.createElement('div')
+		innerContentDiv.className = 'inner-content'
+		section.innerContent = innerContentDiv
+		div.appendChild(innerContentDiv)
+
+		section.element = div
+		div.onclick = (e) => this.handleClick(e, section)
+		grid.container.onclick = () => {}
+		grid.container.appendChild(div)
+
+		// simplemde.codemirror.on('changes', () => this.handleEdit())
+	}
+}
+
+const simplemde = new SimpleMDE({ element: document.getElementById('editor') })
 let toggleEditMode = new ToggleEditMode()
 const grid = new Grid()
 
 grid.x0 = 0
 grid.y0 = 0
-grid.createSection(6, 4)
-grid.setNotResizing()
+// grid.createSection(6, 6)
+console.log(grid.sections)
 
-toggleEditMode.switchModes()
+// toggleEditMode.switchModes()
+
+class Preview {
+	constructor() {
+		this.setUpButton()
+	}
+	handleClick(e) {
+		this.toggleFullscreen()
+	}
+	setUpButton() {
+		const button = document.getElementById('preview')
+		button.onclick = (e) => this.handleClick(e)
+	}
+	toggleFullscreen() {
+		grid.container.classList.toggle('fullscreen')
+	}
+}
+
+new Preview()
