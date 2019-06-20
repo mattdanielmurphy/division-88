@@ -1,14 +1,14 @@
 #!bin/bash
 
 cd src/client
-# run react build
+# run react-static build
 yarn build
 cd ../../
 
-if test -d 'build'; then
+if test -d 'dist'; then
   echo 'Removing existing build...'
-  rm -r 'build'
+  rm -r 'dist'
 fi
 
 echo 'Moving new build...'
-mv 'src/client/build' .
+mv 'src/client/dist' .

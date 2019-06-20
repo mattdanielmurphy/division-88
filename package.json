@@ -5,6 +5,7 @@
 		"@babel/plugin-proposal-class-properties": "^7.4.0",
 		"@babel/preset-env": "^7.4.3",
 		"@babel/preset-react": "^7.0.0",
+		"@babel/runtime": "^7.0.0-beta.55",
 		"babel-watch": "^7.0.0",
 		"concurrently": "^4.1.0",
 		"rimraf": "^2.6.3"
@@ -14,7 +15,7 @@
 		"build-modules": "babel src --out-dir functions --ignore src/node_modules --ignore src/client/node_modules",
 		"prebuild-modules": "node node_modules/rimraf/bin functions",
 		"postbuild-modules": "cd functions && yarn && cd client && yarn",
-		"deploy": "bash scripts/set-dev-env.sh && yarn build && bash scripts/build-client.sh && firebase deploy",
+		"deploy": "bash scripts/set-prod-env.sh && bash scripts/build-client.sh && firebase deploy",
 		"dev": "bash scripts/set-dev-env.sh && concurrently \"nodemon src/index.js\" \"cd src/client && yarn start\""
 	},
 	"dependencies": {}
