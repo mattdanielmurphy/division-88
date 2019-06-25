@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{51:function(n,t,e){"use strict";e.r(t);var i=e(0),r=e.n(i);t.default=function(){return r.a.createElement("div",null,"Artists")}}}]);

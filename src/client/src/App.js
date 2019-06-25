@@ -6,7 +6,7 @@ import Dynamic from 'containers/Dynamic'
 
 import './styles/app.scss'
 
-setConfiguration({ gutterWidth: 10 })
+setConfiguration({ gutterWidth: 0 })
 
 // Any routes that start with 'dynamic' will be treated as non-static routes
 addPrefetchExcludes([ 'dynamic' ])

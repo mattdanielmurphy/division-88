@@ -1,5 +1,6 @@
 import React from 'react'
 import { FaPlay } from 'react-icons/fa'
+
 const VideoEl = ({ videoId }) => {
 	console.log(videoId)
 	return (
@@ -38,11 +39,9 @@ export default class Video extends React.Component {
 		return this.state.videoId ? (
 			<VideoEl videoId={this.state.videoId} />
 		) : (
-			<div onClick={() => this.playVideo()} className="video-link">
-				<div>
-					<img src={this.props.imgSrc} alt="image" />
-					<FaPlay className="icon" />
-				</div>
+			<div onClick={() => this.playVideo()} className="video-link wrapper">
+				<img src={this.props.imgSrc} alt="image" />
+				<FaPlay className="icon" />
 			</div>
 		)
 	}

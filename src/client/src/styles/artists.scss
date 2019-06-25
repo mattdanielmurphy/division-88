@@ -1,0 +1,25 @@
+.artist-row {
+	margin: 0 0 6rem 0;
+	img {
+		height: auto;
+		width: 100%;
+		object-fit: cover;
+		max-width: 100%;
+	}
+}
+
+.artist-bio {
+	display: grid;
+	align-content: center;
+	p {
+		padding: .5rem;
+		margin: 0;
+	}
+}
+
+.artist-name {
+	text-align: center;
+	a {
+		color: white;
+	}
+}
