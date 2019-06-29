@@ -1,26 +1,38 @@
+html {
+	overflow-x: hidden;
+}
 #index {
 	text-transform: uppercase;
+	max-width: 1600px;
+	margin: 0 auto;
 	img {
 		height: 100%;
 		width: 100%;
 		object-fit: cover;
 		max-width: 100%;
 	}
-}
-
-#banner {
-	background: rgb(104, 0, 0);
-	padding: .3rem;
-	text-align: center;
-}
-
-footer {
-	padding: 3rem 0 .5rem 0;
-	@media (min-width: 350px) {
-		padding: 4rem 0 1rem 0;
+	a.grid-item {
+		transition: .3s;
+		&:hover {
+			opacity: 0.9;
+		}
 	}
-	@media (min-width: 1000px) {
-		padding: 7rem 0 2rem 0;
+	.grid-item {
+		display: grid;
+		color: white;
+		text-align: center;
+		.react-resizable-handle {
+			background: rgba(255, 255, 255, 0.5);
+		}
+		.bottom-text {
+			background: #222;
+			display: grid;
+			align-content: center;
+		}
+		.background-text {
+			height: 100%;
+			display: grid;
+			align-content: center;
+		}
 	}
-	text-align: center;
 }

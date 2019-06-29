@@ -1,25 +1,68 @@
-.artist-row {
-	margin: 0 0 6rem 0;
-	img {
-		height: auto;
-		width: 100%;
-		object-fit: cover;
-		max-width: 100%;
-	}
-}
-
-.artist-bio {
-	display: grid;
-	align-content: center;
-	p {
-		padding: .5rem;
+#artists {
+	h2 {
 		margin: 0;
+		font-size: 1.8em;
+		font-weight: 400;
 	}
-}
+	h3 {
+		margin: 0;
+		font-size: 1.6rem;
+		&.big {
+			font-size: 2rem;
+		}
+	}
+	h4 {
+		margin: 0;
+		font-size: .8rem;
+		text-transform: uppercase;
+		font-weight: 600;
+	}
 
-.artist-name {
-	text-align: center;
-	a {
-		color: white;
+	.artist-row {
+		margin: 3rem auto;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-column-gap: 2rem;
+		max-width: 1000px;
+
+		.artist-img-container {
+			justify-self: end;
+			.artist-img {
+				width: 100%;
+				// padding: 2rem;
+				// width: 30vw;
+				// max-width: 620px;
+			}
+		}
+
+		.artist-info {
+			padding: 1.5rem 1rem 1rem 1rem;
+			display: inline-grid;
+			align-content: center;
+			a {
+				color: white;
+			}
+			.artist-name {
+				text-align: left;
+				a.see-releases {
+					transition: .5s;
+				}
+			}
+
+			.artist-bio {
+				display: grid;
+				align-content: center;
+				margin: 1.5rem 0;
+				p {
+					max-width: 500px;
+					padding: .5rem;
+					padding-top: 0;
+					margin: 0;
+				}
+			}
+
+			.see-releases {
+			}
+		}
 	}
 }

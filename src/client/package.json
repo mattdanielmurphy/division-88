@@ -17,6 +17,7 @@
 		"react-grid-layout": "^0.16.6",
 		"react-grid-system": "^4.4.6",
 		"react-icons": "^3.7.0",
+		"react-progressive-image": "^0.6.0",
 		"react-static": "^7.0.0",
 		"react-static-plugin-reach-router": "^7.0.0",
 		"react-static-plugin-sass": "^7.1.0",

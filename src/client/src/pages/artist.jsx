@@ -1,7 +1,8 @@
 import React from 'react'
-import { Link } from 'components/Router'
+import { Link } from 'components/jsx/Router'
 import { Container, Row, Col } from 'react-grid-system'
-import artists from '../components/artists'
+import artists from '../components/js/artists'
+import Image from '../components/jsx/Image'
 
 class SpotifyPlayer extends React.Component {
 	getEmbedUrl() {
@@ -17,7 +18,7 @@ class SpotifyPlayer extends React.Component {
 				src={src}
 				width="300"
 				height="380"
-				frameborder="0"
+				frameBorder="0"
 				allowtransparency="true"
 				allow="encrypted-media"
 			/>
@@ -31,8 +32,8 @@ const Releases = ({ artist }) => (
 		<h2>Top ten tracks</h2>
 		<SpotifyPlayer spotifyUrl={artist.spotifyUrl} />
 		{artist.releases ? (
-			artist.releases.map((release) => (
-				<div>
+			artist.releases.map((release, index) => (
+				<div key={index}>
 					<h2>{release.name}</h2>
 					<SpotifyPlayer spotifyUrl={release.spotifyUrl} />
 				</div>
@@ -46,10 +47,11 @@ export default class Artist extends React.Component {
 		artist: artists.find((artist) => artist.page === this.props.artistName)
 	}
 	render = () => (
-		<Container style={{ padding: '0' }} fluid id="artists" className="main-container">
+		<div id="artists" className="main-container">
 			<h1>{this.state.artist.name}</h1>
+			<Image imgClassName="artist-img" src={this.state.artist.imgSrc} />
 
 			<Releases artist={this.state.artist} />
-		</Container>
+		</div>
 	)
 }
