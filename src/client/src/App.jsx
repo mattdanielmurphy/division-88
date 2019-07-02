@@ -5,10 +5,8 @@ import { Link, Router } from 'components/jsx/Router'
 import Dynamic from 'containers/Dynamic'
 import Header from './components/jsx/Header'
 import Footer from './components/jsx/Footer'
-
-console.log(Header)
-// import * as log from 'loglevel'
-// log.warn('ultra-compatible')
+import * as log from 'loglevel'
+log.warn('ultra-compatible')
 
 import './styles/app.scss'
 

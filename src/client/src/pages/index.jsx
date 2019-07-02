@@ -7,13 +7,14 @@ const ResponsiveGridLayout = WidthProvider(Responsive)
 
 import GridItem from '../components/jsx/GridItem'
 import Video from '../components/jsx/Video'
+import axios from 'axios'
 
 const defaultLayouts = {
 	lg: [
-		{ w: 12, h: 10, x: 0, y: 0, i: '0', moved: false, static: false },
-		{ w: 12, h: 10, x: 0, y: 0, i: '1', moved: false, static: false },
-		{ w: 5, h: 10, x: 0, y: 10, i: '2', moved: false, static: false },
-		{ w: 5, h: 10, x: 5, y: 10, i: '3', moved: false, static: false }
+		{ w: 12, h: 5, x: 0, y: 0, i: '0', moved: false, static: false, minW: 2, minH: 2 },
+		{ w: 12, h: 5, x: 0, y: 0, i: '1', moved: false, static: false, minW: 2, minH: 2 },
+		{ w: 5, h: 5, x: 0, y: 10, i: '2', moved: false, static: false, minW: 2, minH: 2 },
+		{ w: 5, h: 5, x: 5, y: 10, i: '3', moved: false, static: false, minW: 2, minH: 2 }
 	]
 }
 
@@ -32,13 +33,17 @@ export default class Grid extends React.PureComponent {
 	resetLayout() {
 		this.setState({ layouts: defaultLayouts })
 	}
+	getLayoutsFromDatabase = async () => await axios.get('http://localhost/api/layouts/index').then((r) => r.data)
 	onLayoutChange(layout, layouts) {
-		saveToLocalStorage('layouts', layouts)
-		console.log(JSON.stringify(layouts))
+		// saveToLocalStorage('layouts', layouts)
+		// console.log(JSON.stringify(layouts))
+		axios.post('http://localhost/api/layouts/index', { layouts }).then((response) => console.log(response))
+
 		this.setState({ layouts })
 	}
 	toggleEditingMode = () => {
 		this.setState({ editingModeEnabled: !this.state.editingModeEnabled })
+		console.log(this.state.editingModeEnabled)
 	}
 	getButtonStyle = () => {
 		if (this.state.editingModeEnabled) {
@@ -46,6 +51,19 @@ export default class Grid extends React.PureComponent {
 		} else return {}
 	}
 	handleLinkClick = (e) => (this.state.editingModeEnabled ? e.preventDefault() : null)
+	setKeyBindings = () => {
+		document.onkeypress = (e) => {
+			if (e.key === 'e') this.toggleEditingMode()
+			else if (e.key === 'r') this.resetLayout()
+		}
+	}
+	componentDidMount = async () => {
+		// axios.get('http://localhost/api/layouts/index').then(async (res) => {
+		// })
+		const { layouts } = await this.getLayoutsFromDatabase()
+		this.setState({ layouts, layoutsLoaded: true })
+		this.setKeyBindings()
+	}
 	render() {
 		return (
 			<div id="index">
@@ -53,50 +71,52 @@ export default class Grid extends React.PureComponent {
 				<button onClick={() => this.toggleEditingMode()} style={this.getButtonStyle()}>
 					Toggle Editing Mode (currently {this.state.editingModeEnabled ? 'ON' : 'OFF'})
 				</button> */}
-				<ResponsiveGridLayout
-					measureBeforeMount={true}
-					className="layout"
-					layouts={this.state.layouts}
-					rowHeight={30}
-					nb
-					width={1200}
-					isDraggable={this.state.editingModeEnabled}
-					isResizable={this.state.editingModeEnabled}
-					breakpoints={{
-						lg: 1200
-						// md: 996,
-						// sm: 768,
-						// xs: 480,
-						// xxs: 0
-					}}
-					cols={{
-						lg: 12
-						//  md: 10, sm: 6, xs: 4, xxs: 2
-					}}
-					containerPadding={[ 0, 0 ]}
-					onLayoutChange={(layout, layouts) => this.onLayoutChange(layout, layouts)}
-				>
-					{this.state.cells.map(
-						(cell, index) =>
-							cell.link && !this.state.editingModeEnabled ? (
-								<a href="" className="grid-item" key={index}>
-									<GridItem
-										src="https://placeimg.com/800/300/any"
-										backgroundText={cell.backgroundText}
-										bottomText={cell.bottomText}
-									/>
-								</a>
-							) : (
-								<div className="grid-item" key={index}>
-									<GridItem
-										src="https://placeimg.com/800/300/any"
-										backgroundText={cell.backgroundText}
-										bottomText={cell.bottomText}
-									/>
-								</div>
-							)
-					)}
-				</ResponsiveGridLayout>
+				{this.state.layoutsLoaded && (
+					<ResponsiveGridLayout
+						measureBeforeMount={true}
+						className="layout"
+						layouts={this.state.layouts}
+						rowHeight={90}
+						nb
+						width={1200}
+						isDraggable={this.state.editingModeEnabled}
+						isResizable={this.state.editingModeEnabled}
+						breakpoints={{
+							lg: 1200
+							// md: 996,
+							// sm: 768,
+							// xs: 480,
+							// xxs: 0
+						}}
+						cols={{
+							lg: 12
+							//  md: 10, sm: 6, xs: 4, xxs: 2
+						}}
+						containerPadding={[ 0, 0 ]}
+						onLayoutChange={(layout, layouts) => this.onLayoutChange(layout, layouts)}
+					>
+						{this.state.cells.map(
+							(cell, index) =>
+								cell.link && !this.state.editingModeEnabled ? (
+									<a href="" className="grid-item" key={index}>
+										<GridItem
+											src="https://placeimg.com/800/300/any"
+											backgroundText={cell.backgroundText}
+											bottomText={cell.bottomText}
+										/>
+									</a>
+								) : (
+									<div className="grid-item" key={index}>
+										<GridItem
+											src="https://placeimg.com/800/300/any"
+											backgroundText={cell.backgroundText}
+											bottomText={cell.bottomText}
+										/>
+									</div>
+								)
+						)}
+					</ResponsiveGridLayout>
+				)}
 			</div>
 		)
 	}
