@@ -1,18 +1,23 @@
 import React from 'react'
-import { Link } from 'components/jsx/Router'
+import { Link } from './Router'
+import OffCanvas from './OffCanvas'
+import Nav from './Nav'
+import MediaQuery from 'react-responsive'
+
 export default () => (
-	<header>
-		<div id="logo">
-			<Link to="/">
-				<img src="/images/logo.svg" alt="" />
-			</Link>
-		</div>
-		<div id="nav-wrapper">
-			<nav>
-				<Link to="/artists">Artists</Link>
-				<Link to="/producer-tools">Producer Tools</Link>
-				<Link to="/about">About</Link>
-			</nav>
-		</div>
-	</header>
+	<div className="header-wrapper">
+		<MediaQuery maxWidth={440}>
+			<OffCanvas />
+		</MediaQuery>
+		<header>
+			<div id="logo">
+				<Link to="/">
+					<img src="/images/logo.svg" alt="" />
+				</Link>
+			</div>
+			<MediaQuery minWidth={440}>
+				<Nav />
+			</MediaQuery>
+		</header>
+	</div>
 )

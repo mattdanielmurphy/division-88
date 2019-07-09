@@ -3,7 +3,6 @@ html {
 }
 #index {
 	text-transform: uppercase;
-	max-width: 1600px;
 	margin: 0 auto;
 	img {
 		height: 100%;
@@ -12,7 +11,7 @@ html {
 		max-width: 100%;
 	}
 	a.grid-item {
-		transition: .3s;
+		// transition: .3s;
 		&:hover {
 			opacity: 0.9;
 		}
@@ -33,6 +32,13 @@ html {
 			height: 100%;
 			display: grid;
 			align-content: center;
+		}
+		.video-link {
+			overflow: hidden;
+		}
+		img {
+			width: 100%;
+			overflow: hidden;
 		}
 	}
 }

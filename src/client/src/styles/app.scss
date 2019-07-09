@@ -1,7 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900&display=swap');
+@import './mixins';
 @import './base';
 @import './index';
 @import './artists';
+@import './artist';
+@import './producer-tools';
+@import './about';
 @import './header';
 @import './footer';
 @import '../../node_modules/react-grid-layout/css/styles.css';

@@ -2,7 +2,6 @@ import React from 'react'
 import { FaPlay } from 'react-icons/fa'
 
 const VideoEl = ({ videoId }) => {
-	console.log(videoId)
 	return (
 		<div
 			className="video"

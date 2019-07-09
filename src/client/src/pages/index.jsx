@@ -1,6 +1,9 @@
 import * as log from 'loglevel'
 log.warn('ultra-compatible')
 
+// INDEX WON'T EXPORT AS IS: NEED TO CHANGE. Read the link below for more details.
+// https://www.gatsbyjs.org/docs/debugging-html-builds/
+
 import React from 'react'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 const ResponsiveGridLayout = WidthProvider(Responsive)
@@ -11,10 +14,10 @@ import axios from 'axios'
 
 const defaultLayouts = {
 	lg: [
-		{ w: 12, h: 5, x: 0, y: 0, i: '0', moved: false, static: false, minW: 2, minH: 2 },
-		{ w: 12, h: 5, x: 0, y: 0, i: '1', moved: false, static: false, minW: 2, minH: 2 },
-		{ w: 5, h: 5, x: 0, y: 10, i: '2', moved: false, static: false, minW: 2, minH: 2 },
-		{ w: 5, h: 5, x: 5, y: 10, i: '3', moved: false, static: false, minW: 2, minH: 2 }
+		{ w: 12, h: 5, x: 0, y: 0, i: '0', moved: false, static: false, minW: 1, minH: 3 },
+		{ w: 12, h: 5, x: 0, y: 0, i: '1', moved: false, static: false, minW: 1, minH: 3 },
+		{ w: 5, h: 5, x: 0, y: 10, i: '2', moved: false, static: false, minW: 1, minH: 3 },
+		{ w: 5, h: 5, x: 5, y: 10, i: '3', moved: false, static: false, minW: 1, minH: 3 }
 	]
 }
 
@@ -25,10 +28,27 @@ export default class Grid extends React.PureComponent {
 		layouts: JSON.parse(JSON.stringify(originalLayouts)),
 		editingModeEnabled: false,
 		cells: [
-			{ link: '', bottomText: { text: 'Hi', height: '50px' } },
-			{ link: '/artists', backgroundText: { heading: 'Heading' } },
-			{ link: '/artists', backgroundText: { heading: 'Heading', subheading: 'Subheading' } }
-		]
+			{
+				link: '',
+				bottomText: { text: 'Hi', height: '50px' },
+				imgSrc: '/images/neon-bambi.jpg'
+			},
+			{
+				link: '/artists',
+				backgroundText: { heading: 'Heading' },
+				imgSrc: 'https://picsum.photos/1500/1500'
+			},
+			{
+				link: '/artists',
+				backgroundText: { heading: 'Heading', subheading: 'Subheading' },
+				imgSrc: 'https://picsum.photos/1500/1600'
+			},
+			{
+				imgSrc: '/images/skoop.jpg',
+				videoSrc: 'https://www.youtube.com/watch?v=aUdfLZJkqFs'
+			}
+		],
+		rowHeight: this.rowHeight
 	}
 	resetLayout() {
 		this.setState({ layouts: defaultLayouts })
@@ -50,11 +70,28 @@ export default class Grid extends React.PureComponent {
 			return { backgroundColor: 'red' }
 		} else return {}
 	}
+	get rowHeight() {
+		let vW = window.innerWidth / 100
+		return 5 * vW
+		// window.innerWidth / 10 = 1 vw
+		// 2560
+	}
 	handleLinkClick = (e) => (this.state.editingModeEnabled ? e.preventDefault() : null)
+	handleResize = () => {
+		this.setState({ rowHeight: this.rowHeight })
+		if (!this.buffering) {
+			setTimeout(() => {
+				this.buffering = false
+			}, 10)
+		}
+	}
+	watchWindowResizing() {
+		window.onresize = () => this.handleResize()
+	}
 	setKeyBindings = () => {
 		document.onkeypress = (e) => {
 			if (e.key === 'e') this.toggleEditingMode()
-			else if (e.key === 'r') this.resetLayout()
+			else if (e.key === 'f') this.resetLayout()
 		}
 	}
 	componentDidMount = async () => {
@@ -63,6 +100,7 @@ export default class Grid extends React.PureComponent {
 		const { layouts } = await this.getLayoutsFromDatabase()
 		this.setState({ layouts, layoutsLoaded: true })
 		this.setKeyBindings()
+		this.watchWindowResizing()
 	}
 	render() {
 		return (
@@ -73,10 +111,10 @@ export default class Grid extends React.PureComponent {
 				</button> */}
 				{this.state.layoutsLoaded && (
 					<ResponsiveGridLayout
-						measureBeforeMount={true}
+						measureBeforeMount
 						className="layout"
 						layouts={this.state.layouts}
-						rowHeight={90}
+						rowHeight={this.state.rowHeight}
 						nb
 						width={1200}
 						isDraggable={this.state.editingModeEnabled}
@@ -100,7 +138,8 @@ export default class Grid extends React.PureComponent {
 								cell.link && !this.state.editingModeEnabled ? (
 									<a href="" className="grid-item" key={index}>
 										<GridItem
-											src="https://placeimg.com/800/300/any"
+											imgSrc={cell.imgSrc}
+											videoSrc={cell.videoSrc}
 											backgroundText={cell.backgroundText}
 											bottomText={cell.bottomText}
 										/>
@@ -108,7 +147,8 @@ export default class Grid extends React.PureComponent {
 								) : (
 									<div className="grid-item" key={index}>
 										<GridItem
-											src="https://placeimg.com/800/300/any"
+											imgSrc={cell.imgSrc}
+											videoSrc={cell.videoSrc}
 											backgroundText={cell.backgroundText}
 											bottomText={cell.bottomText}
 										/>

@@ -5,9 +5,17 @@ import GridItem from './GridItem'
 export default class Image extends GridItem {
 	state = {
 		style: {
-			background: `url(${this.props.src || 'https://placeimg.com/1600/600/any'}) center center/contain no-repeat`,
-			height: 0,
-			paddingTop: `${this.paddingTop}%`
+			background: `linear-gradient(
+				to bottom,
+				rgba(255, 255, 255, 0) 20%,
+				rgba(255, 255, 255, 0.01) 21%,
+				rgba(0, 0, 0, 0.95) 85%,
+				rgba(0, 0, 0, 1) 100%
+			), url(${this.props.src})`,
+			backgroundPosition: 'center center',
+			backgroundSize: 'cover',
+			backgroundRepeat: 'no-repeat',
+			height: 1100
 		}
 	}
 	get paddingTop() {
@@ -27,11 +35,11 @@ export default class Image extends GridItem {
 	}
 	render = () => {
 		let gridItemChildren = [
-			<img
+			<div
 				key="image"
 				className={this.props.imgClassName}
-				// style={this.state.style}
-				src={this.props.src}
+				style={this.state.style}
+				// src={this.props.src}
 				children={this.getChildren()}
 			/>,
 			this.props.bottomText && (
