@@ -7,9 +7,7 @@ const VideoEl = ({ videoId }) => {
 			className="video"
 			style={{
 				position: 'relative',
-				paddingBottom: '56.25%' /* 16:9 */,
-				paddingTop: 25,
-				height: 0
+				height: '100%'
 			}}
 		>
 			<iframe
@@ -30,17 +28,22 @@ const VideoEl = ({ videoId }) => {
 export default class Video extends React.Component {
 	state = {}
 	playVideo() {
+		if (this.props.editingModeEnabled) return
 		const videoId = /\?v=(.*)/.exec(this.props.videoSrc)[1]
 		this.setState({ videoId })
 	}
-	componentDidMount() {}
+	getStyle = () => ({
+		cursor: this.props.editingModeEnabled ? 'default' : 'pointer'
+	})
 	render = () => {
 		return this.state.videoId ? (
 			<VideoEl videoId={this.state.videoId} />
 		) : (
-			<div onClick={() => this.playVideo()} className="video-link wrapper">
-				<img src={this.props.imgSrc} alt="image" />
-				<FaPlay className="icon" />
+			<div onClick={() => this.playVideo()} style={this.getStyle()} className="video-link wrapper">
+				<img src={this.props.imgSrc} onMouseDown={(e) => e.preventDefault()} alt="image" />
+				<div className="icon-wrapper">
+					<FaPlay className="icon" />
+			</div>
 			</div>
 		)
 	}

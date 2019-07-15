@@ -10,8 +10,8 @@ class ProducerTools extends React.Component {
 				<h1>Producer Tools</h1>
 			</div>
 			<div className="grid">
-				{producerTools.map((tool) => (
-					<Link to={`/producer-tool/${tool.page}`}>
+				{producerTools.map((tool, index) => (
+					<Link key={index} to={`/producer-tool/${tool.page}`}>
 						<img src={tool.img} alt="" />
 						<h2>{tool.name}</h2>
 						<div className="description">{tool.description}</div>

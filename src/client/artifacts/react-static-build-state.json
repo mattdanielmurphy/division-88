@@ -16,29 +16,29 @@
   "plugins": [
     "react-static-plugin-sass",
     [
-      "/Users/matt/Documents/web-dev/projects/division-88/src/client/node_modules/react-static-plugin-source-filesystem/node.api.js",
+      "/Users/Matthew/local-projects/division-88/src/client/node_modules/react-static-plugin-source-filesystem/node.api.js",
       {
-        "location": "/Users/matt/Documents/web-dev/projects/division-88/src/client/src/pages"
+        "location": "/Users/Matthew/local-projects/division-88/src/client/src/pages"
       }
     ],
-    "/Users/matt/Documents/web-dev/projects/division-88/src/client/node_modules/react-static-plugin-reach-router/browser.api.js",
-    "/Users/matt/Documents/web-dev/projects/division-88/src/client/node_modules/react-static-plugin-sitemap/dist/node.api.js",
-    "/Users/matt/Documents/web-dev/projects/division-88/src/client"
+    "/Users/Matthew/local-projects/division-88/src/client/node_modules/react-static-plugin-reach-router/browser.api.js",
+    "/Users/Matthew/local-projects/division-88/src/client/node_modules/react-static-plugin-sitemap/dist/node.api.js",
+    "/Users/Matthew/local-projects/division-88/src/client"
   ],
   "paths": {
-    "ROOT": "/Users/matt/Documents/web-dev/projects/division-88/src/client",
-    "SRC": "/Users/matt/Documents/web-dev/projects/division-88/src/client/src",
-    "DIST": "/Users/matt/Documents/web-dev/projects/division-88/src/client/dist",
-    "ASSETS": "/Users/matt/Documents/web-dev/projects/division-88/src/client/dist",
-    "PLUGINS": "/Users/matt/Documents/web-dev/projects/division-88/src/client/plugins",
-    "TEMP": "/Users/matt/Documents/web-dev/projects/division-88/src/client/tmp",
-    "ARTIFACTS": "/Users/matt/Documents/web-dev/projects/division-88/src/client/artifacts",
-    "PUBLIC": "/Users/matt/Documents/web-dev/projects/division-88/src/client/public",
-    "NODE_MODULES": "/Users/matt/Documents/web-dev/projects/division-88/src/client/node_modules",
-    "EXCLUDE_MODULES": "/Users/matt/Documents/web-dev/projects/division-88/src/client/node_modules",
-    "PACKAGE": "/Users/matt/Documents/web-dev/projects/division-88/src/client/package.json",
-    "HTML_TEMPLATE": "/Users/matt/Documents/web-dev/projects/division-88/src/client/dist/index.html",
-    "STATIC_DATA": "/Users/matt/Documents/web-dev/projects/division-88/src/client/dist/staticData"
+    "ROOT": "/Users/Matthew/local-projects/division-88/src/client",
+    "SRC": "/Users/Matthew/local-projects/division-88/src/client/src",
+    "DIST": "/Users/Matthew/local-projects/division-88/src/client/dist",
+    "ASSETS": "/Users/Matthew/local-projects/division-88/src/client/dist",
+    "PLUGINS": "/Users/Matthew/local-projects/division-88/src/client/plugins",
+    "TEMP": "/Users/Matthew/local-projects/division-88/src/client/tmp",
+    "ARTIFACTS": "/Users/Matthew/local-projects/division-88/src/client/artifacts",
+    "PUBLIC": "/Users/Matthew/local-projects/division-88/src/client/public",
+    "NODE_MODULES": "/Users/Matthew/local-projects/division-88/src/client/node_modules",
+    "EXCLUDE_MODULES": "/Users/Matthew/local-projects/division-88/src/client/node_modules",
+    "PACKAGE": "/Users/Matthew/local-projects/division-88/src/client/package.json",
+    "HTML_TEMPLATE": "/Users/Matthew/local-projects/division-88/src/client/dist/index.html",
+    "STATIC_DATA": "/Users/Matthew/local-projects/division-88/src/client/dist/staticData"
   },
   "siteRoot": "",
   "basePath": "",

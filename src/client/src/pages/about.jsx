@@ -1,10 +1,8 @@
 import React from 'react'
+import Page from '../components/jsx/Page'
 
 export default () => (
-	<div id="about" className="main-container">
-		<div className="h1">
-			<h1>About</h1>
-		</div>
+	<Page id="about" heading="About">
 		<section className="text">
 			<p>
 				So utterly lost was he to all sense of reverence for the many marvels of their majestic bulk and mystic
@@ -20,5 +18,5 @@ export default () => (
 				bitter a night, I would put up with the half of any decent man’s blanket.
 			</p>
 		</section>
-	</div>
+	</Page>
 )

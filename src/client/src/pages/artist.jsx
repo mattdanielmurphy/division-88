@@ -61,7 +61,7 @@ const TopTen = ({ artist }) => (
 
 export default class Artist extends React.Component {
 	state = {
-		artist: artists.find((artist) => artist.page === this.props.artistName)
+		artist: artists.find((artist) => artist.page === this.props.artistName) || artists[0]
 	}
 	render = () => (
 		<div id="artist" className="main-container">

@@ -7,44 +7,44 @@ export default class Artist extends React.Component {
 	state = {
 		hovering: false,
 		imgStyle: {
-			background: `url(${this.props.artist.imgSrc}) center center/cover no-repeat`
+			backgroundImage: `url(${this.props.imgSrc})`
 		},
-		alignment: this.props.artist.description.align
+		alignment: this.props.index % 2 === 0 ? 'right' : 'left'
 	}
 	getDescriptionStyle = () =>
 		this.state.hovering
 			? Object.assign(
 					{
-						borderColor: this.props.artist.description.style.color || 'black'
+						borderColor: this.props.description.style.color || 'black'
 					},
-					this.props.artist.description.style
+					this.props.description.style
 				)
-			: this.props.artist.description.style
+			: this.props.description.style
 
 	getSeeReleasesStyle = () =>
 		this.state.hovering
 			? {
-					color: this.props.artist.description.style.color || 'black',
+					color: this.props.description.style.color || 'black',
 					opacity: 1
 				}
 			: {
-					color: this.props.artist.description.style.color || 'black'
+					color: this.props.description.style.color || 'black'
 				}
 	setHovering = (hovering) => this.setState({ hovering })
 	render = () => (
-		<div className={`${this.props.index === 0 ? 'artist first' : 'artist'}`}>
+		<div className="artist">
 			<div className="artist-img" style={this.state.imgStyle} />
 			<div className={`description-outer-wrapper align-${this.state.alignment}`}>
 				<Link
-					to={`/artist/${this.props.artist.page}`}
+					to={`/artists/${this.props.page}`}
 					onMouseOver={() => this.setHovering(true)}
 					className="description-wrapper"
 					onMouseLeave={() => this.setHovering(false)}
 				>
 					<div className="description" style={this.getDescriptionStyle()}>
 						<div className="text">
-							<h2>{this.props.artist.name}</h2>
-							<div className="bio">{this.props.artist.description.bio}</div>
+							<h2>{this.props.name}</h2>
+							<div className="bio">{this.props.description.bio}</div>
 							<div className="see-releases" style={this.getSeeReleasesStyle()}>
 								<span>></span> See releases
 							</div>

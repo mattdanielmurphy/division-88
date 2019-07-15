@@ -1,28 +1,4 @@
-export default [
-	// the featured artist's photo needs to be cropped for extra whitespace on the top (needs to be taller)
-	{
-		name: 'Matt Murphy',
-		page: 'matt-murphy',
-		imgSrc: '/images/girl.jpg',
-		fullHeight: true,
-		description: {
-			style: {
-				backgroundColor: '#323867',
-				color: '#DA876B'
-			},
-			align: 'right',
-			bio:
-				'Bacon ipsum dolor amet meatloaf pig andouille kielbasa bacon picanha tenderloin. Ground round beef ribs rump, meatloaf spare ribs tongue brisket biltong leberkas pig kielbasa.'
-		},
-		spotifyUrl: 'https://open.spotify.com/artist/6zNQ51HIfnzskqL2R82jYD?si=rEm8CzOpQIOnzqqCJIBFYQ',
-		releases: [
-			{
-				name: 'All Nighters',
-				spotifyUrl: 'https://open.spotify.com/album/3t9S03TNKktyKlNysyJS8k?si=ZJk-l8WKRW692NLHGnPlow',
-				cover: '/images/all-nighters.jpg'
-			}
-		]
-	},
+module.exports = [
 	{
 		name: 'Skoop',
 		imgSrc: '/images/skoop2.jpg',

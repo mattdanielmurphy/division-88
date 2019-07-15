@@ -1,5 +1,6 @@
 .header-wrapper {
 	position: absolute;
+	top: 0;
 	right: 0;
 	left: 0;
 	z-index: 999;
@@ -17,11 +18,13 @@ header {
 	#logo {
 		text-align: center;
 		justify-self: right;
+		color: inherit;
 		a {
 			display: block;
 			height: 100%;
 			width: 100%;
-			img {
+			color: inherit;
+			.icon {
 				max-width: 100%;
 				max-height: 40px;
 				@media (min-width: 700px) {
@@ -45,6 +48,7 @@ header {
 				font-weight: 300;
 				padding-top: .4rem;
 				display: inline-block;
+				color: inherit;
 			}
 		}
 	}

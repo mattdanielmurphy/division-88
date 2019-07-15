@@ -1,5 +1,5 @@
 import React from 'react'
-import GridItem from './GridItem'
+import GridItem from './index/GridItem'
 // import ProgressiveImage from 'react-progressive-image'
 
 export default class Image extends GridItem {
@@ -7,8 +7,8 @@ export default class Image extends GridItem {
 		style: {
 			background: `linear-gradient(
 				to bottom,
-				rgba(255, 255, 255, 0) 20%,
-				rgba(255, 255, 255, 0.01) 21%,
+				rgba(0, 0, 0, 0) 20%,
+				rgba(0, 0, 0, 0.01) 21%,
 				rgba(0, 0, 0, 0.95) 85%,
 				rgba(0, 0, 0, 1) 100%
 			), url(${this.props.src})`,

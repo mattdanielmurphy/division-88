@@ -1,21 +1,33 @@
 import React from 'react'
-import artists from '../components/js/artists'
 import Artist from '../components/jsx/Artist'
+import { useRouteData } from 'react-static'
+import Page from '../components/jsx/Page'
 
-class Artists extends React.Component {
-	getDescriptionStyle = () => {
-		artists
-		return {}
+class ErrorHandler extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = { errorOccurred: false }
 	}
-	render = () => (
-		<div id="artists" className="main-container">
-			{/* Going to switch to modular way once everything is sorted manually */}
-			<div className="h1">
-				<h1>Artists</h1>
-			</div>
-			{artists.map((artist, index) => <Artist key={index} artist={artist} index={index} />)}
-		</div>
+
+	componentDidCatch(error, info) {
+		this.setState({ errorOccurred: true })
+		logErrorToMyService(error, info)
+	}
+
+	render() {
+		return this.state.errorOccurred ? <h1>Something went wrong!</h1> : this.props.children
+	}
+}
+
+const Artists = () => {
+	let { artists } = useRouteData()
+	artists = Object.values(artists)
+
+	return (
+		<Page id="artists" heading="Artists" backgroundImage={{ source: '/images/trees.jpg' }}>
+			{artists.map((artist, index) => <Artist key={index} {...artist} index={index} />)}
+		</Page>
 	)
 }
 
-export default () => <Artists />
+export default Artists

@@ -11,13 +11,6 @@
 	.text {
 		@include fluid-type(font-size, 1000px, 2560px, 16px, 24px);
 		position: relative;
-		top: 12rem;
-		@media (min-width: 1000px) {
-			top: 16rem;
-		}
-		@media (min-width: 1500px) {
-			top: 18rem;
-		}
 		max-width: 1000px;
 		width: 50vw;
 		@media (max-width: 1200px) {

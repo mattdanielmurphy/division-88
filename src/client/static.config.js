@@ -3,19 +3,19 @@ import axios from 'axios'
 
 export default {
 	getRoutes: async () => {
-		const { data: posts } = await axios.get('https://jsonplaceholder.typicode.com/posts')
+		const { data: artists } = await axios.get('http://localhost/api/artists')
 
 		return [
 			{
-				path: '/blog',
+				path: '/artists',
 				getData: () => ({
-					posts
+					artists
 				}),
-				children: posts.map((post) => ({
-					path: `/post/${post.id}`,
-					template: 'src/containers/Post',
+				children: Object.values(artists).map((artist) => ({
+					path: `/${artist.page}`,
+					template: 'src/containers/Artist',
 					getData: () => ({
-						post
+						artist
 					})
 				}))
 			}

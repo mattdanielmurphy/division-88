@@ -3,6 +3,12 @@
 #artists {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
+	.top-img {
+		background: url('/images/trees.jpg') no-repeat center/cover;
+		position: relative;
+		grid-column: 1 / span 2;
+		height: 30vw;
+	}
 	.artist {
 		position: relative;
 		display: grid;
@@ -13,7 +19,6 @@
 			.description-outer-wrapper {
 				height: auto;
 				.description {
-					// height: 20vw;
 					height: auto;
 				}
 			}
@@ -21,7 +26,7 @@
 
 		.artist-img {
 			grid-column: 1 / span 2;
-			background: url('/images/girl.jpg') no-repeat center/cover;
+			background: url('/images/trees.jpg') no-repeat center/cover;
 			position: relative;
 			width: 100%;
 			height: 25vw;
@@ -29,7 +34,6 @@
 		}
 
 		.description-outer-wrapper {
-			// position: absolute;
 			overflow: hidden;
 			&.align-left {
 				left: 1vw;
@@ -72,13 +76,6 @@
 	}
 }
 
-// @media (min-width: 530px) and (max-width: 1400px) {
-// 	#artists .artist {
-// 		.description-outer-wrapper {
-// 			position: absolute;
-// 		}
-// 	}
-// }
 // DESKTOP-EXCLUSIVE
 @media (min-width: 530px) {
 	#artists .artist {
@@ -114,10 +111,6 @@
 	}
 }
 
-// @media (min-width: 100) {
-
-// }
-
 #artists .artist {
 	grid-column-gap: 1vw;
 	&.first {
@@ -140,20 +133,6 @@
 	}
 }
 
-// @media (max-width: 1600px) {
-// 	#artists .artist .description-outer-wrapper {
-// 		&.align-left {
-// 			left: 1vw;
-// 		}
-// 		&.align-right {
-// 			right: 1vw;
-// 		}
-// 	}
-// }
-
-@media (max-width: 1400px) {
-}
-
 @media (max-width: 1250px) {
 	#artists .artist .description-outer-wrapper {
 		position: absolute;
@@ -165,8 +144,6 @@
 			bottom: 0;
 			right: 0;
 		}
-		.description {
-		}
 	}
 }
 
@@ -174,8 +151,6 @@
 	#artists .artist {
 		display: grid;
 		align-items: center;
-		.description-outer-wrapper {
-		}
 		.description {
 			padding: 0 2vw;
 			width: 20vw;
@@ -193,6 +168,7 @@
 		}
 	}
 }
+
 // TABLET
 
 @media (max-width: 1200px) {
@@ -229,7 +205,6 @@
 			margin-bottom: 5vw;
 			.description-outer-wrapper {
 				position: static;
-				// padding-bottom: 3vw;
 				width: 100%;
 				&.align-left {
 					left: 4vw;
