@@ -10,21 +10,25 @@ html {
 		object-fit: cover;
 		max-width: 100%;
 	}
-	&.hovering-over-grid-item {
-		.grid-item {
-			opacity: .5;
+	.layout {
+		&.grid-item-hovered-upon {
+			.grid-item {
+				opacity: .5;
+				transition: 0s ease-in-out opacity;
+				&:hover {
+					opacity: 1;
+					transition: .4s ease-in-out opacity;
+					a {
+						color: white;
+					}
+				}
+			}
 		}
 	}
 	.grid-item {
 		display: grid;
 		color: white;
 		text-align: center;
-		&:hover {
-			opacity: 1;
-			a {
-				color: white;
-			}
-		}
 		a {
 		}
 		.react-resizable-handle {

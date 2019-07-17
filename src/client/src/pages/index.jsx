@@ -38,7 +38,8 @@ export default class Index extends React.PureComponent {
 				imgSrc: '/images/skoop.jpg',
 				videoSrc: 'http://www.youtube.com/watch?v=aUdfLZJkqFs'
 			}
-		]
+		],
+		layoutClassName: `layout ${this.gridItemHoveredUpon !== 'undefined' ? 'grid-item-hovered-upon' : ''}`
 	}
 	restoreDefaultLayouts() {
 		console.log('Restoring default layout...')
@@ -99,6 +100,16 @@ export default class Index extends React.PureComponent {
 			else if (e.key === 'r') this.redoLayoutChange()
 		}
 	}
+	handleMouseOverGridItem(gridItemIndex) {
+		console.log('grid item hovered upon')
+		this.setState({ gridItemHoveredUpon: gridItemIndex })
+	}
+	handleMouseLeaveGridItem(gridItemIndex) {
+		console.log('mouse leave grid item')
+		console.log(gridItemIndex)
+		if (this.state.gridItemHoveredUpon === gridItemIndex) this.setState({ gridItemHoveredUpon: undefined })
+	}
+
 	componentDidMount = async () => {
 		const { layouts } = await this.getLayoutsFromDatabase()
 		this.setState({ layouts, layoutsLoaded: true })
@@ -114,7 +125,7 @@ export default class Index extends React.PureComponent {
 				{this.state.layoutsLoaded && (
 					<ResponsiveGridLayout
 						measureBeforeMount
-						className="layout"
+						className={this.state.layoutClassName}
 						layouts={this.state.layouts}
 						rowHeight={this.state.rowHeight}
 						nb
@@ -138,12 +149,17 @@ export default class Index extends React.PureComponent {
 						{this.state.cells.map((cell, index) => (
 							<div className="grid-item" key={index}>
 								<GridItem
+									index={index}
 									link={cell.link}
 									imgSrc={cell.imgSrc}
 									backgroundText={cell.backgroundText}
 									bottomText={cell.bottomText}
 									videoSrc={cell.videoSrc}
 									editingModeEnabled={this.state.editingModeEnabled}
+									handleMouseOverGridItem={(gridItemIndex) =>
+										this.handleMouseOverGridItem(gridItemIndex)}
+									handleMouseLeaveGridItem={(gridItemIndex) =>
+										this.handleMouseLeaveGridItem(gridItemIndex)}
 								/>
 							</div>
 						))}

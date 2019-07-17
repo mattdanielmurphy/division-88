@@ -6,9 +6,20 @@ class GridItemContentContainer extends React.Component {
 	render = () =>
 		// disable link when editing so you user doesn't accidentally leave the page when dragging
 		this.props.link && !this.props.editingModeEnabled ? (
-			<Link to={this.props.link}>{this.props.children}</Link>
+			<Link
+				onMouseEnter={() => this.props.handleMouseOverGridItem()}
+				onMouseLeave={() => this.props.handleMouseLeaveGridItem()}
+				to={this.props.link}
+			>
+				{this.props.children}
+			</Link>
 		) : (
-			<div>{this.props.children}</div>
+			<div
+				onMouseEnter={() => this.props.handleMouseOverGridItem()}
+				onMouseLeave={() => this.props.handleMouseLeaveGridItem()}
+			>
+				{this.props.children}
+			</div>
 		)
 }
 
@@ -40,7 +51,12 @@ class GridItemContent extends React.Component {
 	}
 	render = () => {
 		return (
-			<GridItemContentContainer link={this.props.link} editingModeEnabled={this.props.editingModeEnabled}>
+			<GridItemContentContainer
+				link={this.props.link}
+				editingModeEnabled={this.props.editingModeEnabled}
+				handleMouseOverGridItem={() => this.props.handleMouseOverGridItem(this.props.index)}
+				handleMouseLeaveGridItem={() => this.props.handleMouseLeaveGridItem(this.props.index)}
+			>
 				<div style={this.state.style}>
 					{this.props.backgroundText && <BackgroundText {...this.props.backgroundText} />}
 				</div>
@@ -51,13 +67,5 @@ class GridItemContent extends React.Component {
 }
 
 export default class GridItem extends React.Component {
-	state = {
-		beingHoveredOver: false
-	}
-	render = () =>
-		this.props.videoSrc ? (
-			<Video {...this.props} />
-		) : (
-			<GridItemContent {...this.props} />
-		)
+	render = () => (this.props.videoSrc ? <Video {...this.props} /> : <GridItemContent {...this.props} />)
 }

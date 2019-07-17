@@ -31,6 +31,7 @@ export default class Video extends React.Component {
 		if (this.props.editingModeEnabled) return
 		const videoId = /\?v=(.*)/.exec(this.props.videoSrc)[1]
 		this.setState({ videoId })
+		this.props.handleMouseLeaveGridItem(this.props.index)
 	}
 	getStyle = () => ({
 		cursor: this.props.editingModeEnabled ? 'default' : 'pointer'
@@ -39,11 +40,17 @@ export default class Video extends React.Component {
 		return this.state.videoId ? (
 			<VideoEl videoId={this.state.videoId} />
 		) : (
-			<div onClick={() => this.playVideo()} style={this.getStyle()} className="video-link wrapper">
+			<div
+				onMouseEnter={() => this.props.handleMouseOverGridItem(this.props.index)}
+				onMouseLeave={() => this.props.handleMouseLeaveGridItem(this.props.index)}
+				onClick={() => this.playVideo()}
+				style={this.getStyle()}
+				className="video-link wrapper"
+			>
 				<img src={this.props.imgSrc} onMouseDown={(e) => e.preventDefault()} alt="image" />
 				<div className="icon-wrapper">
 					<FaPlay className="icon" />
-			</div>
+				</div>
 			</div>
 		)
 	}
