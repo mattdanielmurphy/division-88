@@ -2,6 +2,7 @@ import React from 'react'
 import { useRouteData } from 'react-static'
 import { Link } from 'components/jsx/Router'
 import Image from '../components/jsx/Image'
+import Page from '../components/jsx/Page'
 
 class SpotifyPlayer extends React.Component {
 	state = { loading: true }
@@ -61,15 +62,9 @@ const TopTen = ({ artist }) => (
 export default () => {
 	const { artist } = useRouteData()
 	return (
-		<div id="artist" className="main-container">
-			<div className="h1">
-				<h1>
-					{artist.name}: <span>Releases</span>
-				</h1>
-			</div>
-			<Image imgClassName="artist-img" src={artist.imgSrc} />
+		<Page id="artist" heading={{ text: `${artist.name}: `, spanText: 'releases' }} backgroundImage={artist.imgSrc}>
 			<TopTen artist={artist} />
 			{artist.releases.length > 0 && <Releases artist={artist} />}
-		</div>
+		</Page>
 	)
 }

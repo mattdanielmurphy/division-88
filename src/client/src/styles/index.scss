@@ -1,7 +1,13 @@
-html {
-	overflow-x: hidden;
+@mixin grid-item-hover {
+	opacity: 0.8;
 }
+
+@mixin grid-item-hover-transition {
+	transition: .4s ease-in-out opacity;
+}
+
 #index {
+	overflow: hidden;
 	text-transform: uppercase;
 	margin: 0 auto;
 	img {
@@ -13,13 +19,12 @@ html {
 	.layout {
 		&.grid-item-hovered-upon {
 			.grid-item {
-				opacity: .5;
-				transition: 0s ease-in-out opacity;
-				&:hover {
-					opacity: 1;
-					transition: .4s ease-in-out opacity;
-					a {
-						color: white;
+				a {
+					color: white;
+					&:hover {
+						.background {
+							@include grid-item-hover;
+						}
 					}
 				}
 			}
@@ -30,6 +35,9 @@ html {
 		color: white;
 		text-align: center;
 		a {
+			.background {
+				@include grid-item-hover-transition;
+			}
 		}
 		.react-resizable-handle {
 			background: rgba(255, 255, 255, 0.5);
@@ -40,6 +48,9 @@ html {
 			align-content: center;
 		}
 		.background-text {
+			position: absolute;
+			top: 0;
+			width: 100%;
 			height: 100%;
 			display: grid;
 			align-content: center;
@@ -49,9 +60,18 @@ html {
 		}
 		.video-link {
 			overflow: hidden;
+			.img {
+				background: url('/images/trees.jpg') no-repeat center/cover;
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				@include grid-item-hover-transition;
+			}
 			&:hover {
-				img {
-					opacity: 0.8;
+				.img {
+					@include grid-item-hover;
 				}
 			}
 			.icon-wrapper {

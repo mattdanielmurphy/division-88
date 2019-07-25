@@ -1,17 +1,17 @@
 import React from 'react'
 import { Link } from '../components/jsx/Router'
 import Image from '../components/jsx/Image'
-import producerTools from '../components/js/producer-tools'
+import Page from '../components/jsx/Page'
+import { useRouteData } from 'react-static'
 
-class ProducerTools extends React.Component {
-	render = () => (
-		<div id="producer-tools" className="main-container">
-			<div className="h1">
-				<h1>Producer Tools</h1>
-			</div>
+export default () => {
+	const { producerTools } = useRouteData()
+	console.log(producerTools)
+	return (
+		<Page>
 			<div className="grid">
 				{producerTools.map((tool, index) => (
-					<Link key={index} to={`/producer-tool/${tool.page}`}>
+					<Link key={index} to={`producer-tools/${tool.page}`}>
 						<img src={tool.img} alt="" />
 						<h2>{tool.name}</h2>
 						<div className="description">{tool.description}</div>
@@ -20,8 +20,6 @@ class ProducerTools extends React.Component {
 				<Link to="/" />
 				<Link to="/" />
 			</div>
-		</div>
+		</Page>
 	)
 }
-
-export default () => <ProducerTools />

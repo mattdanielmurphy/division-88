@@ -1,10 +1,7 @@
-const { Layout } = require('../../models/Layout')
+const { Grid } = require('../../models/Grid')
 
 module.exports = async (req, res) => {
-	Layout.create({
-		page: req.params.page,
-		layouts: defaultLayouts
-	})
+	Grid.create(req.body)
 		.then((layoutObject) => {
 			console.log(layoutObject)
 			res.json(layoutObject)

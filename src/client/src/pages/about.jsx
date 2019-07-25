@@ -2,7 +2,7 @@ import React from 'react'
 import Page from '../components/jsx/Page'
 
 export default () => (
-	<Page id="about" heading="About">
+	<Page name="About">
 		<section className="text">
 			<p>
 				So utterly lost was he to all sense of reverence for the many marvels of their majestic bulk and mystic

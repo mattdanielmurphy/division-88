@@ -1,12 +1,22 @@
 const routes = require('express').Router()
-const layouts = require('./layouts')
+const grids = require('./grids')
+const layouts = require('./grids/layouts')
 const artists = require('./artists')
+const auth = require('./auth')
 
 routes.get('/', (req, res) => {
 	res.status(200).json('Hey friend!')
 })
 
-routes.use('/layouts', layouts)
+routes.use('/grids', grids)
+routes.use('/grids', layouts)
 routes.use('/artists', artists)
+routes.use('/auth', auth)
+
+// /grids
+// /grids/index
+// /grids/index/layouts
+// /grids/index/layouts/new -> {lg: {}, md: {}, ...}
+// /grids/index/layouts/lg -> {}
 
 module.exports = routes

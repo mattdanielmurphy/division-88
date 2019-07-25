@@ -70,7 +70,7 @@ export default class Artist extends React.Component {
 					{this.state.artist.name}: <span>Releases</span>
 				</h1>
 			</div>
-			<Image imgClassName="artist-img" src={this.state.artist.imgSrc} />
+			<Image src={this.state.artist.imgSrc} />
 			<TopTen artist={this.state.artist} />
 			{this.state.artist.releases.length > 0 && <Releases artist={this.state.artist} />}
 		</div>

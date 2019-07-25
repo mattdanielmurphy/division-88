@@ -61,7 +61,7 @@ module.exports = [
 	},
 	{
 		name: 'Someone Else',
-		page: 'billy-wild',
+		page: 'someone-else',
 		imgSrc: '/images/trees.jpg',
 		description: {
 			align: 'left',

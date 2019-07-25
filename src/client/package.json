@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"@reach/router": "^1.2.1",
+		"auth0-lock": "^11.17.0",
 		"axios": "^0.18.0",
 		"circular-json": "^0.5.9",
 		"loglevel": "^1.6.3",
@@ -19,13 +20,16 @@
 		"react-grid-layout": "^0.16.6",
 		"react-grid-system": "^4.4.6",
 		"react-icons": "^3.7.0",
+		"react-iframe": "^1.8.0",
 		"react-progressive-image": "^0.6.0",
 		"react-responsive": "^7.0.0",
+		"react-sizeme": "^2.6.7",
 		"react-static": "^7.0.0",
 		"react-static-plugin-reach-router": "^7.0.0",
 		"react-static-plugin-sass": "^7.1.0",
 		"react-static-plugin-sitemap": "^7.0.0",
-		"react-static-plugin-source-filesystem": "^7.0.0"
+		"react-static-plugin-source-filesystem": "^7.0.0",
+		"react-textfit": "^1.1.0"
 	},
 	"devDependencies": {
 		"babel-eslint": "9.x",

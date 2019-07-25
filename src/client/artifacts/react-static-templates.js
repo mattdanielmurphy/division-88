@@ -7,10 +7,12 @@ export default {
 '../src/pages/about.jsx': require('../src/pages/about.jsx').default,
 '../src/pages/artist.jsx': require('../src/pages/artist.jsx').default,
 '../src/pages/artists.jsx': require('../src/pages/artists.jsx').default,
+'../src/pages/index original.jsx': require('../src/pages/index original.jsx').default,
 '../src/pages/index.jsx': require('../src/pages/index.jsx').default,
-'../src/pages/producer-tool.jsx': require('../src/pages/producer-tool.jsx').default,
 '../src/pages/producer-tools.jsx': require('../src/pages/producer-tools.jsx').default,
-'../src/containers/Artist': require('../src/containers/Artist').default
+'../src/containers/Admin': require('../src/containers/Admin').default,
+'../src/containers/Artist': require('../src/containers/Artist').default,
+'../src/containers/ProducerTool': require('../src/containers/ProducerTool').default
 }
 
 export const notFoundTemplate = '../src/pages/404.jsx'

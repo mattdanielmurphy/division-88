@@ -1,0 +1,35 @@
+#admin-root {
+	margin: 0 auto;
+	max-width: 1400px;
+	padding: 0 2rem;
+}
+#root-wrapper {
+	position: relative;
+	margin: 0 auto;
+}
+
+#change-view {
+	display: grid;
+	grid-template-columns: auto auto;
+}
+
+#preview-wrapper {
+	position: relative;
+	margin: 0 auto;
+	padding-right: 15px;
+	overflow-x: hidden;
+	#preview {
+		position: relative;
+	}
+}
+
+#cell-editor {
+	margin-top: 2rem;
+	max-width: 500px;
+}
+
+.cell-property-input {
+	display: grid;
+	grid-column-gap: 1rem;
+	grid-template-columns: 1fr 1fr;
+}

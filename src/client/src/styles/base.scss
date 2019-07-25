@@ -1,36 +1,32 @@
-main {
-	margin: 0 auto;
-	// position: relative;
-	// top: 12rem;
-	// @media (min-width: 1000px) {
-	// 	top: 16rem;
-	// }
-	// @media (min-width: 1500px) {
-	// 	top: 18rem;
-	// }
+.top-heading {
+	width: 100%;
+	padding: 8rem 0 2rem 0;
+	div {
+		padding: 0 1rem;
+	}
+	text-align: center;
+	font-family: 'Libre Baskerville', serif;
+	font-weight: 700;
+	span {
+		text-transform: lowercase;
+		font-weight: 300;
+	}
 }
 
-html {
-	height: 100%;
+main {
+	margin: 0 auto;
 }
 
 body {
 	padding: 0;
 	margin: 0;
-	position: relative;
-	min-height: 100%;
-	font-family: 'Nunito', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
+	font-family: 'Roboto Condensed', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
 		'Lucida Grande', sans-serif;
 	font-size: 16px;
-	font-weight: 300;
+	font-weight: 400;
 	line-height: 1.5;
 	color: white;
 	background: black;
-	&::after {
-		content: '';
-		display: block;
-		height: 10vw;
-	}
 }
 
 a {
@@ -54,38 +50,13 @@ section.text {
 button {
 	background: #444;
 	padding: 1em;
-	font-family: 'Nunito', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
+	font-family: 'Roboto Condensed', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
 		'Lucida Grande', sans-serif;
+	text-transform: uppercase;
 	font-size: 16px;
 	color: white;
 	border: none;
 	margin: .2em;
-}
-
-h1,
-h2 {
-	margin: 0;
-}
-
-.h1 {
-	text-align: center;
-	position: absolute;
-	width: 100%;
-	// max-width: 2560px;
-	top: 6rem;
-	z-index: 998;
-	h1 {
-		margin: 0;
-		display: inline-block;
-		@include fluid-type(font-size, 800px, 2560px, 40px, 80px);
-		font-weight: 700;
-		text-transform: uppercase;
-		// border-bottom: 1px solid white;
-	}
-	h2 {
-		font-size: 2.4rem;
-		margin: 0;
-	}
 }
 
 .spotify-iframe {
@@ -110,18 +81,21 @@ span.arrow {
 }
 
 .background-image {
-	width: 100%;
-	height: 50vw;
+	background-position: center center;
 	background-size: cover;
-	background-position: center;
 	background-repeat: no-repeat;
 }
+// 	width: 100%;
+// 	height: 50vw;
+// 	background-size: cover;
+// 	background-position: center;
+// 	background-repeat: no-repeat;
 
 .page-container {
 	margin: 0 auto;
 	padding: 0;
 	width: 100%;
-	// max-width: 2560px;
+	max-width: 2560px;
 	.wrapper {
 		height: 100%;
 		width: 100%;

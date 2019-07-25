@@ -18,11 +18,17 @@ export default class Nav extends React.Component {
 			}
 		]
 	}
+	isAdminVersion = () => /\/admin/.test(window.location.pathname)
+	getAdminLink = (url) => '/admin' + url
 	render = () => (
 		<div id="nav-wrapper">
 			<nav>
 				{this.state.links.map((link) => (
-					<Link key={link.name} onClick={this.props.toggleOpenClose} to={link.url}>
+					<Link
+						key={link.name}
+						onClick={this.props.toggleOpenClose}
+						to={this.isAdminVersion() ? this.getAdminLink(link.url) : link.url}
+					>
 						{link.name}
 					</Link>
 				))}

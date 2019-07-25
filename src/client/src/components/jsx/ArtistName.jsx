@@ -8,7 +8,7 @@ export default class ArtistName extends React.Component {
 			<Link
 				onMouseEnter={() => this.props.setHovering(true)}
 				onMouseLeave={() => this.props.setHovering(false)}
-				to={`/artist/${this.props.artist.page}`}
+				to={`artist/${this.props.artist.page}`}
 			>
 				{this.props.artist.name}
 			</Link>

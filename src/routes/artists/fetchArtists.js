@@ -1,4 +1,4 @@
-// const { Layout } = require('../../models/Layout')
+// const { Grid } = require('../../models/Grid')
 
 const artists = require('../../client/src/components/js/artists')
 

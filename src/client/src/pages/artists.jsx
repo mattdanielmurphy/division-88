@@ -19,15 +19,13 @@ class ErrorHandler extends React.Component {
 	}
 }
 
-const Artists = () => {
+export default (props) => {
 	let { artists } = useRouteData()
 	artists = Object.values(artists)
 
 	return (
-		<Page id="artists" heading="Artists" backgroundImage={{ source: '/images/trees.jpg' }}>
+		<Page backgroundImage={'/images/trees.jpg'}>
 			{artists.map((artist, index) => <Artist key={index} {...artist} index={index} />)}
 		</Page>
 	)
 }
-
-export default Artists
