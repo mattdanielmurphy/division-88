@@ -31,7 +31,14 @@ export default class Index extends React.Component {
 	handleMouseLeaveGridItem(gridItemIndex) {
 		if (this.state.gridItemHoveredUpon === gridItemIndex) this.updateGridItemHover()
 	}
+	resetGridItemBorders() {
+		const gridItems = [ ...document.getElementsByClassName('grid-item') ]
+		gridItems.forEach((gridItem) => (gridItem.style.border = 'none'))
+	}
 	handleClickGridItem(index, e) {
+		this.resetGridItemBorders()
+		const gridItem = e.target.closest('.grid-item')
+		gridItem.style.border = '2px solid red'
 		this.props.selectCell(index)
 	}
 	componentDidMount = async () => {

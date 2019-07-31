@@ -2,7 +2,6 @@ import axios from 'axios'
 import React from 'react'
 import { Responsive } from 'react-grid-layout'
 const env = require('../client-env')
-import Page from '../components/jsx/Page'
 
 import Index from '../components/jsx/index/Index'
 
@@ -87,7 +86,11 @@ export default class AdminIndex extends React.Component {
 	// 	// console.log('adminindex update cell')
 	// 	// console.log(this)
 	// }
-	componentDidMount = () => this.setKeyBindings()
+	componentDidMount = () => {
+		this.setKeyBindings()
+		console.log(document.getElementsByTagName('body')[0])
+		document.getElementsByTagName('body')[0].style.backgroundColor = '#222'
+	}
 	componentDidUpdate = (prevProps) => {
 		if (JSON.stringify(this.props.layouts) !== JSON.stringify(prevProps.layouts)) {
 			console.log(this.props.layouts)
