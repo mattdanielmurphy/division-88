@@ -1,5 +1,4 @@
 import React from 'react'
-import Iframe from 'react-iframe'
 import AdminIndex from '../../../containers/AdminIndex'
 import Header from '../Header'
 
@@ -39,8 +38,10 @@ export default class PagePreview extends React.Component {
 				>
 					<Header mobilePreview={this.props.view === 'mobile'} previewWidth={this.getWidth()} />
 					<Page
+						layouts={this.props.layouts}
+						view={this.props.view}
 						selectCell={(index) => this.props.selectCell(index)}
-						updatedCell={this.props.updatedCell}
+						cells={this.props.cells}
 						editingModeEnabled={this.props.editingModeEnabled}
 						gridWidth={this.getWidth()}
 					/>

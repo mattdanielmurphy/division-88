@@ -2,28 +2,22 @@ const { Grid } = require('../../../models/Grid')
 
 module.exports = async (req, res) => {
 	const page = req.params.page
+	const cell = req.params.cell
 	// add layoutsObj to existing arrays for each size provided
 	// for NOW: assume all sizes provided
-	const { newLayouts, newCell } = req.body
-	const { layouts, cells } = await Grid.findOne({ page })
-
-	let index
-	Object.entries(newLayouts).forEach(([ size, layout ]) => {
-		index = Number(layouts[size][layouts[size].length - 1].i) + 1
-		layout.i = String(index)
-		layouts[size].push(layout)
-	})
-
-	cells.push(newCell)
-
-	Grid.updateOne({ page }, { layouts, cells })
-		.then((layoutObject) => res.status(200).json({ index, layouts, cells }))
-		.catch((rej) => {
-			console.error(`Error updating layouts for page ${page}... ${rej}`)
-			res.status(500).res.json(rej)
+	Grid.findOne({ page }).then((page) => {
+		const { layouts, cells } = page
+		Object.values(layouts).forEach((size) => {
+			size.splice(cell, 1)
 		})
-}
 
+		cells.splice(cell, 1)
+
+		page.markModified('cells')
+		page.markModified('layouts')
+		page.save().then((result) => res.status(200).json({ layouts, cells }))
+	})
+}
 l = {
 	desktop: [
 		{ w: 12, h: 4, x: 0, y: 0, i: '0', moved: false, static: false },

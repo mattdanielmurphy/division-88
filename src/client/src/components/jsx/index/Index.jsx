@@ -7,7 +7,7 @@ export default class Index extends React.Component {
 	}
 	get rowHeight() {
 		let vW = this.props.gridWidth ? this.props.gridWidth / 100 : window.innerWidth / 100
-		return 5 * vW
+		return this.props.view === 'mobile' ? 10 * vW : this.props.view === 'tablet' ? 8 * vW : 4 * vW
 	}
 	watchWindowResizing() {
 		window.onresize = () => {
@@ -38,14 +38,24 @@ export default class Index extends React.Component {
 		this.watchWindowResizing()
 		this.setState({ rowHeight: this.rowHeight })
 	}
+	// getCellOnPage(index) {
+	// 	const cell = document.getElementById(`grid-item-${index}`)
+	// 	console.log(cell)
+	// 	return cell
+	// }
 	componentDidUpdate(prevProps) {
-		console.log(this.props.cells[3].backgroundText.subheading, prevProps.cells[3].backgroundText.subheading)
-		if (JSON.stringify(this.props.cells) !== JSON.stringify(prevProps.cells)) {
-			console.log('updated', this.props.cells)
-		}
+		if (prevProps.gridWidth !== this.props.gridWidth) this.setState({ rowHeight: this.rowHeight })
+		// const {cell, index} = this.props.updatedCell
+		// if (JSON.stringify(cell) !== JSON.stringify(this.getCellOnPage(index))) console.log('good')
+		// console.log(this.props.cells[3].backgroundText.heading)
+		// console.log(JSON.stringify(this.props) !== JSON.stringify(prevProps))
+		// if (JSON.stringify(this.props.cells) !== JSON.stringify(prevProps.cells)) {
+		// 	console.log('updated', this.props.updatedCell)
+		// }
 	}
 	render() {
 		let ResponsiveGridLayout = this.props.ResponsiveGridLayout
+		console.log(this.props.cells)
 		return (
 			<div id="index">
 				{this.props.layouts && (
@@ -68,6 +78,11 @@ export default class Index extends React.Component {
 							tablet: 12,
 							mobile: 12
 						}}
+						rows={{
+							desktop: 12,
+							tablet: 12,
+							mobile: 12
+						}}
 						containerPadding={[ 0, 0 ]}
 						onLayoutChange={(layout, layouts) =>
 							this.props.onLayoutChange ? this.props.onLayoutChange(layout, layouts) : {}}
@@ -76,11 +91,11 @@ export default class Index extends React.Component {
 							<div className="grid-item" onClick={(e) => this.handleClickGridItem(index, e)} key={index}>
 								<GridItem
 									index={index}
-									link={this.props.cells[index].link}
-									imgSrc={this.props.cells[index].imgSrc}
-									backgroundText={this.props.cells[index].backgroundText}
-									bottomText={this.props.cells[index].bottomText}
-									videoSrc={this.props.cells[index].videoSrc}
+									link={cell.link}
+									imgSrc={cell.imgSrc}
+									backgroundText={cell.backgroundText}
+									bottomText={cell.bottomText}
+									videoSrc={cell.videoSrc}
 									editingModeEnabled={this.props.editingModeEnabled}
 									// handleMouseOverGridItem={(gridItemIndex) =>
 									// 	this.handleMouseOverGridItem(gridItemIndex)}

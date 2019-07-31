@@ -7,6 +7,8 @@ class GridItemContentContainer extends React.Component {
 		// disable link when editing so you user doesn't accidentally leave the page when dragging
 		this.props.link && !this.props.editingModeEnabled ? (
 			<Link
+				id={`grid-item-${this.props.index}`}
+				content={this.props.content}
 				// onMouseEnter={() => this.props.handleMouseOverGridItem()}
 				// onMouseLeave={() => this.props.handleMouseLeaveGridItem()}
 				to={this.props.link}
@@ -15,8 +17,10 @@ class GridItemContentContainer extends React.Component {
 			</Link>
 		) : (
 			<div
-			// onMouseEnter={() => this.props.handleMouseOverGridItem()}
-			// onMouseLeave={() => this.props.handleMouseLeaveGridItem()}
+				id={`grid-item-${this.props.index}`}
+				content={this.props.content}
+				// onMouseEnter={() => this.props.handleMouseOverGridItem()}
+				// onMouseLeave={() => this.props.handleMouseLeaveGridItem()}
 			>
 				{this.props.children}
 			</div>
@@ -48,11 +52,16 @@ const BackgroundText = (props) => (
 )
 
 class GridItemContent extends React.Component {
+	bottomTextHasText = () => this.props.bottomText.text
+	backgroundTextHasText = () => this.props.backgroundText.heading || this.props.backgroundText.subheading
 	state = {
 		style: {
 			background: `url(${this.props.imgSrc}) center center/cover no-repeat`,
 			width: '100%',
-			height: this.props.bottomText ? `calc(100% - ${this.props.bottomText.height})` : '100%'
+			height:
+				this.props.bottomText && this.bottomTextHasText()
+					? `calc(100% - ${this.props.bottomText.height || '25px'})`
+					: '100%'
 		},
 		backgroundText: this.props.backgroundText
 	}
@@ -64,17 +73,20 @@ class GridItemContent extends React.Component {
 			<GridItemContentContainer
 				link={this.props.link}
 				editingModeEnabled={this.props.editingModeEnabled}
+				index={this.props.index}
+				content={this.props}
 				// handleMouseOverGridItem={() => this.props.handleMouseOverGridItem(this.props.index)}
 				// handleMouseLeaveGridItem={() => this.props.handleMouseLeaveGridItem(this.props.index)}
 			>
 				<div className="background" style={this.state.style} />
-				{this.props.backgroundText && (
+				{this.props.backgroundText &&
+				this.backgroundTextHasText() && (
 					<BackgroundText
 						updateBackgroundText={(bgTxt) => this.updateBackgroundText(bgTxt)}
 						{...this.state.backgroundText}
 					/>
 				)}
-				{this.props.bottomText && <BottomText {...this.props.bottomText} />}
+				{this.props.bottomText && this.bottomTextHasText() && <BottomText {...this.props.bottomText} />}
 			</GridItemContentContainer>
 		)
 	}

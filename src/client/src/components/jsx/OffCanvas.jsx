@@ -7,7 +7,7 @@ export default class OffCanvas extends React.Component {
 	state = { isOpen: false, width: 30, opacity: '0' }
 	getStyles = () => ({
 		bmBurgerButton: {
-			position: 'fixed',
+			position: 'absolute',
 			width: this.state.width + 'px',
 			height: '26px',
 			marginLeft: `calc(${this.props.previewWidth - this.state.width}px - 2rem)` || '0',
@@ -22,7 +22,8 @@ export default class OffCanvas extends React.Component {
 		},
 		bmCrossButton: {
 			height: '24px',
-			width: '24px'
+			width: '24px',
+			display: this.props.previewWidth ? 'none' : 'block'
 		},
 		bmCross: {
 			background: '#bdc3c7'
@@ -35,6 +36,7 @@ export default class OffCanvas extends React.Component {
 			zIndex: '9999'
 		},
 		bmMenu: {
+			display: this.props.previewWidth ? 'none' : 'block',
 			padding: '2.5em 1.5em 0',
 			background: '#000',
 			fontSize: '1.15em'
@@ -55,6 +57,7 @@ export default class OffCanvas extends React.Component {
 		}
 	})
 	toggleOpenClose() {
+		if (this.props.previewWidth) return
 		this.setState({ isOpen: !this.state.isOpen })
 	}
 	render = () => (

@@ -18,7 +18,11 @@ export default class AdminIndex extends React.Component {
 	state = {
 		layoutClassName: `layout ${this.gridItemHoveredUpon !== undefined ? 'grid-item-hovered-upon' : ''}`,
 		view: 'mobile',
-		scale: 1
+		scale: 1,
+		editingModeEnabled: true
+	}
+	toggleEditingMode() {
+		this.setState({ editingModeEnabled: !this.state.editingModeEnabled })
 	}
 	getGridFromDatabase = async () => {
 		const layouts = await axios.get(`${env.apiUrl}/grids/index/layouts`).then((r) => r.data)
@@ -52,6 +56,7 @@ export default class AdminIndex extends React.Component {
 		this.layoutsHistory.push(layouts)
 		axios.post(`${env.apiUrl}/grids/index`, { layouts })
 	}
+	updateLayouts(layouts) {}
 	getButtonStyle = () => {
 		if (this.props.editingModeEnabled) {
 			return { backgroundColor: 'red' }
@@ -60,7 +65,7 @@ export default class AdminIndex extends React.Component {
 	setKeyBindings = () => {
 		document.onkeypress = (e) => {
 			if (e.target.tagName === 'INPUT') return
-			else if (e.key === 'e') this.undoLayoutChange()
+			else if (e.key === 'e') this.toggleEditingMode()
 			else if (e.key === 'u') this.undoLayoutChange()
 			else if (e.key === 'r') this.redoLayoutChange()
 		}
@@ -73,32 +78,42 @@ export default class AdminIndex extends React.Component {
 	}
 	setScale = (scale) => this.setState({ scale })
 	setView = (view) => this.setState({ view })
-	updateCell(index, cell) {
-		const cells = this.state.cells
-		cells[index] = cell
-		this.setState({ cells })
-	}
+	// updateCell = (index, cell) => {
+	// 	console.log(index, cell)
+	// 	const cells = this.state.cells.slice()
+	// 	cells[index] = cell
+	// 	this.setState({ cells })
+	// 	this.forceUpdate()
+	// 	// console.log('adminindex update cell')
+	// 	// console.log(this)
+	// }
 	componentDidMount = () => this.setKeyBindings()
 	componentDidUpdate = (prevProps) => {
-		if (this.props.updatedCell !== prevProps.updatedCell) {
-			const { index, cell } = this.props.updatedCell
-			this.updateCell(index, cell)
+		if (JSON.stringify(this.props.layouts) !== JSON.stringify(prevProps.layouts)) {
+			console.log(this.props.layouts)
+			this.setState({ layouts: this.props.layouts })
+		}
+		if (JSON.stringify(this.props.cells) !== JSON.stringify(prevProps.cells)) {
+			console.log(this.props.cells)
+			this.setState({ cells: this.props.cells })
 		}
 	}
 	render = () =>
 		this.state.cells ? (
-			<Page noTopHeading>
-				<Index
-					selectCell={(index) => this.props.selectCell(index)}
-					layouts={this.state.layouts}
-					cells={this.state.cells}
-					ResponsiveGridLayout={Responsive}
-					gridWidth={this.props.gridWidth}
-					editingModeEnabled={this.props.editingModeEnabled}
-					onLayoutChange={(layout, layouts) => this.onLayoutChange(layout, layouts)}
-				/>
-			</Page>
+			// <Page noTopHeading>
+			<Index
+				selectCell={(index) => this.props.selectCell(index)}
+				// updatedCell={this.props.updatedCell}
+				view={this.props.view}
+				layouts={this.state.layouts}
+				cells={this.state.cells}
+				ResponsiveGridLayout={Responsive}
+				gridWidth={this.props.gridWidth}
+				editingModeEnabled={this.state.editingModeEnabled}
+				onLayoutChange={(layout, layouts) => this.onLayoutChange(layout, layouts)}
+			/>
 		) : (
+			// </Page>
 			// <Iframe
 			// 	url="/"
 			// 	editingModeEnabled={this.props.editingModeEnabled}

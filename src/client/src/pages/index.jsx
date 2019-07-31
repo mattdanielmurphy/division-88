@@ -19,6 +19,10 @@ export default class ClientIndex extends React.Component {
 			this.setState({ cells, layouts, layoutsLoaded: true })
 		})
 	}
+	componentDidUpdate(prevProps) {
+		console.log(this.props)
+		console.log(JSON.stringify(this.props) !== JSON.stringify(prevProps))
+	}
 	render = () =>
 		this.state.cells ? (
 			<Page noTopHeading>
