@@ -15,7 +15,7 @@ export default class NonAdminRoot extends React.Component {
 					<Router>
 						<Routes path="*" />
 						{/* CHANGE PRODUCER TOOL so it's like artists (so it's not a dynamic route) */}
-						<ProducerTool path="/producer-tool/:pageName" />
+						{/* <ProducerTool path="/producer-tool/:pageName" /> */}
 					</Router>
 				</React.Suspense>
 			</div>

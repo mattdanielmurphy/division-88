@@ -31,9 +31,10 @@ export default class OffCanvas extends React.Component {
 		bmMenuWrap: {
 			position: 'fixed',
 			marginLeft: `calc(${this.state.width}px + 4rem)` || '0',
-			right: this.props.previewWidth ? 'auto' : '0',
+			right: '0',
 			height: '100vh',
-			zIndex: '9999'
+			zIndex: '9999',
+			display: this.props.previewWidth ? 'none' : 'inline'
 		},
 		bmMenu: {
 			display: this.props.previewWidth ? 'none' : 'block',
@@ -53,16 +54,21 @@ export default class OffCanvas extends React.Component {
 			display: 'block'
 		},
 		bmOverlay: {
-			background: 'rgba(0, 0, 0, 0.3)'
+			background: 'rgba(0, 0, 0, 0.3)',
+			display: this.props.previewWidth ? 'none' : 'inline'
 		}
 	})
-	toggleOpenClose() {
-		if (this.props.previewWidth) return
-		this.setState({ isOpen: !this.state.isOpen })
+	toggleOpenClose(e) {
+		console.log(e)
+		if (!this.props.previewWidth) this.setState({ isOpen: !this.state.isOpen })
+	}
+	componentDidMount() {
+		const button = document.getElementsByClassName('bm-burger-button')[0].children[1]
+		button.onclick = (e) => e.preventDefault()
 	}
 	render = () => (
 		<Menu right styles={this.getStyles()} isOpen={this.state.isOpen}>
-			<Nav toggleOpenClose={this.toggleOpenClose} />
+			<Nav toggleOpenClose={() => this.toggleOpenClose(e)} />
 		</Menu>
 	)
 }
