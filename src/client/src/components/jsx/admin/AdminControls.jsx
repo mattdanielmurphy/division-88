@@ -1,13 +1,6 @@
 import React from 'react'
 import ChangeView from './ChangeView'
-
-class ToggleEditingMode extends React.Component {
-	render = () => (
-		<div className="toggle-editing-mode">
-			<button onClick={this.props.toggle}>Toggle editing mode</button>
-		</div>
-	)
-}
+import ToggleButton from '../ToggleButton'
 
 export default class AdminControls extends React.Component {
 	handleScaleSelect(e) {
@@ -18,7 +11,11 @@ export default class AdminControls extends React.Component {
 	render = () => (
 		<div id="admin-panel">
 			<ChangeView setView={this.props.setView} setScale={this.props.setScale} />
-			<ToggleEditingMode toggle={this.props.toggleEditingMode} />
+			<ToggleButton toggle={this.props.toggleEditingMode} enabled={this.props.editingModeEnabled}>
+				Toggle editing mode
+			</ToggleButton>
+			<button onClick={() => this.props.undoLayoutChange()}>Undo</button>
+			<button onClick={() => this.props.redoLayoutChange()}>Redo</button>
 		</div>
 	)
 }

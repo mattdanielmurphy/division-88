@@ -1,6 +1,6 @@
 import React from 'react'
 import ToggleButton from 'components/jsx/ToggleButton'
-import NonVideoOptions from 'components/jsx/index/NonVideoOptions'
+import NonVideoOptions from 'components/jsx/admin/NonVideoOptions'
 import axios from 'axios'
 import env from 'client-env'
 

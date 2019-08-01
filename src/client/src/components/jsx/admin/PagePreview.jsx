@@ -40,6 +40,7 @@ export default class PagePreview extends React.Component {
 					<Page
 						layouts={this.props.layouts}
 						view={this.props.view}
+						onLayoutChange={(layout, layouts) => this.props.onLayoutChange(layout, layouts)}
 						selectCell={(index) => this.props.selectCell(index)}
 						selectedCell={this.props.selectedCell}
 						cells={this.props.cells}
