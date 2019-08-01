@@ -35,7 +35,7 @@ class VideoEl extends React.Component {
 }
 
 export default class Video extends React.Component {
-	state = { videoId: /\?v=(.*)/.exec(this.props.videoSrc)[1] }
+	state = { videoId: this.props.videoSrc ? /\?v=(.*)/.exec(this.props.videoSrc)[1] : '' }
 	onPlayerReady(event) {
 		if (this.state.videoLoaded) this.player.playVideo()
 		const playButton = document.getElementById(`play-video-${this.state.videoId}`)
@@ -68,9 +68,9 @@ export default class Video extends React.Component {
 				onClick={() => this.loadVideo()}
 				id={`play-video-${this.state.videoId}`}
 				style={this.getStyle()}
-				className="video-link wrapper"
+				className={`video-link wrapper`}
 			>
-				<Image src={this.props.imgSrc} />
+				<Image src={this.props.imgSrc} selected={this.props.selected} />
 				<div className="icon-wrapper">
 					<FaPlay className="icon" />
 				</div>

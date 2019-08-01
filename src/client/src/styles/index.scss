@@ -35,6 +35,9 @@
 		display: grid;
 		color: white;
 		text-align: center;
+		.background {
+			width: 100%;
+		}
 		a {
 			.background {
 				@include grid-item-hover-transition;

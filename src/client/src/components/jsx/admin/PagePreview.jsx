@@ -41,6 +41,7 @@ export default class PagePreview extends React.Component {
 						layouts={this.props.layouts}
 						view={this.props.view}
 						selectCell={(index) => this.props.selectCell(index)}
+						selectedCell={this.props.selectedCell}
 						cells={this.props.cells}
 						editingModeEnabled={this.props.editingModeEnabled}
 						gridWidth={this.getWidth()}

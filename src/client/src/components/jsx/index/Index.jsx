@@ -3,7 +3,8 @@ import GridItem from './GridItem'
 
 export default class Index extends React.Component {
 	state = {
-		layoutClassName: `layout ${this.gridItemHoveredUpon !== undefined ? 'grid-item-hovered-upon' : ''}`
+		layoutClassName: `layout ${this.gridItemHoveredUpon !== undefined ? 'grid-item-hovered-upon' : ''}`,
+		cellsUpToDate: true
 	}
 	get rowHeight() {
 		let vW = this.props.gridWidth ? this.props.gridWidth / 100 : window.innerWidth / 100
@@ -31,14 +32,14 @@ export default class Index extends React.Component {
 	handleMouseLeaveGridItem(gridItemIndex) {
 		if (this.state.gridItemHoveredUpon === gridItemIndex) this.updateGridItemHover()
 	}
-	resetGridItemBorders() {
-		const gridItems = [ ...document.getElementsByClassName('grid-item') ]
-		gridItems.forEach((gridItem) => (gridItem.style.border = 'none'))
-	}
+	// resetGridItemBorders() {
+	// 	const gridItems = [ ...document.getElementsByClassName('grid-item') ]
+	// 	gridItems.forEach((gridItem) => (gridItem.style.border = 'none'))
+	// }
 	handleClickGridItem(index, e) {
-		this.resetGridItemBorders()
-		const gridItem = e.target.closest('.grid-item')
-		gridItem.style.border = '2px solid red'
+		// this.resetGridItemBorders()
+		// const gridItem = e.target.closest('.grid-item')
+		// gridItem.style.border = '2px solid red'
 		this.props.selectCell(index)
 	}
 	componentDidMount = async () => {
@@ -56,62 +57,72 @@ export default class Index extends React.Component {
 		// if (JSON.stringify(cell) !== JSON.stringify(this.getCellOnPage(index))) console.log('good')
 		// console.log(this.props.cells[3].backgroundText.heading)
 		// console.log(JSON.stringify(this.props) !== JSON.stringify(prevProps))
-		// if (JSON.stringify(this.props.cells) !== JSON.stringify(prevProps.cells)) {
-		// 	console.log('updated', this.props.updatedCell)
-		// }
+		if (JSON.stringify(this.props.cells) !== JSON.stringify(prevProps.cells)) {
+			// this.forceUpdate()
+			this.setState({ cellsUpToDate: false })
+		} else if (!this.state.cellsUpToDate) this.setState({ cellsUpToDate: true })
 	}
 	render() {
 		let ResponsiveGridLayout = this.props.ResponsiveGridLayout
-		console.log(this.props.cells)
 		return (
 			<div id="index">
-				{this.props.layouts && (
-					<ResponsiveGridLayout
-						measureBeforeMount
-						className={this.state.layoutClassName}
-						layouts={this.props.layouts}
-						rowHeight={this.state.rowHeight}
-						width={this.props.gridWidth}
-						nb
-						isDraggable={!!this.props.editingModeEnabled}
-						isResizable={!!this.props.editingModeEnabled}
-						breakpoints={{
-							desktop: 1326,
-							tablet: 750,
-							mobile: 0
-						}}
-						cols={{
-							desktop: 12,
-							tablet: 12,
-							mobile: 12
-						}}
-						rows={{
-							desktop: 12,
-							tablet: 12,
-							mobile: 12
-						}}
-						containerPadding={[ 0, 0 ]}
-						onLayoutChange={(layout, layouts) =>
-							this.props.onLayoutChange ? this.props.onLayoutChange(layout, layouts) : {}}
-					>
-						{this.props.cells.map((cell, index) => (
-							<div className="grid-item" onClick={(e) => this.handleClickGridItem(index, e)} key={index}>
-								<GridItem
-									index={index}
-									link={cell.link}
-									imgSrc={cell.imgSrc}
-									backgroundText={cell.backgroundText}
-									bottomText={cell.bottomText}
-									videoSrc={cell.videoSrc}
-									editingModeEnabled={this.props.editingModeEnabled}
-									// handleMouseOverGridItem={(gridItemIndex) =>
-									// 	this.handleMouseOverGridItem(gridItemIndex)}
-									// handleMouseLeaveGridItem={(gridItemIndex) =>
-									// 	this.handleMouseLeaveGridItem(gridItemIndex)}
-								/>
-							</div>
-						))}
-					</ResponsiveGridLayout>
+				{this.state.cellsUpToDate ? (
+					this.props.layouts && (
+						<ResponsiveGridLayout
+							measureBeforeMount
+							className={this.state.layoutClassName}
+							layouts={this.props.layouts}
+							rowHeight={this.state.rowHeight}
+							width={this.props.gridWidth}
+							nb
+							isDraggable={!!this.props.editingModeEnabled}
+							isResizable={!!this.props.editingModeEnabled}
+							breakpoints={{
+								desktop: 1326,
+								tablet: 750,
+								mobile: 0
+							}}
+							cols={{
+								desktop: 12,
+								tablet: 12,
+								mobile: 12
+							}}
+							rows={{
+								desktop: 12,
+								tablet: 12,
+								mobile: 12
+							}}
+							containerPadding={[ 0, 0 ]}
+							onLayoutChange={(layout, layouts) =>
+								this.props.onLayoutChange ? this.props.onLayoutChange(layout, layouts) : {}}
+						>
+							{this.props.cells.map((cell, index) => (
+								<div
+									className="grid-item"
+									onClick={(e) => this.handleClickGridItem(index, e)}
+									key={index}
+								>
+									<GridItem
+										selected={this.props.selectedCell === index}
+										index={index}
+										link={cell.link}
+										imgSrc={cell.imgSrc}
+										backgroundText={cell.backgroundText}
+										bottomText={cell.bottomText}
+										videoSrc={cell.videoSrc}
+										video={cell.video}
+										editingModeEnabled={this.props.editingModeEnabled}
+										// handleMouseOverGridItem={(gridItemIndex) =>
+										// 	this.handleMouseOverGridItem(gridItemIndex)}
+										// handleMouseLeaveGridItem={(gridItemIndex) =>
+										// 	this.handleMouseLeaveGridItem(gridItemIndex)}
+									/>
+								</div>
+							))}
+						</ResponsiveGridLayout>
+					)
+				) : (
+					<div>Loading...</div>
 				)}
 			</div>
 		)

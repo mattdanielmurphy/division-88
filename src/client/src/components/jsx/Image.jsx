@@ -9,6 +9,6 @@ export default class Image extends React.Component {
 		}
 	}
 	render = () => {
-		return <div className="img" style={this.state.style} />
+		return <div style={this.state.style} className={`img ${this.props.selected ? 'selected' : ''}`} />
 	}
 }

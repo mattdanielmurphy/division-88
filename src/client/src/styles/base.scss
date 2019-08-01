@@ -57,6 +57,9 @@ button {
 	color: white;
 	border: none;
 	margin: .2em;
+	&.enabled {
+		background: red;
+	}
 }
 
 .spotify-iframe {

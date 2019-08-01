@@ -16,8 +16,6 @@ export default class AdminIndex extends React.Component {
 	}
 	state = {
 		layoutClassName: `layout ${this.gridItemHoveredUpon !== undefined ? 'grid-item-hovered-upon' : ''}`,
-		view: 'mobile',
-		scale: 1,
 		editingModeEnabled: true
 	}
 	toggleEditingMode() {
@@ -28,10 +26,6 @@ export default class AdminIndex extends React.Component {
 		const cells = await axios.get(`${env.apiUrl}/grids/index/cells`).then((r) => r.data)
 		return { layouts, cells }
 	}
-	isAuthenticated = () => {
-		return true
-	}
-
 	undoLayoutChange() {
 		const layouts = this.layoutsHistory[this.layoutsHistory.length - 2]
 		if (layouts) {
@@ -75,17 +69,6 @@ export default class AdminIndex extends React.Component {
 			layoutClassName: `layout ${gridItemIndex !== undefined ? 'grid-item-hovered-upon' : ''}`
 		})
 	}
-	setScale = (scale) => this.setState({ scale })
-	setView = (view) => this.setState({ view })
-	// updateCell = (index, cell) => {
-	// 	console.log(index, cell)
-	// 	const cells = this.state.cells.slice()
-	// 	cells[index] = cell
-	// 	this.setState({ cells })
-	// 	this.forceUpdate()
-	// 	// console.log('adminindex update cell')
-	// 	// console.log(this)
-	// }
 	componentDidMount = () => {
 		this.setKeyBindings()
 		console.log(document.getElementsByTagName('body')[0])
@@ -103,10 +86,9 @@ export default class AdminIndex extends React.Component {
 	}
 	render = () =>
 		this.state.cells ? (
-			// <Page noTopHeading>
 			<Index
 				selectCell={(index) => this.props.selectCell(index)}
-				// updatedCell={this.props.updatedCell}
+				selectedCell={this.props.selectedCell}
 				view={this.props.view}
 				layouts={this.state.layouts}
 				cells={this.state.cells}

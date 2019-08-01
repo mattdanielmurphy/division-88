@@ -57,7 +57,6 @@ class GridItemContent extends React.Component {
 	state = {
 		style: {
 			background: `url(${this.props.imgSrc}) center center/cover no-repeat`,
-			width: '100%',
 			height:
 				this.props.bottomText && this.bottomTextHasText()
 					? `calc(100% - ${this.props.bottomText.height || '25px'})`
@@ -78,7 +77,7 @@ class GridItemContent extends React.Component {
 				// handleMouseOverGridItem={() => this.props.handleMouseOverGridItem(this.props.index)}
 				// handleMouseLeaveGridItem={() => this.props.handleMouseLeaveGridItem(this.props.index)}
 			>
-				<div className="background" style={this.state.style} />
+				<div className={`background ${this.props.selected ? 'selected' : ''}`} style={this.state.style} />
 				{this.props.backgroundText &&
 				this.backgroundTextHasText() && (
 					<BackgroundText
@@ -93,5 +92,5 @@ class GridItemContent extends React.Component {
 }
 
 export default class GridItem extends React.Component {
-	render = () => (this.props.videoSrc ? <Video {...this.props} /> : <GridItemContent {...this.props} />)
+	render = () => (this.props.video ? <Video {...this.props} /> : <GridItemContent {...this.props} />)
 }

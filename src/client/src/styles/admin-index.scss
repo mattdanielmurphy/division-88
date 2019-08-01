@@ -34,3 +34,10 @@
 	grid-column-gap: 1rem;
 	grid-template-columns: 1fr 1fr;
 }
+
+.video-link .img,
+.background {
+	&.selected {
+		border: 2px solid red;
+	}
+}
