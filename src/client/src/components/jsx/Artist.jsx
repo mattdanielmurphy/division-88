@@ -5,6 +5,30 @@ import React from 'react'
 import baseUrl from 'components/js/baseUrl'
 import { Textfit } from 'react-textfit'
 
+class ArtistWrapper extends React.Component {
+	render = () => {
+		return this.props.isPreview ? (
+			<div
+				onClick={() => this.props.selectArtist()}
+				className="artist-wrapper"
+				onMouseOver={() => this.props.setHovering(true)}
+				onMouseLeave={() => this.props.setHovering(false)}
+			>
+				{this.props.children}
+			</div>
+		) : (
+			<Link
+				to={`${baseUrl()}/artists/${this.props.page}`}
+				className="artist-wrapper"
+				onMouseOver={() => this.props.setHovering(true)}
+				onMouseLeave={() => this.props.setHovering(false)}
+			>
+				{this.props.children}
+			</Link>
+		)
+	}
+}
+
 export default class Artist extends React.Component {
 	state = {
 		hovering: false,
@@ -19,14 +43,6 @@ export default class Artist extends React.Component {
 			this.props.description.style
 		)
 		return style
-		// this.state.hovering
-		// 	? Object.assign(
-		// 			{
-		// 				borderColor: this.props.description.style.color || 'black'
-		// 			},
-		// 			this.props.description.style
-		// 		)
-		// 	: this.props.description.style
 	}
 
 	getSeeReleasesStyle = () =>
@@ -40,11 +56,11 @@ export default class Artist extends React.Component {
 				}
 	setHovering = (hovering) => this.setState({ hovering })
 	render = () => (
-		<Link
-			to={`${baseUrl()}/artists/${this.props.page}`}
-			onMouseOver={() => this.setHovering(true)}
-			className="artist-wrapper"
-			onMouseLeave={() => this.setHovering(false)}
+		<ArtistWrapper
+			selectArtist={() => this.props.selectArtist()}
+			isPreview={this.props.gridWidth}
+			page={this.props.page}
+			setHovering={(hovering) => this.setHovering(hovering)}
 		>
 			<div className="artist">
 				<Image src={this.props.imgSrc} />
@@ -64,6 +80,6 @@ export default class Artist extends React.Component {
 					</div>
 				</div>
 			</div>
-		</Link>
+		</ArtistWrapper>
 	)
 }

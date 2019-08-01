@@ -14,7 +14,6 @@ export default class AdminIndex extends React.Component {
 				cells={this.props.cells}
 				ResponsiveGridLayout={Responsive}
 				gridWidth={this.props.gridWidth}
-				editingModeEnabled={this.props.editingModeEnabled}
 				onLayoutChange={(layout, layouts) => this.props.onLayoutChange(layout, layouts)}
 			/>
 		) : (

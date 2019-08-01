@@ -4,24 +4,12 @@ import { Link } from '../Router'
 
 class GridItemContentContainer extends React.Component {
 	render = () =>
-		// disable link when editing so you user doesn't accidentally leave the page when dragging
-		this.props.link && !this.props.editingModeEnabled ? (
-			<Link
-				id={`grid-item-${this.props.index}`}
-				content={this.props.content}
-				// onMouseEnter={() => this.props.handleMouseOverGridItem()}
-				// onMouseLeave={() => this.props.handleMouseLeaveGridItem()}
-				to={this.props.link}
-			>
+		this.props.link && !this.props.isPreview ? (
+			<Link id={`grid-item-${this.props.index}`} content={this.props.content} to={this.props.link}>
 				{this.props.children}
 			</Link>
 		) : (
-			<div
-				id={`grid-item-${this.props.index}`}
-				content={this.props.content}
-				// onMouseEnter={() => this.props.handleMouseOverGridItem()}
-				// onMouseLeave={() => this.props.handleMouseLeaveGridItem()}
-			>
+			<div id={`grid-item-${this.props.index}`} content={this.props.content}>
 				{this.props.children}
 			</div>
 		)
@@ -71,11 +59,9 @@ class GridItemContent extends React.Component {
 		return (
 			<GridItemContentContainer
 				link={this.props.link}
-				editingModeEnabled={this.props.editingModeEnabled}
 				index={this.props.index}
 				content={this.props}
-				// handleMouseOverGridItem={() => this.props.handleMouseOverGridItem(this.props.index)}
-				// handleMouseLeaveGridItem={() => this.props.handleMouseLeaveGridItem(this.props.index)}
+				isPreview={this.props.isPreview}
 			>
 				<div className={`background ${this.props.selected ? 'selected' : ''}`} style={this.state.style} />
 				{this.props.backgroundText &&

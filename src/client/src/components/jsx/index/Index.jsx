@@ -32,25 +32,14 @@ export default class Index extends React.Component {
 	handleMouseLeaveGridItem(gridItemIndex) {
 		if (this.state.gridItemHoveredUpon === gridItemIndex) this.updateGridItemHover()
 	}
-	// resetGridItemBorders() {
-	// 	const gridItems = [ ...document.getElementsByClassName('grid-item') ]
-	// 	gridItems.forEach((gridItem) => (gridItem.style.border = 'none'))
-	// }
 	handleClickGridItem(index, e) {
-		// this.resetGridItemBorders()
-		// const gridItem = e.target.closest('.grid-item')
-		// gridItem.style.border = '2px solid red'
 		this.props.selectCell(index)
 	}
 	componentDidMount = async () => {
 		this.watchWindowResizing()
 		this.setState({ rowHeight: this.rowHeight })
+		console.log(this.props.gridWidth)
 	}
-	// getCellOnPage(index) {
-	// 	const cell = document.getElementById(`grid-item-${index}`)
-	// 	console.log(cell)
-	// 	return cell
-	// }
 	componentDidUpdate(prevProps) {
 		if (prevProps.gridWidth !== this.props.gridWidth) this.setState({ rowHeight: this.rowHeight })
 		// const {cell, index} = this.props.updatedCell
@@ -75,8 +64,8 @@ export default class Index extends React.Component {
 							rowHeight={this.state.rowHeight}
 							width={this.props.gridWidth}
 							nb
-							isDraggable={!!this.props.editingModeEnabled}
-							isResizable={!!this.props.editingModeEnabled}
+							isDraggable={!!this.props.gridWidth}
+							isResizable={!!this.props.gridWidth}
 							breakpoints={{
 								desktop: 1326,
 								tablet: 750,
@@ -111,11 +100,7 @@ export default class Index extends React.Component {
 										bottomText={cell.bottomText}
 										videoSrc={cell.videoSrc}
 										video={cell.video}
-										editingModeEnabled={this.props.editingModeEnabled}
-										// handleMouseOverGridItem={(gridItemIndex) =>
-										// 	this.handleMouseOverGridItem(gridItemIndex)}
-										// handleMouseLeaveGridItem={(gridItemIndex) =>
-										// 	this.handleMouseLeaveGridItem(gridItemIndex)}
+										isPreview={this.props.gridWidth}
 									/>
 								</div>
 							))}

@@ -118,23 +118,33 @@ export default class CellEditor extends React.Component {
 		const cell = await this.getCell(index)
 		this.setState({ index, cell, cellFromDatabase: cell, unsavedChanges: false })
 	}
-	newCell() {
-		console.log('new cell')
-		const obj = {
-			newLayouts: {
-				desktop: { w: 12, h: 4, x: 0, y: 0 },
-				tablet: { w: 12, h: 4, x: 0, y: 0 },
-				mobile: { w: 12, h: 4, x: 0, y: 0 }
-			},
-			newCell: {
-				imgSrc: '/images/trees.jpg'
-			}
+	validateCell() {
+		const cell = this.state.cell
+		const valid = cell.video ? cell.videoSrc : cell.imgSrc
+		if (valid) {
+			this.setState({ error: undefined })
+		} else {
+			this.setState({ error: 'Error: You must provide at least a background image' })
 		}
-		axios.post(`${env.apiUrl}/grids/index/layouts/newCell`, obj).then((r) => {
-			const { layouts, cells } = r.data
-			this.props.updateGrid({ layouts, cells })
-			this.changeIndex(r.data.index)
-		})
+		return valid
+	}
+	newCell = async () => {
+		if (this.validateCell()) {
+			const layouts = await axios.get(`${env.apiUrl}/grids/index/layouts`).then((r) => r.data)
+			const obj = {
+				newLayouts: {
+					desktop: { w: 12, h: 4, x: 0, minW: 4, minH: 2 },
+					tablet: { w: 12, h: 4, x: 0, minW: 4, minH: 2 },
+					mobile: { w: 12, h: 4, x: 0, minW: 4, minH: 2 }
+				},
+				newCell: this.state.cell
+			}
+			axios.post(`${env.apiUrl}/grids/index/layouts/newCell`, obj).then((r) => {
+				const { layouts, cells } = r.data
+				this.props.updateGrid({ layouts, cells })
+				this.changeIndex(r.data.index)
+			})
+		}
 	}
 	deleteCell() {
 		axios.get(`${env.apiUrl}/grids/index/cells/${this.state.index}/delete`).then((r) => {
@@ -157,9 +167,6 @@ export default class CellEditor extends React.Component {
 	render = () =>
 		this.state.cell ? (
 			<div id="cell-editor">
-				<div id="create-new">
-					<button onClick={() => this.newCell()}>New</button>
-				</div>
 				<div className="video-toggle">
 					<ToggleButton enabled={this.state.cell.video} toggle={this.toggleVideoMode}>
 						Toggle Video
@@ -199,9 +206,19 @@ export default class CellEditor extends React.Component {
 						/>
 					)}
 					<br />
+					{this.state.error}
 					<button>Submit changes</button>
 				</form>
-				<button onClick={() => confirm('Are you sure?') && this.deleteCell()}>Delete cell</button>
+				<div id="create-new">
+					<button onClick={() => this.newCell()}>Submit as new cell</button>
+				</div>
+				<button
+					onClick={() =>
+						confirm("Are you sure you want to delete this cell? (There's no going back!)") &&
+						this.deleteCell()}
+				>
+					Delete cell
+				</button>
 			</div>
 		) : (
 			<div>loading...</div>

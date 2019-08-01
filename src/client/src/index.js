@@ -1,6 +1,5 @@
 // Error logging:
 import * as log from 'loglevel'
-log.warn('ultra-compatible')
 
 import React from 'react'
 import ReactDOM from 'react-dom'

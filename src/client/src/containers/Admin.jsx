@@ -26,7 +26,6 @@ class Admin extends React.Component {
 		view: 'mobile',
 		scale: 1,
 		countdown: 2,
-		editingModeEnabled: false,
 		selectedCell: 0,
 
 		authenticated: true // REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION
@@ -35,14 +34,6 @@ class Admin extends React.Component {
 		const layouts = await axios.get(`${env.apiUrl}/grids/index/layouts`).then((r) => r.data)
 		const cells = await axios.get(`${env.apiUrl}/grids/index/cells`).then((r) => r.data)
 		return { layouts, cells }
-	}
-	constructor(props) {
-		super(props)
-		this.getGridFromDatabase().then(({ cells, layouts }) => {
-			this.setState({ cells, layouts, layoutsLoaded: true })
-			this.layoutsHistory = [ layouts ]
-			this.layoutsUndone = []
-		})
 	}
 	setScale = (scale) => this.setState({ scale })
 	setView = (view) => this.setState({ view })
@@ -69,12 +60,10 @@ class Admin extends React.Component {
 		this.setTokenIfProvided()
 		this.startCountdown()
 	}
-	toggleEditingMode = () => {
-		this.setState({ editingModeEnabled: !this.state.editingModeEnabled })
-	}
 	updateGrid = ({ layouts, cells }) => {
-		if (layouts) this.setState({ layouts })
-		if (cells) this.setState({ cells })
+		if (layouts && cells) this.setState({ layouts, cells })
+		else if (layouts) this.setState({ layouts })
+		else if (cells) this.setState({ cells })
 	}
 	addSpaceToTopOfBody() {
 		const body = document.getElementsByTagName('body')[0]
@@ -117,15 +106,22 @@ class Admin extends React.Component {
 	setKeyBindings = () => {
 		document.onkeypress = (e) => {
 			if (e.target.tagName === 'INPUT') return
-			else if (e.key === 'e') this.toggleEditingMode()
 			else if (e.key === 'u') this.undoLayoutChange()
 			else if (e.key === 'r') this.redoLayoutChange()
 		}
+	}
+	selectArtist(artist) {
+		console.log('select artist', artist)
 	}
 	componentDidMount() {
 		this.addSpaceToTopOfBody()
 		this.setKeyBindings()
 		this.setBodyBackground()
+		this.getGridFromDatabase().then(({ cells, layouts }) => {
+			this.setState({ cells, layouts, layoutsLoaded: true })
+			this.layoutsHistory = [ layouts ]
+			this.layoutsUndone = []
+		})
 	}
 	render = () => {
 		if (this.state.authenticated) {
@@ -134,8 +130,6 @@ class Admin extends React.Component {
 					<AdminControls
 						setScale={(scale) => this.setScale(scale)}
 						setView={(view) => this.setView(view)}
-						toggleEditingMode={this.toggleEditingMode}
-						editingModeEnabled={this.state.editingModeEnabled}
 						undoLayoutChange={() => this.undoLayoutChange()}
 						redoLayoutChange={() => this.redoLayoutChange()}
 					/>
@@ -143,13 +137,12 @@ class Admin extends React.Component {
 						page={this.props.page}
 						view={this.state.view}
 						scale={this.state.scale}
-						toggleEditingMode={this.toggleEditingMode}
-						editingModeEnabled={this.state.editingModeEnabled}
 						selectCell={(index) => this.selectCell(index)}
 						selectedCell={this.state.selectedCell}
 						layouts={this.state.layouts}
 						cells={this.state.cells}
 						onLayoutChange={(layout, layouts) => this.onLayoutChange(layout, layouts)}
+						selectArtist={(artist) => this.selectArtist(artist)}
 					/>
 					<CellEditor
 						videoMode={this.state.selectedCell.video}

@@ -23,6 +23,25 @@ class HeadingWithBackgroundImage extends React.Component {
 	)
 }
 
+class PageContent extends React.Component {
+	render = () => {
+		return (
+			!this.props.noTopHeading &&
+			(this.props.backgroundImage ? (
+				<HeadingWithBackgroundImage image={this.props.backgroundImage}>
+					{this.props.state.heading.text}
+					<span>{this.props.state.heading.spanText}</span>
+				</HeadingWithBackgroundImage>
+			) : (
+				<Heading>
+					{this.props.state.heading.text}
+					<span>{this.props.state.heading.spanText}</span>
+				</Heading>
+			))
+		)
+	}
+}
+
 export default class Page extends React.Component {
 	// PROPS
 	// REQUIRED:
@@ -42,13 +61,6 @@ export default class Page extends React.Component {
 			return typeof this.props.heading === 'object' ? this.props.heading : { text: this.props.heading }
 		} else return { text: this.getPageName() }
 	}
-	getView() {
-		const preview = document.getElementById('preview')
-		if (preview) {
-			console.log(preview.clientWidth)
-		} else {
-		}
-	}
 	getMainContainerClassName({ width }) {
 		const tablet = 768
 		const desktop = 1366
@@ -56,8 +68,23 @@ export default class Page extends React.Component {
 		const view = width < tablet ? 'mobile' : width < desktop ? 'tablet' : 'desktop'
 		return `main-container ${view}`
 	}
+	getParentElementsBeforeBody(element) {
+		const parentElements = []
+		const getParentElement = (element) => {
+			element = element.parentElement
+			if (element.tagName === 'BODY') return
+			parentElements.push(element)
+			getParentElement(element)
+		}
+		getParentElement(element)
+		return parentElements
+	}
+	setParentElementsTo100PercentHeight() {
+		const parentElements = this.getParentElementsBeforeBody(document.querySelector('#content'))
+		parentElements.forEach((element) => (element.style.height = '100%'))
+	}
 	componentDidMount() {
-		this.getView()
+		this.setParentElementsTo100PercentHeight()
 	}
 	render = () => {
 		// const props = this.props
@@ -69,18 +96,7 @@ export default class Page extends React.Component {
 			<SizeMe>
 				{({ size }) => (
 					<div id={this.state.id} className={this.getMainContainerClassName(size)}>
-						{!this.props.noTopHeading &&
-							(this.props.backgroundImage ? (
-								<HeadingWithBackgroundImage image={this.props.backgroundImage}>
-									{this.state.heading.text}
-									<span>{this.state.heading.spanText}</span>
-								</HeadingWithBackgroundImage>
-							) : (
-								<Heading>
-									{this.state.heading.text}
-									<span>{this.state.heading.spanText}</span>
-								</Heading>
-							))}
+						<PageContent state={this.state} />
 						<main>{this.props.children}</main>
 					</div>
 				)}

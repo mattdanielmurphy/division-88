@@ -26,7 +26,7 @@ class VideoEl extends React.Component {
 					mozallowfullscreen="true"
 					allowFullScreen
 					src={`https://www.youtube.com/embed/${this.props
-						.videoId}?enablejsapi=1&origin=http://localhost:3000&modestbranding=1?`}
+						.videoId}?enablejsapi=1&modestbranding=1?&origin=http://localhost:3000`}
 					frameBorder="0"
 				/>
 			</div>
@@ -39,19 +39,18 @@ export default class Video extends React.Component {
 	onPlayerReady(event) {
 		if (this.state.videoLoaded) this.player.playVideo()
 		const playButton = document.getElementById(`play-video-${this.state.videoId}`)
-		playButton.addEventListener('click', () => (this.props.editingModeEnabled ? null : this.player.playVideo()))
+		playButton.addEventListener('click', () => (this.props.isPreview ? null : this.player.playVideo()))
 	}
 	loadVideo() {
-		if (this.props.editingModeEnabled) return
-		this.props.handleMouseLeaveGridItem(this.props.index)
+		if (this.props.isPreview) return
 		this.setState({ videoLoaded: true })
 	}
 	getStyle = () => ({
-		cursor: this.props.editingModeEnabled ? 'default' : 'pointer',
+		cursor: this.props.isPreview ? 'default' : 'pointer',
 		display: this.state.videoLoaded ? 'none' : 'block'
 	})
 	componentDidMount = () => {
-		if (!this.props.editingModeEnabled) {
+		if (!this.props.isPreview) {
 			this.player = new YT.Player(`video-${this.state.videoId}`, {
 				events: {
 					onReady: () => this.onPlayerReady()
@@ -61,20 +60,21 @@ export default class Video extends React.Component {
 	}
 	render = () => (
 		<div>
-			<VideoEl videoId={this.state.videoId} loaded={this.state.videoLoaded} />
-			<div
-				// onMouseEnter={() => this.props.handleMouseOverGridItem(this.props.index)}
-				// onMouseLeave={() => this.props.handleMouseLeaveGridItem(this.props.index)}
-				onClick={() => this.loadVideo()}
-				id={`play-video-${this.state.videoId}`}
-				style={this.getStyle()}
-				className={`video-link wrapper`}
-			>
-				<Image src={this.props.imgSrc} selected={this.props.selected} />
-				<div className="icon-wrapper">
-					<FaPlay className="icon" />
+			{this.state.videoLoaded && !this.props.isPreview ? (
+				<VideoEl videoId={this.state.videoId} loaded={this.state.videoLoaded} />
+			) : (
+				<div
+					onClick={() => this.loadVideo()}
+					id={`play-video-${this.state.videoId}`}
+					style={this.getStyle()}
+					className={`video-link wrapper`}
+				>
+					<Image src={this.props.imgSrc} selected={this.props.selected} />
+					<div className="icon-wrapper">
+						<FaPlay className="icon" />
+					</div>
 				</div>
-			</div>
+			)}
 		</div>
 	)
 }

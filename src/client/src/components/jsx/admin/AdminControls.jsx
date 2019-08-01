@@ -11,9 +11,6 @@ export default class AdminControls extends React.Component {
 	render = () => (
 		<div id="admin-panel">
 			<ChangeView setView={this.props.setView} setScale={this.props.setScale} />
-			<ToggleButton toggle={this.props.toggleEditingMode} enabled={this.props.editingModeEnabled}>
-				Toggle editing mode
-			</ToggleButton>
 			<button onClick={() => this.props.undoLayoutChange()}>Undo</button>
 			<button onClick={() => this.props.redoLayoutChange()}>Redo</button>
 		</div>

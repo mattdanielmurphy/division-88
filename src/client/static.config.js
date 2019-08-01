@@ -24,7 +24,8 @@ export default {
 		</Html>
 	),
 	getRoutes: async () => {
-		const { data: artists } = await axios.get('http://localhost/api/artists')
+		let { data: artists } = await axios.get('http://localhost/api/artists')
+		artists = Object.values(artists)
 		const pages = [ 'artists', 'producer-tools', 'about' ]
 
 		return [
@@ -43,48 +44,48 @@ export default {
 						producerTools
 					})
 				}))
-			},
-			{
-				path: '/artists',
-				getData: () => ({
-					artists
-				}),
-				children: Object.values(artists).map((artist) => ({
-					path: `/${artist.page}`,
-					template: 'src/containers/Artist',
-					getData: () => ({
-						artist
-					})
-				}))
-			},
-			{
-				path: '/admin/artists',
-				getData: () => ({
-					page: 'artists',
-					artists
-				}),
-				template: 'src/containers/Admin',
-				children: Object.values(artists).map((artist) => ({
-					path: `/${artist.page}`,
-					template: 'src/containers/Artist',
-					getData: () => ({
-						artist
-					})
-				}))
-			},
-			{
-				path: '/producer-tools',
-				getData: () => ({
-					producerTools
-				}),
-				children: producerTools.map((tool) => ({
-					path: `/${tool.page}`,
-					template: 'src/containers/ProducerTool',
-					getData: () => ({
-						tool
-					})
-				}))
 			}
+			// {
+			// 	path: '/artists',
+			// 	getData: () => ({
+			// 		artists
+			// 	}),
+			// 	children: Object.values(artists).map((artist) => ({
+			// 		path: `/${artist.page}`,
+			// 		template: 'src/containers/Artist',
+			// 		getData: () => ({
+			// 			artist
+			// 		})
+			// 	}))
+			// },
+			// {
+			// 	path: '/admin/artists',
+			// 	getData: () => ({
+			// 		page: 'artists',
+			// 		artists
+			// 	}),
+			// 	template: 'src/containers/Admin',
+			// 	children: Object.values(artists).map((artist) => ({
+			// 		path: `/${artist.page}`,
+			// 		template: 'src/containers/Artist',
+			// 		getData: () => ({
+			// 			artist
+			// 		})
+			// 	}))
+			// },
+			// {
+			// 	path: '/producer-tools',
+			// 	getData: () => ({
+			// 		producerTools
+			// 	}),
+			// 	children: producerTools.map((tool) => ({
+			// 		path: `/${tool.page}`,
+			// 		template: 'src/containers/ProducerTool',
+			// 		getData: () => ({
+			// 			tool
+			// 		})
+			// 	}))
+			// }
 		]
 	},
 	plugins: [
