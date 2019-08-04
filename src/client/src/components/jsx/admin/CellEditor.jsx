@@ -12,76 +12,35 @@ export default class CellEditor extends React.Component {
 	updateCell = async (index, cell) => {
 		const result = await axios.post(`${env.apiUrl}/grids/index/cells/${index}`, cell).then((r) => {
 			this.setState({ cellFromDatabase: cell })
-			this.props.refreshGrid()
 			return r.data
 		})
 		return result
 	}
 
 	handleSubmit = async (e) => {
-		e.preventDefault()
+		if (e) e.preventDefault()
 		// just submit this modified value
 		const result = await axios
 			.post(`${env.apiUrl}/grids/index/cells/${this.state.index}`, this.state.cell)
 			.then((r) => {
-				this.setState({ cellFromDatabase: this.state.cell, unsavedChanges: false })
 				const cells = this.state.cells.slice()
-				console.log(cells, this.state.index, cells[this.state.index])
+				this.setState({ cellFromDatabase: this.state.cell, cells, unsavedChanges: false })
 				cells[this.state.index] = this.state.cell
-				console.log('CELLS', cells)
-				this.props.updateGrid({ cells })
+				if (this.state.colorChange) {
+					this.props.refreshGrid({ cells })
+					this.setState({ colorChange: false })
+				} else {
+					this.props.updateGrid({ cells })
+				}
 				return r.data
 			})
 		return result
 	}
-	handleKeyPress = () => {}
-	// handleKeyPress = (e) => {
-	// 	// e.preventDefault()
-	// 	if (e.key !== 'Enter') return
-	// 	// just submit this modified value
-	// 	const cell = Object.assign({}, this.state.cellFromDatabase)
-	// 	let id = e.target.id
-	// 	let value = e.target.value
-	// 	function set(path, value) {
-	// 		var schema = cell // a moving reference to internal objects within obj
-	// 		var pList = path.split('.')
-	// 		var len = pList.length
-	// 		for (var i = 0; i < len - 1; i++) {
-	// 			var elem = pList[i]
-	// 			if (!schema[elem]) schema[elem] = {}
-	// 			schema = schema[elem]
-	// 		}
+	handleKeyPress = (e) => {
+		if (e.key !== 'Enter') return
+		this.handleSubmit(e)
+	}
 
-	// 		schema[pList[len - 1]] = value
-	// 	}
-	// 	set(id, value)
-	// 	this.updateCell(this.state.index, cell)
-	// }
-
-	// handleRealTimeInputChange = (e) => {
-	// 	const cell = Object.assign({}, this.state.cell)
-	// 	let id = e.target.id
-	// 	let value = e.target.value
-	// 	function set(path, value) {
-	// 		var schema = cell // a moving reference to internal objects within obj
-	// 		var pList = path.split('.')
-	// 		var len = pList.length
-	// 		for (var i = 0; i < len - 1; i++) {
-	// 			var elem = pList[i]
-	// 			if (!schema[elem]) schema[elem] = {}
-	// 			schema = schema[elem]
-	// 		}
-
-	// 		schema[pList[len - 1]] = value
-	// 	}
-	// 	set(id, value)
-	// 	this.props.updateCell(this.state.index, cell)
-	// 	// if (this.inputChangeInterval) clearInterval(this.inputChangeInterval)
-	// 	// this.inputChangeInterval = setInterval(() => {
-	// 	// 	valueToEdit = value
-	// 	// 	this.updateCell(cell)
-	// 	// }, 500)
-	// }
 	updateCellValue(path, value) {
 		const cell = Object.assign({}, this.state.cell)
 		function set(path, value) {
@@ -98,12 +57,21 @@ export default class CellEditor extends React.Component {
 		}
 		set(path, value)
 		this.setState({ cell, unsavedChanges: true })
+		// if (this.inputChangeInterval) clearInterval(this.inputChangeInterval)
+		// this.inputChangeInterval = setInterval(() => {
+		// 	this.handleSubmit()
+		// }, 500)
 	}
-	handleInputChange = (e) => {
-		const path = e.target.id
-		console.log(path)
-		const value = e.target.value
-		this.updateCellValue(path, value)
+	handleInputChange = ({ e, path, value, colorChange }) => {
+		if (e) {
+			const path = e.target.id
+			const value = e.target.value
+			this.updateCellValue(path, value)
+		} else {
+			console.log(value)
+			this.updateCellValue(path, value)
+			if (colorChange) this.setState({ colorChange: true })
+		}
 	}
 	getCellsFromDatabase = async () => {
 		return await axios.get(`${env.apiUrl}/grids/index/cells`).then((r) => r.data)
@@ -111,7 +79,7 @@ export default class CellEditor extends React.Component {
 	componentDidMount = async () => {
 		const cell = await this.getCell(this.props.index)
 		const cells = await this.getCellsFromDatabase()
-		this.setState({ index: this.props.index, cell, cellFromDatabase: cell, cells })
+		this.setState({ index: this.props.index, cell, cells, cellFromDatabase: cell })
 		window.onbeforeunload = null
 	}
 	changeIndex = async (index) => {
@@ -166,7 +134,7 @@ export default class CellEditor extends React.Component {
 	}
 	render = () =>
 		this.state.cell ? (
-			<div id="cell-editor">
+			<div id="property-editor">
 				<div className="video-toggle">
 					<ToggleButton enabled={this.state.cell.video} toggle={this.toggleVideoMode}>
 						Toggle Video
@@ -176,11 +144,11 @@ export default class CellEditor extends React.Component {
 				<br />
 
 				<form onSubmit={(e) => this.handleSubmit(e)}>
-					<div className="cell-property-input">
+					<div className="property-input">
 						<label>Image url</label>
 						<input
 							onKeyPress={(e) => this.handleKeyPress(e)}
-							onChange={(e) => this.handleInputChange(e)}
+							onChange={(e) => this.handleInputChange({ e })}
 							type="text"
 							id="imgSrc"
 							value={this.state.cell.imgSrc || ''}
@@ -188,11 +156,11 @@ export default class CellEditor extends React.Component {
 					</div>
 					<br />
 					{this.state.cell.video ? (
-						<div className="cell-property-input">
+						<div className="property-input">
 							<label>Video link:</label>
 							<input
 								onKeyPress={(e) => this.handleKeyPress(e)}
-								onChange={(e) => this.handleInputChange(e)}
+								onChange={(e) => this.handleInputChange({ e })}
 								type="text"
 								id="videoSrc"
 								value={this.state.cell.videoSrc || ''}
@@ -203,6 +171,7 @@ export default class CellEditor extends React.Component {
 							handleKeyPress={(e) => this.handleKeyPress(e)}
 							handleInputChange={(e) => this.handleInputChange(e)}
 							state={this.state}
+							refreshGrid={() => this.props.refreshGrid()}
 						/>
 					)}
 					<br />

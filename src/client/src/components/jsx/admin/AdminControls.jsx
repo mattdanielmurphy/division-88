@@ -11,8 +11,12 @@ export default class AdminControls extends React.Component {
 	render = () => (
 		<div id="admin-panel">
 			<ChangeView setView={this.props.setView} setScale={this.props.setScale} />
-			<button onClick={() => this.props.undoLayoutChange()}>Undo</button>
-			<button onClick={() => this.props.redoLayoutChange()}>Redo</button>
+			{this.props.pageName === 'index' && (
+				<div className="undo-redo">
+					<button onClick={() => this.props.undoLayoutChange()}>Undo [u]</button>
+					<button onClick={() => this.props.redoLayoutChange()}>Redo [r]</button>
+				</div>
+			)}
 		</div>
 	)
 }

@@ -6,6 +6,7 @@ body,
 
 #content {
 	min-height: calc(100% - 10rem);
+	overflow: hidden;
 }
 
 .top-heading {
@@ -20,6 +21,18 @@ body,
 	span {
 		text-transform: lowercase;
 		font-weight: 300;
+	}
+}
+
+.desktop {
+	.top-heading {
+		padding: 11rem 0 4rem 0;
+	}
+}
+
+.tablet {
+	.top-heading {
+		padding: 8rem 0 3rem 0;
 	}
 }
 

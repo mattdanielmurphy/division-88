@@ -5,8 +5,23 @@ import Nav from './Nav'
 import MediaQuery from 'react-responsive'
 
 export default class extends React.Component {
-	isAdminVersion = () => /\/admin/.test(window.location.pathname)
+	state = {
+		adminVersion: false
+	}
 	getAdminLink = (url) => '/admin' + url
+	componentDidMount() {
+		this.setState({
+			adminVersion: /\/admin/.test(window.location.pathname),
+			mounted: true
+		})
+	}
+	componentDidUpdate() {
+		if (this.state.mounted) {
+			if (this.state.adminVersion && this.state.adminVersion !== /\/admin/.test(window.location.pathname)) {
+				this.setState({ adminVersion: /\/admin/.test(window.location.pathname) })
+			}
+		}
+	}
 	render = () => (
 		<div className="header-wrapper">
 			{this.props.mobilePreview ? (
@@ -19,7 +34,7 @@ export default class extends React.Component {
 
 			<header>
 				<div id="logo">
-					<Link to={this.isAdminVersion() ? this.getAdminLink('/') : '/'}>
+					<Link to={this.state.adminVersion ? this.getAdminLink('/') : '/'}>
 						<svg
 							className="icon"
 							width="921px"

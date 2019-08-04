@@ -12,8 +12,7 @@ module.exports = [
 				'Bacon ipsum dolor amet meatloaf pig andouille kielbasa bacon picanha tenderloin. Ground round beef ribs rump, meatloaf spare ribs tongue brisket biltong leberkas pig kielbasa. Ribeye picanha sausage, tongue sirloin landjaeger flank venison ham hock tri-tip pork chop shank. Brisket fatback strip steak tail.'
 		},
 		spotifyUrl: 'https://open.spotify.com/artist/7s0kEWdmrps2Ptqg2wAfOD?si=xdIgZCPVSVCDs7qp_A3wpw',
-		releases: [],
-		id: 0
+		releases: []
 	},
 	{
 		name: 'Billy Wild',
@@ -34,8 +33,7 @@ module.exports = [
 				spotifyUrl: 'https://open.spotify.com/album/3t9S03TNKktyKlNysyJS8k?si=ZJk-l8WKRW692NLHGnPlow',
 				cover: '/images/all-nighters.jpg'
 			}
-		],
-		id: 1
+		]
 	},
 	{
 		name: 'Creedence Clearwater Revival',
@@ -56,8 +54,7 @@ module.exports = [
 				spotifyUrl: 'https://open.spotify.com/album/6s22OUJ3b1y5NRQ3BPZLZw',
 				cover: '/images/ccr-cover.jpg'
 			}
-		],
-		id: 2
+		]
 	},
 	{
 		name: 'Someone Else',
@@ -77,7 +74,6 @@ module.exports = [
 				name: 'All Nighters',
 				spotifyUrl: 'https://open.spotify.com/album/3t9S03TNKktyKlNysyJS8k?si=ZJk-l8WKRW692NLHGnPlow'
 			}
-		],
-		id: 3
+		]
 	}
 ]

@@ -6,6 +6,16 @@
 		// position: relative;
 		height: 10rem;
 	}
+	main {
+		display: grid;
+		grid-template-columns: 100%;
+		grid-gap: .3rem;
+	}
+	.artist-wrapper {
+		&.selected {
+			border: 2px solid red;
+		}
+	}
 	.artist {
 		position: relative;
 		align-items: center;
@@ -22,12 +32,15 @@
 			height: 25%;
 			min-height: 300px;
 		}
+		.description-outer-wrapper {
+			max-width: 100%;
+		}
 		.description {
-			padding: 1rem;
-			padding-top: 4.2rem;
+			padding: 2rem 1rem;
 			display: grid;
 			color: black;
-			align-content: top;
+			align-content: center;
+			height: 22rem;
 			.artist-name {
 			}
 			.bio {
@@ -45,6 +58,7 @@
 		}
 		.text {
 			display: inline;
+			overflow: hidden;
 		}
 		h2 {
 			margin: .5rem 0 0 0;
@@ -57,7 +71,6 @@
 
 #artists.tablet {
 	main {
-		display: grid;
 		grid-template-columns: 50% 50%;
 	}
 	.artist {
@@ -77,7 +90,6 @@
 
 #artists.desktop {
 	main {
-		display: grid;
 		grid-template-columns: 50% 50%;
 	}
 	.artist {
@@ -89,12 +101,15 @@
 		.description-outer-wrapper {
 			overflow: hidden;
 			position: absolute;
+			max-width: 500px;
 			&.align-left {
 				grid-column: 1 / span 1;
 				// left: 1%;
+				justify-self: start;
 			}
 			&.align-right {
 				grid-column: 2;
+				justify-self: end;
 				// right: 1%;
 			}
 		}

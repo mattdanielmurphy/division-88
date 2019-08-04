@@ -16,10 +16,20 @@ export default class Nav extends React.Component {
 				name: 'About',
 				url: '/about'
 			}
-		]
+		],
+		adminVersion: false
 	}
-	isAdminVersion = () => /\/admin/.test(window.location.pathname)
 	getAdminLink = (url) => '/admin' + url
+	componentDidMount() {
+		this.setState({ adminVersion: /\/admin/.test(window.location.pathname), mounted: true })
+	}
+	componentDidUpdate() {
+		if (this.state.mounted) {
+			if (this.state.adminVersion && this.state.adminVersion !== /\/admin/.test(window.location.pathname)) {
+				this.setState({ adminVersion: /\/admin/.test(window.location.pathname) })
+			}
+		}
+	}
 	render = () => (
 		<div id="nav-wrapper">
 			<nav>
@@ -27,7 +37,7 @@ export default class Nav extends React.Component {
 					<Link
 						key={link.name}
 						onClick={this.props.toggleOpenClose}
-						to={this.isAdminVersion() ? this.getAdminLink(link.url) : link.url}
+						to={this.state.adminVersion ? this.getAdminLink(link.url) : link.url}
 					>
 						{link.name}
 					</Link>

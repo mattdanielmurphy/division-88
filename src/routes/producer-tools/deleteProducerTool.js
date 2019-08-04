@@ -1,11 +1,11 @@
-const { Artist } = require('../../models/Artist')
+const { ProducerTool } = require('../../models/ProducerTool')
 
 module.exports = async (req, res) => {
-	const index = req.params.artist
+	const index = req.params.producerTool
 
-	const artists = await Artist.find()
-	const id = artists[index].id
-	Artist.findOneAndRemove({ _id: id }).then((result) => {
+	const producerTools = await ProducerTool.find()
+	const id = producerTools[index].id
+	ProducerTool.findOneAndRemove({ _id: id }).then((result) => {
 		res.json(result)
 	})
 }

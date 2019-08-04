@@ -9,8 +9,8 @@ class ArtistWrapper extends React.Component {
 	render = () => {
 		return this.props.isPreview ? (
 			<div
-				onClick={() => this.props.selectArtist()}
-				className="artist-wrapper"
+				onClick={() => this.props.select()}
+				className={`artist-wrapper ${this.props.selected ? 'selected' : ''}`}
 				onMouseOver={() => this.props.setHovering(true)}
 				onMouseLeave={() => this.props.setHovering(false)}
 			>
@@ -19,7 +19,7 @@ class ArtistWrapper extends React.Component {
 		) : (
 			<Link
 				to={`${baseUrl()}/artists/${this.props.page}`}
-				className="artist-wrapper"
+				className={`artist-wrapper ${this.props.selected ? 'selected' : ''}`}
 				onMouseOver={() => this.props.setHovering(true)}
 				onMouseLeave={() => this.props.setHovering(false)}
 			>
@@ -37,8 +37,7 @@ export default class Artist extends React.Component {
 	getDescriptionStyle = () => {
 		const style = Object.assign(
 			{
-				boxSizing: 'border-box',
-				height: '22rem'
+				boxSizing: 'border-box'
 			},
 			this.props.description.style
 		)
@@ -57,8 +56,9 @@ export default class Artist extends React.Component {
 	setHovering = (hovering) => this.setState({ hovering })
 	render = () => (
 		<ArtistWrapper
-			selectArtist={() => this.props.selectArtist()}
-			isPreview={this.props.gridWidth}
+			select={() => this.props.selectArtist(this.props.index)}
+			selected={this.props.selected}
+			isPreview={this.props.isPreview}
 			page={this.props.page}
 			setHovering={(hovering) => this.setHovering(hovering)}
 		>
@@ -67,7 +67,7 @@ export default class Artist extends React.Component {
 				<div className={`description-outer-wrapper align-${this.state.alignment}`}>
 					<div className="description" style={this.getDescriptionStyle()}>
 						<div className="text">
-							<Textfit mode="single" className="artist-name" max={40}>
+							<Textfit mode="single" className="artist-name" min={16} max={40}>
 								{this.props.name}
 							</Textfit>
 							<Textfit className="bio" min={12} max={20}>

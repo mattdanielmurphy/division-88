@@ -1,14 +1,14 @@
-const { Artist } = require('../../models/Artist')
+const { ProducerTool } = require('../../models/ProducerTool')
 
 module.exports = async (req, res) => {
-	const index = req.params.artist
-	const artist = req.body
+	const index = req.params.producerTool
+	const producerTool = req.body
 
-	const artists = await Artist.find()
-	const id = artists[index].id
-	// artists[index] = artist
-	console.log(artist)
-	Artist.findOneAndUpdate({ _id: id }, artist).then((result) => {
+	const producerTools = await ProducerTool.find()
+	const id = producerTools[index].id
+	// producerTools[index] = producerTool
+	console.log(producerTool)
+	ProducerTool.findOneAndUpdate({ _id: id }, producerTool).then((result) => {
 		res.json(result)
 	})
 }

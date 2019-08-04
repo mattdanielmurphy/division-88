@@ -1,22 +1,24 @@
 import React from 'react'
+import ColorPicker from 'components/jsx/admin/ColorPicker'
+
 export default class extends React.Component {
 	render = () => (
 		<div className="non-video-options">
-			<div className="cell-property-input">
+			<div className="property-input">
 				<label>link</label>
 				<input
 					onKeyPress={(e) => this.props.handleKeyPress(e)}
-					onChange={(e) => this.props.handleInputChange(e)}
+					onChange={(e) => this.props.handleInputChange({ e })}
 					type="text"
 					id="link"
 					value={this.props.state.cell.link || ''}
 				/>
 			</div>
-			<div className="cell-property-input">
+			<div className="property-input">
 				<label>backgroundText: heading</label>
 				<input
 					onKeyPress={(e) => this.props.handleKeyPress(e)}
-					onChange={(e) => this.props.handleInputChange(e)}
+					onChange={(e) => this.props.handleInputChange({ e })}
 					type="text"
 					id="backgroundText.heading"
 					value={
@@ -24,11 +26,11 @@ export default class extends React.Component {
 					}
 				/>
 			</div>
-			<div className="cell-property-input">
+			<div className="property-input">
 				<label>backgroundText: subheading</label>
 				<input
 					onKeyPress={(e) => this.props.handleKeyPress(e)}
-					onChange={(e) => this.props.handleInputChange(e)}
+					onChange={(e) => this.props.handleInputChange({ e })}
 					type="text"
 					id="backgroundText.subheading"
 					value={
@@ -41,33 +43,38 @@ export default class extends React.Component {
 				/>
 			</div>
 			<br />
-			<div className="cell-property-input">
-				<label>bottomText: background color (HTML color value)</label>
-				<input
-					onKeyPress={(e) => this.props.handleKeyPress(e)}
-					onChange={(e) => this.props.handleInputChange(e)}
-					type="text"
-					id="bottomText.backgroundColor"
-					value={
-						this.props.state.cell.bottomText ? this.props.state.cell.bottomText.backgroundColor || '' : ''
+			<div className="property-input">
+				<label>bottomText: background color</label>
+				<ColorPicker
+					color={
+						(this.props.state.cell.bottomText && this.props.state.cell.bottomText.backgroundColor) || '#fff'
 					}
+					setColor={(color) => {
+						const { r, g, b, a } = color.rgb
+						const rgbaString = `rgba(${r},${g},${b},${a})`
+						this.props.handleInputChange({
+							path: 'bottomText.backgroundColor',
+							value: rgbaString,
+							colorChange: true
+						})
+					}}
 				/>
 			</div>
-			<div className="cell-property-input">
+			<div className="property-input">
 				<label>bottomText: height (example: 10px)</label>
 				<input
 					onKeyPress={(e) => this.props.handleKeyPress(e)}
-					onChange={(e) => this.props.handleInputChange(e)}
+					onChange={(e) => this.props.handleInputChange({ e })}
 					type="text"
 					id="bottomText.height"
 					value={this.props.state.cell.bottomText ? this.props.state.cell.bottomText.height || '' : ''}
 				/>
 			</div>
-			<div className="cell-property-input">
+			<div className="property-input">
 				<label>bottomText: text</label>
 				<input
 					onKeyPress={(e) => this.props.handleKeyPress(e)}
-					onChange={(e) => this.props.handleInputChange(e)}
+					onChange={(e) => this.props.handleInputChange({ e })}
 					type="text"
 					id="bottomText.text"
 					value={this.props.state.cell.bottomText ? this.props.state.cell.bottomText.text || '' : ''}

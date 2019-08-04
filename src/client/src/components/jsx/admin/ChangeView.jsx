@@ -10,9 +10,9 @@ export default class AdminControls extends React.Component {
 		<div id="change-view">
 			<h3>Change view</h3>
 			<div>
-				<button onClick={() => this.props.setView('mobile')}>Mobile</button>
-				<button onClick={() => this.props.setView('tablet')}>Tablet</button>
-				<button onClick={() => this.props.setView('desktop')}>Desktop</button>
+				<button onClick={() => this.props.setView('mobile')}>Mobile [m]</button>
+				<button onClick={() => this.props.setView('tablet')}>Tablet [t]</button>
+				<button onClick={() => this.props.setView('desktop')}>Desktop [d]</button>
 				<label>Scale: </label>
 				<select onChange={(e) => this.handleScaleSelect(e)}>
 					<option value="1">100%</option>

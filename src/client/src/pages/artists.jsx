@@ -39,16 +39,33 @@ class ErrorHandler extends React.Component {
 export default class extends React.Component {
 	state = {}
 	componentWillMount = async () => {
-		let artists = await axios.get(`${env.apiUrl}/artists`).then((r) => r.data)
-		artists = Object.values(artists)
-		this.setState({ artists })
+		if (this.props.artists) {
+			this.setState({ artists: this.props.artists, isPreview: true })
+		} else {
+			let artists = await axios.get(`${env.apiUrl}/artists`).then((r) => r.data)
+			this.setState({ artists })
+		}
+	}
+	componentDidUpdate(prevProps) {
+		if (this.props.artists && JSON.stringify(prevProps.artists) !== JSON.stringify(this.props.artists)) {
+			this.setState({ artists: this.props.artists })
+		}
 	}
 	render = () => {
 		return this.state.artists ? (
 			<Page backgroundImage={'/images/trees.jpg'}>
-				{this.state.artists.map((artist, index) => (
-					<Artist key={index} {...artist} index={index} {...this.props} />
-				))}
+				{this.state.artists.map((artist, index) => {
+					return (
+						<Artist
+							key={index}
+							index={index}
+							isPreview={this.state.isPreview}
+							{...artist}
+							selectArtist={() => this.props.selectArtist(index)}
+							selected={this.props.selectedArtist === index}
+						/>
+					)
+				})}
 			</Page>
 		) : (
 			<div>Loading...</div>

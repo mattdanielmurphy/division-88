@@ -1,9 +1,7 @@
-const { Artist } = require('../../models/Artist')
+const { ProducerTool } = require('../../models/ProducerTool')
 
 module.exports = async (req, res) => {
-	Artist.find().then((artists) => {
-		res.json({
-			...artists
-		})
+	ProducerTool.find().then((tools) => {
+		res.json(Object.values(tools))
 	})
 }

@@ -20,22 +20,27 @@ export default class PagePreview extends React.Component {
 			}
 		}
 	}
-	getWidth = () => {
-		const width = this.state.dimensions[this.props.view].width
-		return width
-	}
+	getWidth = () => this.state.dimensions[this.props.view].width
 	getHeight = () => this.state.dimensions[this.props.view].height
 	render = () => {
 		const Page = this.props.page
 		return (
 			<div
 				id="preview-wrapper"
-				style={{ transform: `scale(${this.props.scale})`, width: this.getWidth(), height: this.getHeight() }}
+				style={{
+					width: this.getWidth() * this.props.scale,
+					height: this.getHeight() * this.props.scale
+				}}
 			>
 				<div
 					id="preview"
 					className={this.props.view}
-					style={{ width: this.getWidth(), height: this.getHeight() }}
+					style={{
+						width: this.getWidth(),
+						height: this.getHeight(),
+						transform: `scale(${this.props.scale})`,
+						transformOrigin: 'left top'
+					}}
 				>
 					<Header mobilePreview={this.props.view === 'mobile'} previewWidth={this.getWidth()} />
 					<Page
@@ -43,9 +48,14 @@ export default class PagePreview extends React.Component {
 						view={this.props.view}
 						onLayoutChange={(layout, layouts) => this.props.onLayoutChange(layout, layouts)}
 						selectCell={(index) => this.props.selectCell(index)}
+						selectArtist={(index) => this.props.selectArtist(index)}
+						selectedArtist={this.props.selectedArtist}
 						selectedCell={this.props.selectedCell}
+						artists={this.props.artists}
 						cells={this.props.cells}
 						gridWidth={this.getWidth()}
+						updateSent={this.props.updateSent}
+						updateReceived={() => this.props.updateReceived()}
 					/>
 					<Footer />
 				</div>

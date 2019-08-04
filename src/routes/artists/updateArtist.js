@@ -5,10 +5,19 @@ module.exports = async (req, res) => {
 	const artist = req.body
 
 	const artists = await Artist.find()
+	const existingArtist = artists[index]
 	const id = artists[index].id
-	// artists[index] = artist
-	console.log(artist)
-	Artist.findOneAndUpdate({ _id: id }, artist).then((result) => {
-		res.json(result)
-	})
+
+	const newArtist = Object.assign(existingArtist, artist)
+	console.log(newArtist)
+	console.log(id)
+	Artist.updateOne({ _id: id }, newArtist)
+		.then((response) => {
+			console.log(response)
+			res.status(200).json(newArtist)
+		})
+		.catch((rej) => {
+			console.error(`Error fetching cells for page ${page}... ${rej}`)
+			res.status(500).json(rej)
+		})
 }

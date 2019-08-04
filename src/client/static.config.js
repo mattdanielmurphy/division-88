@@ -14,8 +14,10 @@ export default {
 					href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900&display=swap"
 					rel="stylesheet"
 				/> */}
+				{/* REMOVE LATER: */}
+				<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 				<link
-					href="https://fonts.googleapis.com/css?family=Libre+Baskerville:700|Roboto+Condensed&display=swap"
+					href="https://fonts.googleapis.com/css?family=Libre+Baskerville:700|Roboto+Condensed:400,700&display=swap"
 					rel="stylesheet"
 				/>
 				<script src="//www.youtube.com/player_api" />
@@ -44,48 +46,65 @@ export default {
 						producerTools
 					})
 				}))
+			},
+			{
+				path: '/artists',
+				getData: () => ({
+					artists
+				}),
+				children: Object.values(artists).map((artist) => ({
+					path: `/${artist.page}`,
+					template: 'src/containers/Artist',
+					getData: () => ({
+						artist
+					})
+				}))
+			},
+			{
+				path: '/admin/artists',
+				getData: () => ({
+					page: 'artists',
+					artists
+				}),
+				template: 'src/containers/Admin',
+				children: Object.values(artists).map((artist) => ({
+					path: `/${artist.page}`,
+					template: 'src/containers/Admin',
+					getData: () => ({
+						page: 'artist',
+						artist
+					})
+				}))
+			},
+			{
+				path: '/producer-tools',
+				getData: () => ({
+					producerTools
+				}),
+				children: producerTools.map((tool) => ({
+					path: `/${tool.page}`,
+					template: 'src/containers/ProducerTool',
+					getData: () => ({
+						tool
+					})
+				}))
+			},
+			{
+				path: '/admin/producer-tools',
+				getData: () => ({
+					producerTools,
+					page: 'producer-tools'
+				}),
+				template: 'src/containers/Admin',
+				children: producerTools.map((tool) => ({
+					path: `/${tool.page}`,
+					template: 'src/containers/Admin',
+					getData: () => ({
+						page: 'producer-tool',
+						tool
+					})
+				}))
 			}
-			// {
-			// 	path: '/artists',
-			// 	getData: () => ({
-			// 		artists
-			// 	}),
-			// 	children: Object.values(artists).map((artist) => ({
-			// 		path: `/${artist.page}`,
-			// 		template: 'src/containers/Artist',
-			// 		getData: () => ({
-			// 			artist
-			// 		})
-			// 	}))
-			// },
-			// {
-			// 	path: '/admin/artists',
-			// 	getData: () => ({
-			// 		page: 'artists',
-			// 		artists
-			// 	}),
-			// 	template: 'src/containers/Admin',
-			// 	children: Object.values(artists).map((artist) => ({
-			// 		path: `/${artist.page}`,
-			// 		template: 'src/containers/Artist',
-			// 		getData: () => ({
-			// 			artist
-			// 		})
-			// 	}))
-			// },
-			// {
-			// 	path: '/producer-tools',
-			// 	getData: () => ({
-			// 		producerTools
-			// 	}),
-			// 	children: producerTools.map((tool) => ({
-			// 		path: `/${tool.page}`,
-			// 		template: 'src/containers/ProducerTool',
-			// 		getData: () => ({
-			// 			tool
-			// 		})
-			// 	}))
-			// }
 		]
 	},
 	plugins: [

@@ -38,6 +38,14 @@
 		.background {
 			width: 100%;
 		}
+		.heading {
+			font-size: 2rem;
+			font-weight: 700;
+			font-family: 'Libre Baskerville', serif;
+			text-transform: initial;
+		}
+		.subheading {
+		}
 		a {
 			.background {
 				@include grid-item-hover-transition;

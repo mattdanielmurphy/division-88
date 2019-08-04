@@ -3,6 +3,8 @@ import { useRouteData } from 'react-static'
 import { Link } from 'components/jsx/Router'
 import Image from '../components/jsx/Image'
 import Page from '../components/jsx/Page'
+import axios from 'axios'
+import env from 'client-env'
 
 class SpotifyPlayer extends React.Component {
 	state = { loading: true }
@@ -59,12 +61,47 @@ const TopTen = ({ artist }) => (
 	</div>
 )
 
-export default () => {
-	const { artist } = useRouteData()
-	return (
-		<Page id="artist" heading={{ text: `${artist.name}: `, spanText: 'releases' }} backgroundImage={artist.imgSrc}>
-			<TopTen artist={artist} />
-			{artist.releases.length > 0 && <Releases artist={artist} />}
-		</Page>
-	)
+// static version:
+
+// export default () => {
+// 	const { artist } = useRouteData()
+// 	return (
+// 		<Page id="artist" heading={{ text: `${artist.name}: `, spanText: 'releases' }} backgroundImage={artist.imgSrc}>
+// 			<TopTen artist={artist} />
+// 			{artist.releases.length > 0 && <Releases artist={artist} />}
+// 		</Page>
+// 	)
+// }
+
+// 100% dynamic (temporary)
+
+export default class extends React.Component {
+	state = {}
+	getArtistNameFromUrl() {
+		const location = String(window.location)
+		return /.*\/(.*)$/.exec(location)[1]
+	}
+	getArtist() {
+		const name = this.getArtistNameFromUrl()
+		return axios.get(`${env.apiUrl}/artists/${name}`).then((r) => r.data)
+	}
+	componentDidMount = async () => {
+		const artist = await this.getArtist()
+		console.log(artist)
+		this.setState({ artist })
+	}
+	render = () => {
+		return this.state.artist ? (
+			<Page
+				id="artist"
+				heading={{ text: `${this.state.artist.name}` }}
+				backgroundImage={this.state.artist.imgSrc}
+			>
+				<TopTen artist={this.state.artist} />
+				{this.state.artist.releases.length > 0 && <Releases artist={this.state.artist} />}
+			</Page>
+		) : (
+			<div>loading...</div>
+		)
+	}
 }

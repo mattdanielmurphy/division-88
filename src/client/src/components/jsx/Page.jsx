@@ -52,8 +52,9 @@ export default class Page extends React.Component {
 	getPathname = () => window.location.pathname.replace(/\/(admin)*/g, '')
 	getPageName = () => this.getPathname().split('-').join(' ')
 	state = {
-		id: this.props.id || this.getPathname(),
-		heading: this.getHeading()
+		id: this.props.id,
+		heading: '',
+		pageName: ''
 	}
 	getHeading() {
 		if (this.props.heading) {
@@ -85,6 +86,7 @@ export default class Page extends React.Component {
 	}
 	componentDidMount() {
 		this.setParentElementsTo100PercentHeight()
+		this.setState({ id: this.getPathname(), pageName: this.getPageName(), heading: this.getHeading() })
 	}
 	render = () => {
 		// const props = this.props
@@ -94,12 +96,15 @@ export default class Page extends React.Component {
 		// })
 		return (
 			<SizeMe>
-				{({ size }) => (
-					<div id={this.state.id} className={this.getMainContainerClassName(size)}>
-						<PageContent state={this.state} />
-						<main>{this.props.children}</main>
-					</div>
-				)}
+				{({ size }) =>
+					this.state.id ? (
+						<div id={this.state.id} className={this.getMainContainerClassName(size)}>
+							<PageContent state={this.state} />
+							<main>{this.props.children}</main>
+						</div>
+					) : (
+						<div />
+					)}
 			</SizeMe>
 		)
 	}

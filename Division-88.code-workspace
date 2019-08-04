@@ -10,5 +10,7 @@
 			"path": "src/client"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"search.usePCRE2": true
+	}
 }

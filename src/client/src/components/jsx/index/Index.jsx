@@ -37,26 +37,30 @@ export default class Index extends React.Component {
 	}
 	componentDidMount = async () => {
 		this.watchWindowResizing()
-		this.setState({ rowHeight: this.rowHeight })
+		console.log('cells', this.props.cells)
+		this.setState({ rowHeight: this.rowHeight, cells: this.props.cells })
 		console.log(this.props.gridWidth)
 	}
-	componentDidUpdate(prevProps) {
+	componentDidUpdate(prevProps, prevState) {
 		if (prevProps.gridWidth !== this.props.gridWidth) this.setState({ rowHeight: this.rowHeight })
-		// const {cell, index} = this.props.updatedCell
-		// if (JSON.stringify(cell) !== JSON.stringify(this.getCellOnPage(index))) console.log('good')
-		// console.log(this.props.cells[3].backgroundText.heading)
-		// console.log(JSON.stringify(this.props) !== JSON.stringify(prevProps))
-		if (JSON.stringify(this.props.cells) !== JSON.stringify(prevProps.cells)) {
+		if (this.props.updateSent) {
+			console.log('updateSent')
+			this.setState({ cellsUpToDate: false, cells: this.props.cells })
+			this.props.updateReceived()
+		} else if (JSON.stringify(this.props.cells) !== JSON.stringify(prevProps.cells)) {
 			// this.forceUpdate()
-			this.setState({ cellsUpToDate: false })
+			console.log('update')
+			this.setState({ cellsUpToDate: false, cells: this.props.cells })
 		} else if (!this.state.cellsUpToDate) this.setState({ cellsUpToDate: true })
 	}
 	render() {
 		let ResponsiveGridLayout = this.props.ResponsiveGridLayout
+		if (this.props.updateSent) console.log('update sent')
 		return (
 			<div id="index">
 				{this.state.cellsUpToDate ? (
-					this.props.layouts && (
+					this.props.layouts &&
+					this.state.cells && (
 						<ResponsiveGridLayout
 							measureBeforeMount
 							className={this.state.layoutClassName}
@@ -85,7 +89,7 @@ export default class Index extends React.Component {
 							onLayoutChange={(layout, layouts) =>
 								this.props.onLayoutChange ? this.props.onLayoutChange(layout, layouts) : {}}
 						>
-							{this.props.cells.map((cell, index) => (
+							{this.state.cells.map((cell, index) => (
 								<div
 									className="grid-item"
 									onClick={(e) => this.handleClickGridItem(index, e)}
