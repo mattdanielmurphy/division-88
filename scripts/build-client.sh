@@ -1,6 +1,7 @@
 #!bin/bash
 
 cd src/client
+
 # run react-static build
 yarn build
 cd ../../

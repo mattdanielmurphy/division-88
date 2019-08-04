@@ -1,7 +1,7 @@
 
 
 import React from 'react'
-import universal, { setHasBabelPlugin } from '/Users/matt/Documents/web-dev/projects/division-88/src/client/node_modules/react-universal-component/dist/index.js'
+import universal, { setHasBabelPlugin } from '/Users/Matthew/local-projects/division-88/src/client/node_modules/react-universal-component/dist/index.js'
 
 setHasBabelPlugin()
 
