@@ -220,7 +220,7 @@ export default class ArtistEditor extends React.Component {
 				</button>
 			</div>
 		) : (
-			<div>loading...</div>
+			<div />
 		)
 }
 

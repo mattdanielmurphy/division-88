@@ -33,8 +33,8 @@ class Admin extends React.Component {
 		countdown: 2,
 		selectedCell: 0,
 		selectedArtist: 0,
-		dataReady: false
-		// authenticated: true // REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION
+		dataReady: false,
+		authenticated: true // REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION
 	}
 	getGridFromDatabase = async () => {
 		const layouts = await axios.get(`${env.apiUrl}/grids/index/layouts`).then((r) => r.data)
@@ -73,7 +73,10 @@ class Admin extends React.Component {
 		})
 	}
 	authenticate() {
-		this.lock = new Auth0Lock('kWHysVBkljt5AhDWF62CKNK46HQSCkkw', 'dvsn88.auth0.com', { allowSignUp: false })
+		this.lock = new Auth0Lock('kWHysVBkljt5AhDWF62CKNK46HQSCkkw', 'dvsn88.auth0.com', {
+			allowSignUp: false,
+			responseType: 'code'
+		})
 		this.setTokenIfProvided()
 		this.startCountdown()
 	}

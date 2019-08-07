@@ -10,7 +10,7 @@ export default class extends React.Component {
 		<Root>
 			<Header />
 			<div id="content">
-				<React.Suspense fallback={<em>Loading...</em>}>
+				<React.Suspense fallback={<em></em>}>
 					<Router>
 						<Routes path="*" />
 					</Router>

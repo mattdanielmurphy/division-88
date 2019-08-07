@@ -3,8 +3,7 @@
 #artists {
 	.background-image {
 		background: url('/images/trees.jpg') no-repeat center/cover;
-		// position: relative;
-		height: 10rem;
+		height: 6rem;
 	}
 	main {
 		display: grid;
@@ -21,6 +20,7 @@
 		align-items: center;
 		font-size: 14px;
 		&:hover {
+			cursor: pointer;
 			.img {
 				opacity: .8;
 			}
@@ -40,11 +40,13 @@
 			display: grid;
 			color: black;
 			align-content: center;
-			height: 22rem;
+			height: 18rem;
 			.artist-name {
+				font-size: 2rem;
+				line-height: 1;
 			}
 			.bio {
-				margin: 0.8rem 0 1.3rem 0;
+				margin: 1rem 0 0.8rem 0;
 			}
 			.see-releases {
 				text-transform: uppercase;
@@ -98,10 +100,13 @@
 		.img {
 			height: 22rem;
 		}
+		.description {
+			height: 22rem;
+		}
 		.description-outer-wrapper {
 			overflow: hidden;
 			position: absolute;
-			max-width: 500px;
+			// max-width: 500px;
 			&.align-left {
 				grid-column: 1 / span 1;
 				// left: 1%;

@@ -3,7 +3,8 @@ import { Link } from 'components/jsx/Router'
 import Image from './Image'
 import React from 'react'
 import baseUrl from 'components/js/baseUrl'
-import { Textfit } from 'react-textfit'
+// import { Textfit } from 'react-textfit'
+const ReactFitText = require('react-fittext')
 
 class ArtistWrapper extends React.Component {
 	render = () => {
@@ -54,6 +55,10 @@ export default class Artist extends React.Component {
 					color: this.props.description.style.color || 'black'
 				}
 	setHovering = (hovering) => this.setState({ hovering })
+	resizeText() {
+		console.log('resize')
+		window.dispatchEvent(new Event('resize'))
+	}
 	render = () => (
 		<ArtistWrapper
 			select={() => this.props.selectArtist(this.props.index)}
@@ -67,15 +72,11 @@ export default class Artist extends React.Component {
 				<div className={`description-outer-wrapper align-${this.state.alignment}`}>
 					<div className="description" style={this.getDescriptionStyle()}>
 						<div className="text">
-							<Textfit mode="single" className="artist-name" min={16} max={40}>
-								{this.props.name}
-							</Textfit>
-							<Textfit className="bio" min={12} max={20}>
-								{this.props.description.bio}
-							</Textfit>
-							<Textfit mode="single" max={16} className="see-releases" style={this.getSeeReleasesStyle()}>
+							<div className="artist-name">{this.props.name}</div>
+							<div className="bio">{this.props.description.bio}</div>
+							<div className="see-releases" style={this.getSeeReleasesStyle()}>
 								<span>></span> See releases
-							</Textfit>
+							</div>
 						</div>
 					</div>
 				</div>

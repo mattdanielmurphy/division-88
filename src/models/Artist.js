@@ -30,6 +30,7 @@ const ArtistSchema = new Schema({
 		required: true
 	}
 })
+
 const Artist = mongoose.model('artist', ArtistSchema)
 
 module.exports = { Artist }

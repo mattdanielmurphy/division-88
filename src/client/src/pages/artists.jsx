@@ -68,7 +68,7 @@ export default class extends React.Component {
 				})}
 			</Page>
 		) : (
-			<div>Loading...</div>
+			<div></div>
 		)
 	}
 }

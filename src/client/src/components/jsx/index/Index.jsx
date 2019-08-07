@@ -55,7 +55,6 @@ export default class Index extends React.Component {
 	}
 	render() {
 		let ResponsiveGridLayout = this.props.ResponsiveGridLayout
-		if (this.props.updateSent) console.log('update sent')
 		return (
 			<div id="index">
 				{this.state.cellsUpToDate ? (
@@ -111,7 +110,7 @@ export default class Index extends React.Component {
 						</ResponsiveGridLayout>
 					)
 				) : (
-					<div>Loading...</div>
+					<div></div>
 				)}
 			</div>
 		)

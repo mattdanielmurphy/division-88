@@ -16,6 +16,7 @@ export default class ClientIndex extends React.Component {
 	componentDidMount() {
 		console.log(this.props)
 		this.getGridFromDatabase().then(({ cells, layouts }) => {
+			console.log(cells, layouts)
 			this.setState({ cells, layouts, layoutsLoaded: true })
 		})
 	}
@@ -25,7 +26,7 @@ export default class ClientIndex extends React.Component {
 	}
 	render = () =>
 		this.state.cells ? (
-			<Page noTopHeading>
+			<Page noHeading>
 				<Index
 					layouts={this.state.layouts}
 					cells={this.state.cells}
@@ -33,6 +34,6 @@ export default class ClientIndex extends React.Component {
 				/>
 			</Page>
 		) : (
-			<div>Loading...</div>
+			<div></div>
 		)
 }

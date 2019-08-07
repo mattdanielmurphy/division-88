@@ -17,6 +17,6 @@ export default class AdminIndex extends React.Component {
 				onLayoutChange={(layout, layouts) => this.props.onLayoutChange(layout, layouts)}
 			/>
 		) : (
-			<div>Loading...</div>
+			<div></div>
 		)
 }

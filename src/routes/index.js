@@ -3,6 +3,7 @@ const grids = require('./grids')
 const layouts = require('./grids/layouts')
 const artists = require('./artists')
 const producerTools = require('./producer-tools')
+const workInProgresss = require('./work-in-progress')
 const auth = require('./auth')
 
 routes.get('/', (req, res) => {
@@ -14,6 +15,7 @@ routes.use('/grids', layouts)
 routes.use('/producer-tools', producerTools)
 routes.use('/artists', artists)
 routes.use('/auth', auth)
+routes.use('/wip', workInProgress)
 
 // /grids
 // /grids/index

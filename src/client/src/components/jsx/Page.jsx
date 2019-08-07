@@ -3,7 +3,7 @@ import { Textfit } from 'react-textfit'
 import { WidthProvider } from 'react-grid-layout'
 import { SizeMe } from 'react-sizeme'
 
-class Heading extends React.Component {
+class HeadingWithoutBackgroundImage extends React.Component {
 	render = () => (
 		<div className="top-heading">
 			<Textfit mode="single" max={50}>
@@ -23,21 +23,18 @@ class HeadingWithBackgroundImage extends React.Component {
 	)
 }
 
-class PageContent extends React.Component {
+class Heading extends React.Component {
 	render = () => {
-		return (
-			!this.props.noTopHeading &&
-			(this.props.backgroundImage ? (
-				<HeadingWithBackgroundImage image={this.props.backgroundImage}>
-					{this.props.state.heading.text}
-					<span>{this.props.state.heading.spanText}</span>
-				</HeadingWithBackgroundImage>
-			) : (
-				<Heading>
-					{this.props.state.heading.text}
-					<span>{this.props.state.heading.spanText}</span>
-				</Heading>
-			))
+		return this.props.backgroundImage ? (
+			<HeadingWithBackgroundImage image={this.props.backgroundImage}>
+				{this.props.heading.text}
+				<span>{this.props.heading.spanText}</span>
+			</HeadingWithBackgroundImage>
+		) : (
+			<HeadingWithoutBackgroundImage>
+				{this.props.heading.text}
+				<span>{this.props.heading.spanText}</span>
+			</HeadingWithoutBackgroundImage>
 		)
 	}
 }
@@ -85,21 +82,17 @@ export default class Page extends React.Component {
 		parentElements.forEach((element) => (element.style.height = '100%'))
 	}
 	componentDidMount() {
+		console.log('page mounted', this.props.children)
 		this.setParentElementsTo100PercentHeight()
-		this.setState({ id: this.getPathname(), pageName: this.getPageName(), heading: this.getHeading() })
+		this.setState({ id: this.getPathname() || 'index', pageName: this.getPageName(), heading: this.getHeading() })
 	}
 	render = () => {
-		// const props = this.props
-		// console.log(props)
-		// const children = React.Children.map(this.props.children, (child) => {
-		// 	return React.cloneElement(child, { ...props })
-		// })
 		return (
 			<SizeMe>
 				{({ size }) =>
 					this.state.id ? (
 						<div id={this.state.id} className={this.getMainContainerClassName(size)}>
-							<PageContent state={this.state} />
+							{!this.props.noHeading && <Heading {...this.state} {...this.props} />}
 							<main>{this.props.children}</main>
 						</div>
 					) : (

@@ -17,7 +17,7 @@ class SpotifyPlayer extends React.Component {
 		let src = this.getEmbedUrl()
 		return (
 			<div>
-				{this.state.loading && <div>Loading...</div>}
+				{this.state.loading && <div></div>}
 				<iframe
 					onLoad={() => this.setState({ loading: false })}
 					className="spotify-iframe"
