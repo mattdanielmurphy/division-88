@@ -27,4 +27,4 @@ const WIPSchema = new Schema({
 
 const WIP = mongoose.model('workInProgress', WIPSchema)
 
-Module.exports = { WIP }
+module.exports = WIP

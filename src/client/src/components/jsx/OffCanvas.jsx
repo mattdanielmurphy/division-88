@@ -59,7 +59,6 @@ export default class OffCanvas extends React.Component {
 		}
 	})
 	toggleOpenClose(e) {
-		console.log(e)
 		if (!this.props.previewWidth) this.setState({ isOpen: !this.state.isOpen })
 	}
 	componentDidMount() {

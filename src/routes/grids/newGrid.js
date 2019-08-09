@@ -1,4 +1,4 @@
-const { Grid } = require('../../models/Grid')
+const Grid = require('../../models/Grid')
 
 module.exports = async (req, res) => {
 	Grid.create(req.body)

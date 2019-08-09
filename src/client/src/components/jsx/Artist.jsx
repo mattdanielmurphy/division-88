@@ -56,7 +56,6 @@ export default class Artist extends React.Component {
 				}
 	setHovering = (hovering) => this.setState({ hovering })
 	resizeText() {
-		console.log('resize')
 		window.dispatchEvent(new Event('resize'))
 	}
 	render = () => (

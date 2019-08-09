@@ -68,7 +68,6 @@ export default class CellEditor extends React.Component {
 			const value = e.target.value
 			this.updateCellValue(path, value)
 		} else {
-			console.log(value)
 			this.updateCellValue(path, value)
 			if (colorChange) this.setState({ colorChange: true })
 		}
@@ -81,6 +80,7 @@ export default class CellEditor extends React.Component {
 		const cells = await this.getCellsFromDatabase()
 		this.setState({ index: this.props.index, cell, cells, cellFromDatabase: cell })
 		window.onbeforeunload = null
+		this.setKeyBindings()
 	}
 	changeIndex = async (index) => {
 		const cell = await this.getCell(index)
@@ -95,6 +95,17 @@ export default class CellEditor extends React.Component {
 			this.setState({ error: 'Error: You must provide at least a background image' })
 		}
 		return valid
+	}
+	setKeyBindings = () => {
+		document.onkeypress = (e) => {
+			if (
+				e.target.hasAttribute('data-slate-editor') ||
+				e.target.tagName === 'INPUT' ||
+				e.target.tagName === 'TEXTAREA'
+			)
+				return
+			else if (e.key === 's') this.handleSubmit()
+		}
 	}
 	newCell = async () => {
 		if (this.validateCell()) {
@@ -145,7 +156,7 @@ export default class CellEditor extends React.Component {
 
 				<form onSubmit={(e) => this.handleSubmit(e)}>
 					<div className="property-input">
-						<label>Image url</label>
+						<label>image url</label>
 						<input
 							onKeyPress={(e) => this.handleKeyPress(e)}
 							onChange={(e) => this.handleInputChange({ e })}
@@ -157,7 +168,7 @@ export default class CellEditor extends React.Component {
 					<br />
 					{this.state.cell.video ? (
 						<div className="property-input">
-							<label>Video link:</label>
+							<label>video link:</label>
 							<input
 								onKeyPress={(e) => this.handleKeyPress(e)}
 								onChange={(e) => this.handleInputChange({ e })}

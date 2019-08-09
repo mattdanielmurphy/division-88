@@ -19,7 +19,7 @@ class SpotifyPlayer extends React.Component {
 		let src = this.getEmbedUrl()
 		return (
 			<div>
-				{this.state.loading && <div></div>}
+				{this.state.loading && <div />}
 				<iframe
 					onLoad={() => this.setState({ loading: false })}
 					className="spotify-iframe"
@@ -87,7 +87,7 @@ export default class extends React.Component {
 	}
 	componentDidMount = async () => {
 		const artist = await this.getArtist()
-		console.log(artist)
+
 		this.setState({ artist })
 	}
 	render = () => {
@@ -96,12 +96,13 @@ export default class extends React.Component {
 				id="artist"
 				heading={{ text: `${this.state.artist.name}` }}
 				backgroundImage={this.state.artist.imgSrc}
+				isPreview={this.props.isPreview}
 			>
 				<TopTen artist={this.state.artist} />
 				{this.state.artist.releases.length > 0 && <Releases artist={this.state.artist} />}
 			</Page>
 		) : (
-			<div></div>
+			<div />
 		)
 	}
 }

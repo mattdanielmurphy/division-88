@@ -19,7 +19,7 @@ class ProducerTool extends React.Component {
 	render = () => {
 		return (
 			<section className="text">
-				<p>{this.props.description}</p>
+				<p>{this.props.description.text}</p>
 				<a href={this.state.dropboxDirectUrl} className="button">
 					Download
 				</a>
@@ -33,7 +33,7 @@ class ProducerTool extends React.Component {
 // export default () => {
 // 	const { tool } = useRouteData()
 // 	return (
-// 		<Page
+// 		<Page headingBackgroundImage={this.props.headingBackgroundImage} headingSelected={this.props.headingSelected}
 // 			id="producer-tool"
 // 			heading={{ text: `${tool.name}: `, spanText: 'producer tool' }}
 // 			backgroundImage={tool.img}
@@ -56,15 +56,21 @@ export default class extends React.Component {
 	}
 	componentDidMount = async () => {
 		const tool = await this.getProducerTool()
+
 		console.log(tool)
 		this.setState({ tool })
 	}
 	render = () => {
 		return this.state.tool ? (
 			<Page
+				headingBackgroundImage={this.props.headingBackgroundImage}
+				headingSelected={this.props.headingSelected}
 				id="producer-tool"
 				heading={{ text: `${this.state.tool.name}: `, spanText: 'producer tool' }}
 				backgroundImage={this.state.tool.imgSrc}
+				// make sure this gets passed to ProducerTool from whereever, same for all instances of Page
+				selectHeading={() => this.props.selectHeading(this.props.pageName)}
+				isPreview={this.props.isPreview}
 			>
 				<ProducerTool {...this.state.tool} />
 			</Page>

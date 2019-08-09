@@ -1,10 +1,6 @@
-const  = require('express').Router()
+const workInProgress = require('express').Router()
 
-producerTools.get('/', fetchProducerTools)
-producerTools.get('/:name', fetchProducerToolByName)
-producerTools.get('/index/:index', fetchProducerToolByIndex)
-producerTools.get('/:producerTool/delete', deleteProducerTool)
-producerTools.post('/:producer-tool', updateProducerTool)
-producerTools.post('/new', newProducerTool)
+// workInProgress.get('/', fetchProducerTools)
+// workInProgress.get('/:name', fetchProducerToolByName)
 
-module.exports = producerTools
+module.exports = workInProgress

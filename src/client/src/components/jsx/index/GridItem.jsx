@@ -52,9 +52,7 @@ class GridItemContent extends React.Component {
 		},
 		backgroundText: this.props.backgroundText
 	}
-	updateBackgroundText(bgT) {
-		console.log(bgT)
-	}
+	updateBackgroundText(bgT) {}
 	render = () => {
 		return (
 			<GridItemContentContainer

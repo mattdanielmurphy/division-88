@@ -44,18 +44,30 @@ export default class PagePreview extends React.Component {
 				>
 					<Header mobilePreview={this.props.view === 'mobile'} previewWidth={this.getWidth()} />
 					<Page
-						layouts={this.props.layouts}
+						isPreview
 						view={this.props.view}
-						onLayoutChange={(layout, layouts) => this.props.onLayoutChange(layout, layouts)}
+						gridWidth={this.getWidth()}
+						// Heading
+						selectHeading={() => this.props.selectHeading(this.props.pageName)}
+						updateHeading={() => this.props.updateHeading(this.props.pageName)}
+						headingSelected={this.props.headingSelected}
+						headingBackgroundImage={this.props.headingBackgroundImage}
+						// Grid
 						selectCell={(index) => this.props.selectCell(index)}
+						selectedCell={this.props.selectedCell}
+						cells={this.props.cells}
+						layouts={this.props.layouts}
+						onLayoutChange={(layout, layouts) => this.props.onLayoutChange(layout, layouts)}
+						// Artists
 						selectArtist={(index) => this.props.selectArtist(index)}
 						selectedArtist={this.props.selectedArtist}
-						selectedCell={this.props.selectedCell}
 						artists={this.props.artists}
-						cells={this.props.cells}
-						gridWidth={this.getWidth()}
-						updateSent={this.props.updateSent}
-						updateReceived={() => this.props.updateReceived()}
+						// Producer Tools
+						selectTool={(index) => this.props.selectTool(index)}
+						selectedTool={this.props.selectedTool}
+						tools={this.props.tools}
+						// About
+						aboutText={this.props.aboutText}
 					/>
 					<Footer />
 				</div>

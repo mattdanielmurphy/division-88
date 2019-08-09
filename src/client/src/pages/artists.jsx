@@ -28,7 +28,7 @@ class ErrorHandler extends React.Component {
 // 	artists = Object.values(artists)
 
 // 	return (
-// 		<Page backgroundImage={'/images/trees.jpg'}>
+// 		<Page headingBackgroundImage={this.props.headingBackgroundImage} headingSelected={this.props.headingSelected} backgroundImage={'/images/trees.jpg'}>
 // 			{artists.map((artist, index) => <Artist key={index} {...artist} index={index} {...props} />)}
 // 		</Page>
 // 	)
@@ -38,9 +38,9 @@ class ErrorHandler extends React.Component {
 
 export default class extends React.Component {
 	state = {}
-	componentWillMount = async () => {
+	componentDidMount = async () => {
 		if (this.props.artists) {
-			this.setState({ artists: this.props.artists, isPreview: true })
+			this.setState({ artists: this.props.artists })
 		} else {
 			let artists = await axios.get(`${env.apiUrl}/artists`).then((r) => r.data)
 			this.setState({ artists })
@@ -53,13 +53,19 @@ export default class extends React.Component {
 	}
 	render = () => {
 		return this.state.artists ? (
-			<Page backgroundImage={'/images/trees.jpg'}>
+			<Page
+				headingBackgroundImage={this.props.headingBackgroundImage}
+				headingSelected={this.props.headingSelected}
+				selectHeading={() => this.props.selectHeading(this.props.pageName)}
+				isPreview={this.props.isPreview}
+				backgroundImage={'/images/trees.jpg'}
+			>
 				{this.state.artists.map((artist, index) => {
 					return (
 						<Artist
 							key={index}
 							index={index}
-							isPreview={this.state.isPreview}
+							isPreview={this.props.isPreview}
 							{...artist}
 							selectArtist={() => this.props.selectArtist(index)}
 							selected={this.props.selectedArtist === index}
@@ -68,7 +74,7 @@ export default class extends React.Component {
 				})}
 			</Page>
 		) : (
-			<div></div>
+			<div />
 		)
 	}
 }

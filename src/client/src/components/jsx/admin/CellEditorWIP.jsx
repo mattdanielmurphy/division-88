@@ -22,7 +22,7 @@ export default class CellEditor extends React.Component {
 	handleSubmit = async (e) => {
 		if (e) e.preventDefault()
 		// just submit this modified value
-		console.log('submit', this.state.artist, this.state.index)
+
 		const result = await axios
 			.post(`${env.apiUrl}/grids/index/cells/${this.state.index}`, this.state.cell)
 			.then((r) => {
@@ -32,7 +32,7 @@ export default class CellEditor extends React.Component {
 				this.props.updateGrid({ cells })
 				return r.data
 			})
-		console.log(result)
+
 		return result
 	}
 	updateArtistValue(path, value) {
@@ -58,7 +58,6 @@ export default class CellEditor extends React.Component {
 			const value = e.target.value
 			this.updateArtistValue(path, value)
 		} else {
-			console.log(value)
 			this.updateArtistValue(path, value)
 		}
 	}
@@ -106,13 +105,12 @@ export default class CellEditor extends React.Component {
 			this.handleSubmit()
 		}
 	}
-	componentWillMount = async () => {
+	componentDidMount = async () => {
 		const artist = await this.getArtist(this.props.index)
 		this.setState({ artist, index: this.props.index })
 		window.onbeforeunload = null
 	}
 	updateReleases = (data) => {
-		console.log(data)
 		const artist = this.state.artist
 		artist.releases = data
 		this.setState({ artist })
@@ -184,7 +182,7 @@ export default class CellEditor extends React.Component {
 	// 		const value = e.target.value
 	// 		this.updateCellValue(path, value)
 	// 	} else {
-	// 		console.log(value)
+	//
 	// 		this.updateCellValue(path, value)
 	// 	}
 	// }
@@ -260,7 +258,7 @@ export default class CellEditor extends React.Component {
 
 				<form onSubmit={(e) => this.handleSubmit(e)}>
 					<div className="property-input">
-						<label>Image url</label>
+						<label>image url</label>
 						<input
 							onKeyPress={(e) => this.handleKeyPress(e)}
 							onChange={(e) => this.handleInputChange({ e })}
@@ -304,6 +302,6 @@ export default class CellEditor extends React.Component {
 				</button>
 			</div>
 		) : (
-			<div></div>
+			<div />
 		)
 }

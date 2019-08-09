@@ -14,7 +14,6 @@ export default class Editable extends React.Component {
 	}
 
 	render() {
-		console.log(this.props.data)
 		return (
 			<MaterialTable
 				title="Releases"

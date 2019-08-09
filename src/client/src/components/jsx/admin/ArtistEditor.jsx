@@ -14,7 +14,7 @@ export default class ArtistEditor extends React.Component {
 	handleSubmit = async (e) => {
 		if (e) e.preventDefault()
 		// just submit this modified value
-		console.log('submit', this.state.artist, this.state.index)
+
 		const result = await axios.post(`${env.apiUrl}/artists/${this.state.index}`, this.state.artist).then((r) => {
 			this.setState({ artistFromDatabase: this.state.artist, unsavedChanges: false })
 			if (this.state.colorChange) {
@@ -25,7 +25,7 @@ export default class ArtistEditor extends React.Component {
 			}
 			return r.data
 		})
-		console.log(result)
+
 		return result
 	}
 	updateArtistValue(path, value) {
@@ -93,19 +93,30 @@ export default class ArtistEditor extends React.Component {
 			} else this.changeIndex(this.props.index)
 		}
 	}
+	componentDidMount = async () => {
+		const artist = await this.getArtist(this.props.index)
+		this.setState({ artist, index: this.props.index })
+		window.onbeforeunload = null
+		this.setKeyBindings()
+	}
 	handleTextareaKeyPress(e) {
 		if (e.key === 'Enter') {
 			e.preventDefault()
 			this.handleSubmit()
 		}
 	}
-	componentWillMount = async () => {
-		const artist = await this.getArtist(this.props.index)
-		this.setState({ artist, index: this.props.index })
-		window.onbeforeunload = null
+	setKeyBindings = () => {
+		document.onkeypress = (e) => {
+			if (
+				e.target.hasAttribute('data-slate-editor') ||
+				e.target.tagName === 'INPUT' ||
+				e.target.tagName === 'TEXTAREA'
+			)
+				return
+			else if (e.key === 's') this.handleSubmit()
+		}
 	}
 	updateReleases = (data) => {
-		console.log(data)
 		const artist = this.state.artist
 		artist.releases = data
 		this.setState({ artist })
@@ -119,7 +130,7 @@ export default class ArtistEditor extends React.Component {
 						<input
 							onChange={(e) => this.handleInputChange({ e })}
 							id="name"
-							value={this.state.artist.name || 'artist name'}
+							value={this.state.artist.name || ''}
 						/>
 					</div>
 					<div className="property-input">
@@ -187,17 +198,6 @@ export default class ArtistEditor extends React.Component {
 									colorChange: true
 								})
 							}}
-						/>
-					</div>
-					<div className="property-input">
-						<label>description text (bio)</label>
-						<textarea
-							rows={6}
-							cols={60}
-							onKeyPress={(e) => this.handleTextareaKeyPress(e)}
-							onChange={(e) => this.handleInputChange({ e })}
-							id="description.bio"
-							value={(this.state.artist.description && this.state.artist.description.bio) || ''}
 						/>
 					</div>
 					<br />

@@ -12,6 +12,9 @@ body,
 .top-heading {
 	width: 100%;
 	padding: 6rem 0 2rem 0;
+	&.selected {
+		border: 2px solid red;
+	}
 	div {
 		padding: 0 1rem;
 	}

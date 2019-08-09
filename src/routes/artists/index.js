@@ -10,7 +10,7 @@ artists.get('/', fetchArtists)
 artists.get('/index/:index', fetchArtistByIndex)
 artists.get('/:name', fetchArtistByName)
 artists.get('/:artist/delete', deleteArtist)
-artists.post('/:artist', updateArtist)
+artists.post('/:index', updateArtist)
 artists.post('/new', newArtist)
 
 module.exports = artists

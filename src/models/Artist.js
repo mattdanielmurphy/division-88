@@ -33,7 +33,7 @@ const ArtistSchema = new Schema({
 
 const Artist = mongoose.model('artist', ArtistSchema)
 
-module.exports = { Artist }
+module.exports = Artist
 
 // const example = {
 // 	name: 'Billy Wild',

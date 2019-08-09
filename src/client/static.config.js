@@ -83,7 +83,7 @@ export default {
 				}),
 				children: producerTools.map((tool) => ({
 					path: `/${tool.page}`,
-					template: 'src/containers/ProducerTool',
+					template: 'src/pages/producer-tool',
 					getData: () => ({
 						tool
 					})

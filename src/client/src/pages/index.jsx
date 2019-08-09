@@ -14,19 +14,19 @@ export default class ClientIndex extends React.Component {
 		return { layouts, cells }
 	}
 	componentDidMount() {
-		console.log(this.props)
 		this.getGridFromDatabase().then(({ cells, layouts }) => {
-			console.log(cells, layouts)
 			this.setState({ cells, layouts, layoutsLoaded: true })
 		})
 	}
-	componentDidUpdate(prevProps) {
-		console.log(this.props)
-		console.log(JSON.stringify(this.props) !== JSON.stringify(prevProps))
-	}
+	componentDidUpdate(prevProps) {}
 	render = () =>
 		this.state.cells ? (
-			<Page noHeading>
+			<Page
+				headingBackgroundImage={this.props.headingBackgroundImage}
+				headingSelected={this.props.headingSelected}
+				noHeading
+				selectHeading={() => this.props.selectHeading(this.props.pageName)}
+			>
 				<Index
 					layouts={this.state.layouts}
 					cells={this.state.cells}
@@ -34,6 +34,6 @@ export default class ClientIndex extends React.Component {
 				/>
 			</Page>
 		) : (
-			<div></div>
+			<div />
 		)
 }

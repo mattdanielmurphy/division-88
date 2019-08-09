@@ -1,4 +1,4 @@
-const { Artist } = require('../../models/Artist')
+const Artist = require('../../models/Artist')
 
 module.exports = async (req, res) => {
 	const index = req.params.index

@@ -5,12 +5,20 @@ const ProducerToolSchema = new Schema({
 	name: { type: String, required: true },
 	page: { type: String, required: true },
 	imgSrc: { type: String, required: true },
+	dropboxUrl: { type: String, required: true },
 	description: {
-		type: String,
+		type: Object,
+		default: {
+			style: {
+				backgroundColor: '#fff',
+				color: '#000'
+			},
+			text:
+				'Bacon ipsum dolor amet meatloaf pig andouille kielbasa bacon picanha tenderloin. Ground round beef ribs rump, meatloaf spare ribs tongue brisket biltong leberkas pig kielbasa. Ribeye picanha sausage, tongue sirloin landjaeger flank venison ham hock tri-tip pork chop shank. Brisket fatback strip steak tail'
+		},
 		required: true
-	},
-	dropboxUrl: { type: String, required: true }
+	}
 })
 const ProducerTool = mongoose.model('producerTool', ProducerToolSchema)
 
-module.exports = { ProducerTool }
+module.exports = ProducerTool

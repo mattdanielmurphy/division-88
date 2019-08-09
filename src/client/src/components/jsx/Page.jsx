@@ -2,41 +2,70 @@ import React from 'react'
 import { Textfit } from 'react-textfit'
 import { WidthProvider } from 'react-grid-layout'
 import { SizeMe } from 'react-sizeme'
+import env from 'client-env'
+import axios from 'axios'
 
-class HeadingWithoutBackgroundImage extends React.Component {
-	render = () => (
-		<div className="top-heading">
-			<Textfit mode="single" max={50}>
-				{this.props.children}
-			</Textfit>
-		</div>
-	)
-}
+// class HeadingWithoutBackgroundImage extends React.Component {
+// 	render = () => (
+// 		<div className="top-heading">
+// 			<Textfit mode="single" max={50}>
+// 				{this.props.children}
+// 			</Textfit>
+// 		</div>
+// 	)
+// }
 
-class HeadingWithBackgroundImage extends React.Component {
-	render = () => (
-		<div className="top-heading background-image" style={{ backgroundImage: `url(${this.props.image})` }}>
-			<Textfit mode="single" max={50}>
-				{this.props.children}
-			</Textfit>
-		</div>
-	)
-}
+// class HeadingWithBackgroundImage extends React.Component {
+// 	render = () => (
+// 		<div className="top-heading background-image" style={{ backgroundImage: `url(${this.props.image})` }}>
+// 			<Textfit mode="single" max={50}>
+// 				{this.props.children}
+// 			</Textfit>
+// 		</div>
+// 	)
+// }
 
+// class Heading extends React.Component {
+// 	render = () => {
+// 		return this.props.backgroundImage ? (
+// 			<HeadingWithBackgroundImage image={this.props.backgroundImage}>
+// 				{this.props.heading.text}
+// 				<span>{this.props.heading.spanText}</span>
+// 			</HeadingWithBackgroundImage>
+// 		) : (
+// 			<HeadingWithoutBackgroundImage>
+// 				{this.props.heading.text}
+// 				<span>{this.props.heading.spanText}</span>
+// 			</HeadingWithoutBackgroundImage>
+// 		)
+// 	}
+// }
 class Heading extends React.Component {
-	render = () => {
-		return this.props.backgroundImage ? (
-			<HeadingWithBackgroundImage image={this.props.backgroundImage}>
-				{this.props.heading.text}
-				<span>{this.props.heading.spanText}</span>
-			</HeadingWithBackgroundImage>
-		) : (
-			<HeadingWithoutBackgroundImage>
-				{this.props.heading.text}
-				<span>{this.props.heading.spanText}</span>
-			</HeadingWithoutBackgroundImage>
-		)
+	state = {
+		style: { backgroundImage: this.props.headingBackgroundImage ? `url(${this.props.headingBackgroundImage})` : '' }
 	}
+	componentDidUpdate(prevProps) {
+		if (prevProps.headingBackgroundImage !== this.props.headingBackgroundImage) {
+			if (this.props.headingBackgroundImage)
+				this.setState({ style: { backgroundImage: `url(${this.props.headingBackgroundImage})` } })
+			else this.setState({ style: { backgroundImage: 'none', backgroundColor: '#444' } })
+		}
+	}
+	render = () => (
+		<div
+			className={`top-heading ${this.props.headingBackgroundImage ? 'background-image' : ''} ${this.props
+				.headingSelected
+				? 'selected'
+				: ''}`}
+			style={this.state.style}
+			onClick={() => this.props.selectHeading()}
+		>
+			<Textfit mode="single" max={50}>
+				{this.props.text}
+				{this.props.spanText && <span>{this.props.spanText}</span>}
+			</Textfit>
+		</div>
+	)
 }
 
 export default class Page extends React.Component {
@@ -82,7 +111,6 @@ export default class Page extends React.Component {
 		parentElements.forEach((element) => (element.style.height = '100%'))
 	}
 	componentDidMount() {
-		console.log('page mounted', this.props.children)
 		this.setParentElementsTo100PercentHeight()
 		this.setState({ id: this.getPathname() || 'index', pageName: this.getPageName(), heading: this.getHeading() })
 	}
@@ -92,7 +120,15 @@ export default class Page extends React.Component {
 				{({ size }) =>
 					this.state.id ? (
 						<div id={this.state.id} className={this.getMainContainerClassName(size)}>
-							{!this.props.noHeading && <Heading {...this.state} {...this.props} />}
+							{!this.props.noHeading && (
+								<Heading
+									{...this.state.heading}
+									headingBackgroundImage={this.props.headingBackgroundImage}
+									isPreview={this.props.isPreview}
+									selectHeading={() => this.props.selectHeading()}
+									headingSelected={this.props.headingSelected}
+								/>
+							)}
 							<main>{this.props.children}</main>
 						</div>
 					) : (

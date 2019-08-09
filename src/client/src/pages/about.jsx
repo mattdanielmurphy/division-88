@@ -1,22 +1,16 @@
 import React from 'react'
 import Page from '../components/jsx/Page'
+import AboutTextEditor from '../components/jsx/AboutTextEditor'
 
-export default () => (
-	<Page name="About">
+export default (props) => (
+	<Page
+		headingBackgroundImage={props.headingBackgroundImage}
+		headingSelected={props.headingSelected}
+		isPreview={props.isPreview}
+		selectHeading={() => props.selectHeading()}
+	>
 		<section className="text">
-			<p>
-				So utterly lost was he to all sense of reverence for the many marvels of their majestic bulk and mystic
-				ways; and so dead to anything like an apprehension of any possible danger from encountering them; that
-				in his poor opinion, the wondrous whale was but a species of magnified mouse, or at least water-rat,
-				requiring only a little circumvention and some small application of time and trouble in order to kill
-				and boil.
-			</p>
-			<p>
-				I told him that I never liked to sleep two in a bed; that if I should ever do so, it would depend upon
-				who the harpooneer might be, and that if he (the landlord) really had no other place for me, and the
-				harpooneer was not decidedly objectionable, why rather than wander further about a strange town on so
-				bitter a night, I would put up with the half of any decent man’s blanket.
-			</p>
+			<AboutTextEditor text={props.aboutText} />
 		</section>
 	</Page>
 )

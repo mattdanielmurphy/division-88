@@ -3,19 +3,62 @@ import { useRouteData } from 'react-static'
 import axios from 'axios'
 import Auth0Lock from 'auth0-lock'
 
-const env = require('../client-env')
+const env = require('client-env')
 
 import AdminControls from 'components/jsx/admin/AdminControls'
 import PagePreview from 'components/jsx/admin/PagePreview'
 import CellEditor from 'components/jsx/admin/CellEditor'
 import ArtistEditor from 'components/jsx/admin/ArtistEditor'
+import ToolEditor from 'components/jsx/admin/ToolEditor'
+import HeadingEditor from 'components/jsx/admin/HeadingEditor'
 
 import Index from './AdminIndex'
 import Artists from 'pages/artists'
 import Artist from 'containers/Artist'
-import ProducerTools from '../pages/producer-tools'
-import ProducerTool from 'containers/ProducerTool'
-import About from '../pages/about'
+import ProducerTools from 'pages/producer-tools'
+import ProducerTool from 'pages/producer-tool'
+import About from 'pages/about'
+
+class Editor extends React.Component {
+	render = () => {
+		console.log(this.props.selectedHeading)
+		if (this.props.selectedHeading)
+			return (
+				<HeadingEditor
+					pageName={this.props.pageName}
+					selectedHeading={this.props.selectedHeading}
+					updateHeading={(heading) => this.props.updateHeading(heading)}
+				/>
+			)
+		else if (this.props.pageName === 'artists')
+			return (
+				<ArtistEditor
+					index={this.props.selectedArtist}
+					updateArtists={(index, artist) => this.props.updateArtists(index, artist)}
+					refreshArtists={(index, artist) => this.props.refreshArtists(index, artist)}
+				/>
+			)
+		else if (this.props.pageName === 'index')
+			return (
+				<CellEditor
+					index={this.props.selectedCell}
+					updateGrid={({ layouts, cells }) => this.props.updateGrid({ layouts, cells })}
+					refreshGrid={({ cells }) => this.props.refreshGrid({ cells })}
+					videoMode={this.props.selectedCell.video}
+				/>
+			)
+		else if (this.props.pageName === 'producer-tools')
+			return (
+				<ToolEditor
+					index={this.props.selectedTool}
+					updateTools={(index, tool) => this.props.updateTools(index, tool)}
+					refreshTools={(index, tool) => this.props.refreshTools(index, tool)}
+				/>
+			)
+		else if (this.props.pageName === 'about') return <div>about editor</div>
+		else return <div />
+	}
+}
 
 const pages = {
 	index: Index,
@@ -33,27 +76,12 @@ class Admin extends React.Component {
 		countdown: 2,
 		selectedCell: 0,
 		selectedArtist: 0,
+		selectedTool: 0,
 		dataReady: false,
+		selectedHeading: undefined,
 		authenticated: true // REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION
 	}
-	getGridFromDatabase = async () => {
-		const layouts = await axios.get(`${env.apiUrl}/grids/index/layouts`).then((r) => r.data)
-		const cells = await axios.get(`${env.apiUrl}/grids/index/cells`).then((r) => r.data)
-		return { layouts, cells }
-	}
-	getArtistsFromDatabase = async () => {
-		return await axios.get(`${env.apiUrl}/artists`).then((r) => r.data)
-	}
-	getArtistFromDatabase = async (index) => {
-		const artists = await axios.get(`${env.apiUrl}/artist/index/${index}`).then((r) => r.data)
-		return artists
-	}
-	getProducerToolsFromDatabase = async (index) => {
-		const artists = await axios.get(`${env.apiUrl}/producer-tools`).then((r) => r.data)
-		return artists
-	}
-	setScale = (scale) => this.setState({ scale })
-	setView = (view) => this.setState({ view })
+	// auth
 	signIn() {
 		this.cancelCountdown()
 		this.lock.show()
@@ -72,6 +100,9 @@ class Admin extends React.Component {
 			this.cancelCountdown()
 		})
 	}
+
+	setScale = (scale) => this.setState({ scale })
+	setView = (view) => this.setState({ view })
 	authenticate() {
 		this.lock = new Auth0Lock('kWHysVBkljt5AhDWF62CKNK46HQSCkkw', 'dvsn88.auth0.com', {
 			allowSignUp: false,
@@ -80,15 +111,12 @@ class Admin extends React.Component {
 		this.setTokenIfProvided()
 		this.startCountdown()
 	}
-	updateReceived = () => this.setState({ updateSent: false })
 	updateGrid = ({ layouts, cells }) => {
-		if (layouts && cells) this.setState({ layouts, cells, updateSent: true })
-		else if (layouts) this.setState({ layouts, updateSent: true })
-		else if (cells) this.setState({ cells, updateSent: true })
-		console.log(cells)
+		if (layouts && cells) this.setState({ layouts, cells })
+		else if (layouts) this.setState({ layouts })
+		else if (cells) this.setState({ cells })
 	}
 	refreshGrid = ({ cells }) => {
-		console.log('refresh grid')
 		this.setState({ cells: {}, cellsTemp: cells })
 	}
 	updateArtists = (index, artist) => {
@@ -101,22 +129,37 @@ class Admin extends React.Component {
 		artists[index] = artist
 		this.setState({ artists: undefined, artistsTemp: artists })
 	}
+	updateTools = (index, tool) => {
+		const tools = this.state.tools
+		tools[index] = tool
+		this.setState({ tools })
+	}
+	refreshTools = (index, tool) => {
+		const tools = this.state.tools
+		tools[index] = tool
+		this.setState({ tools: undefined, toolsTemp: tools })
+	}
+	updateHeading = (heading) => {
+		this.setState({ headingBackgroundImage: heading.headingBackgroundImage })
+	}
 	addSpaceToTopOfBody() {
 		const body = document.getElementsByTagName('body')[0]
 		body.style.marginTop = '6rem'
 	}
-	selectCell(index) {
-		this.setState({ selectedCell: index })
+	selectCell = (index) => this.setState({ selectedCell: index, selectedHeading: undefined })
+	selectArtist = (index) => this.setState({ selectedArtist: index, selectedHeading: undefined })
+	selectTool = (index) => this.setState({ selectedTool: index, selectedHeading: undefined })
+	selectHeading = (pageName) => {
+		console.log('select heading', pageName)
+		this.setState({
+			selectedHeading: pageName,
+			selectedCell: undefined,
+			selectedArtist: undefined,
+			selectedTool: undefined
+		})
 	}
-	selectArtist(index) {
-		this.setState({ selectedArtist: index })
-	}
-	updateCell(index, cell) {
-		console.log('update cell')
-		this.setState({ updatedCell: { index, cell } })
-	}
+	updateCell = (index, cell) => this.setState({ updatedCell: { index, cell } })
 	setBodyBackground = () => (document.getElementsByTagName('body')[0].style.backgroundColor = '#222')
-
 	// grid-specific
 	undoLayoutChange() {
 		const layouts = this.layoutsHistory[this.layoutsHistory.length - 2]
@@ -127,6 +170,7 @@ class Admin extends React.Component {
 		}
 	}
 	redoLayoutChange() {
+		if (!this.layoutsUndone) return
 		const layouts = this.layoutsUndone[this.layoutsUndone.length - 1]
 		if (layouts) {
 			this.layoutsUndone = this.layoutsUndone.slice(0, this.layoutsUndone.length - 1)
@@ -143,8 +187,13 @@ class Admin extends React.Component {
 	}
 
 	setKeyBindings = () => {
-		document.onkeypress = (e) => {
-			if (e.target.tagName === 'INPUT') return
+		document.onkeydown = (e) => {
+			if (
+				e.target.hasAttribute('data-slate-editor') ||
+				e.target.tagName === 'INPUT' ||
+				e.target.tagName === 'TEXTAREA'
+			)
+				return
 			else if (e.key === 'u') this.undoLayoutChange()
 			else if (e.key === 'r') this.redoLayoutChange()
 			else if (e.key === 'm') this.setView('mobile')
@@ -152,47 +201,77 @@ class Admin extends React.Component {
 			else if (e.key === 'd') this.setView('desktop')
 		}
 	}
-	selectArtist(index) {
-		this.setState({ selectedArtist: index })
+
+	// get data from database
+	getArtistsFromDatabase = async () => {
+		const artists = await axios.get(`${env.apiUrl}/artists`).then((r) => r.data)
+		this.setState({ artists })
+		return artists
 	}
-	getDataForPage() {
-		if (this.props.pageName === 'artists') {
-			console.log('getting data for artists...')
-			this.getArtistsFromDatabase().then((artists) => {
-				this.setState({ artists, dataReady: true })
-			})
-		} else if (this.props.pageName === 'artist') {
-			console.log('getting data for artist...')
-			this.getArtistsFromDatabase().then((artists) => {
-				this.setState({ artists, dataReady: true })
-			})
-		} else if (this.props.pageName === 'producer-tools') {
-			console.log('getting data for producer-tools...')
-			this.getProducerToolsFromDatabase().then((tools) => {
-				this.setState({ tools, dataReady: true })
-			})
-		} else if (this.props.pageName === 'index') {
-			console.log('getting data for index...')
-			this.getGridFromDatabase().then(({ cells, layouts }) => {
-				this.setState({ cells, layouts, dataReady: true })
-				this.layoutsHistory = [ layouts ]
-				this.layoutsUndone = []
-			})
-		}
+	getArtistFromDatabase = async (index) => {
+		const artist = await axios.get(`${env.apiUrl}/artist/index/${index}`).then((r) => r.data)
+		this.setState({ artist })
+		return artist
 	}
-	componentWillMount() {
-		this.getDataForPage()
+	getProducerToolsFromDatabase = async (index) => {
+		const tools = await axios.get(`${env.apiUrl}/producer-tools`).then((r) => r.data)
+		this.setState({ tools })
+		return tools
+	}
+	getGridFromDatabase = async () => {
+		const layouts = await axios.get(`${env.apiUrl}/grids/index/layouts`).then((r) => r.data)
+		const cells = await axios.get(`${env.apiUrl}/grids/index/cells`).then((r) => r.data)
+		this.setState({ cells, layouts })
+		this.layoutsHistory = [ layouts ]
+		this.layoutsUndone = []
+		return cells
+	}
+	getAboutTextFromDatabase = async (index) => {
+		const aboutText = await axios.get(`${env.apiUrl}/about/text`).then((r) => r.data)
+		this.setState({ aboutText })
+		return aboutText
+	}
+	getHeadingBackgroundImage = async () => {
+		const headingBackgroundImage = await axios
+			.get(`${env.apiUrl}/page-info/${this.props.pageName}`)
+			.then((r) => r.data.headingBackgroundImage)
+		this.setState({ headingBackgroundImage })
+		return headingBackgroundImage
+	}
+	getPageData = async (pageName) => {
+		if (pageName === 'artists') return await this.getArtistsFromDatabase()
+		else if (pageName === 'artist') return await this.getArtistFromDatabase()
+		else if (pageName === 'producer-tools') return await this.getProducerToolsFromDatabase()
+		else if (pageName === 'index') return await this.getGridFromDatabase()
+		else if (pageName === 'about') return await this.getAboutTextFromDatabase()
+	}
+	getDataForPage = async () => {
+		const getHeadingData = new Promise((res, rej) => this.getHeadingBackgroundImage().then((r) => res(r)))
+		const getPageData = new Promise((res, rej) => this.getPageData().then((r) => res(r)))
+		await Promise.all([ getHeadingData, getPageData ])
+		this.setState({ dataReady: true })
 	}
 	componentDidUpdate(prevProps) {
 		if (this.props.pageName !== prevProps.pageName) {
+			this.setState({
+				dataReady: false,
+				selectedArtist: undefined,
+				selectedTool: undefined,
+				selectedCell: undefined,
+				selectedHeading: undefined
+			})
 			this.getDataForPage()
+			// bring values back from temp storage once component updated (used to properly refresh data... unfortunately necessary)
 		} else if (this.state.cellsTemp) {
 			this.setState({ cells: this.state.cellsTemp, cellsTemp: undefined })
 		} else if (this.state.artistsTemp) {
 			this.setState({ artists: this.state.artistsTemp, artistsTemp: undefined })
+		} else if (this.state.toolsTemp) {
+			this.setState({ tools: this.state.toolsTemp, toolsTemp: undefined })
 		}
 	}
 	componentDidMount() {
+		this.getDataForPage()
 		this.addSpaceToTopOfBody()
 		this.setKeyBindings()
 		this.setBodyBackground()
@@ -210,36 +289,44 @@ class Admin extends React.Component {
 					/>
 					{this.state.dataReady && (
 						<PagePreview
+							pageName={this.props.pageName}
 							page={this.props.page}
 							view={this.state.view}
 							scale={this.state.scale}
+							// Heading
+							headingBackgroundImage={this.state.headingBackgroundImage}
+							selectHeading={(pageName) => this.selectHeading(pageName)}
+							headingSelected={this.state.selectedHeading}
+							// Grid
 							selectCell={(index) => this.selectCell(index)}
 							selectedCell={this.state.selectedCell}
 							layouts={this.state.layouts}
 							cells={this.state.cells}
 							onLayoutChange={(layout, layouts) => this.onLayoutChange(layout, layouts)}
+							// Artists
 							selectArtist={(artist) => this.selectArtist(artist)}
 							selectedArtist={this.state.selectedArtist}
 							artists={this.state.artists}
-							updateSent={this.state.updateSent}
-							updateReceived={() => this.updateReceived()}
+							// Producer Tools
+							selectTool={(tool) => this.selectTool(tool)}
+							selectedTool={this.state.selectedTool}
+							tools={this.state.tools}
+							// About
+							aboutText={this.state.aboutText}
 						/>
 					)}
-					{this.props.pageName === 'artists' && (
-						<ArtistEditor
-							index={this.state.selectedArtist}
-							updateArtists={(index, artist) => this.updateArtists(index, artist)}
-							refreshArtists={(index, artist) => this.refreshArtists(index, artist)}
-						/>
-					)}
-					{this.props.pageName === 'index' && (
-						<CellEditor
-							videoMode={this.state.selectedCell.video}
-							updateGrid={({ layouts, cells }) => this.updateGrid({ layouts, cells })}
-							index={this.state.selectedCell}
-							refreshGrid={({ cells }) => this.refreshGrid({ cells })}
-						/>
-					)}
+					<Editor
+						{...this.props}
+						{...this.state}
+						selectedHeading={this.state.selectedHeading}
+						updateHeading={(heading) => this.updateHeading(heading)}
+						updateArtists={(index, artist) => this.updateArtists(index, artist)}
+						refreshArtists={(index, artist) => this.refreshArtists(index, artist)}
+						updateGrid={({ layouts, cells }) => this.updateGrid({ layouts, cells })}
+						refreshGrid={({ cells }) => this.refreshGrid({ cells })}
+						updateTools={(index, tool) => this.updateTools(index, tool)}
+						refreshTools={(index, tool) => this.refreshTools(index, tool)}
+					/>
 				</div>
 			)
 		} else {
@@ -256,6 +343,6 @@ class Admin extends React.Component {
 }
 export default () => {
 	const { page, index } = useRouteData()
-	console.log(page, index)
+
 	return <Admin page={pages[page]} pageName={page} index={index} />
 }

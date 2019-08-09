@@ -1,7 +1,7 @@
-const { ProducerTool } = require('../../models/ProducerTool')
+const ProducerTool = require('../../models/ProducerTool')
 
 module.exports = async (req, res) => {
-	const index = req.params.producerTool
+	const index = req.params.index
 	const producerTool = req.body
 
 	const producerTools = await ProducerTool.find()

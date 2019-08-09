@@ -1,58 +1,72 @@
 import React from 'react'
-import { Link } from '../components/jsx/Router'
-import Image from '../components/jsx/Image'
+import ProducerTool from '../components/jsx/ProducerTool'
 import Page from '../components/jsx/Page'
-import { useRouteData } from 'react-static'
 import axios from 'axios'
 import env from 'client-env'
 
-//static:
+// STATIC VERSION:
+// import { useRouteData } from 'react-static'
 
-// export default () => {
-// 	const { producerTools } = useRouteData()
+// export default (props) => {
+// 	let { artists } = useRouteData()
+// 	artists = Object.values(artists)
 
 // 	return (
-// 		<Page>
-// 			<div className="grid">
-// 				{producerTools.map((tool, index) => (
-// 					<Link key={index} to={`producer-tools/${tool.page}`}>
-// 						<img src={tool.img} alt="" />
-// 						<h2>{tool.name}</h2>
-// 						<div className="description">{tool.description}</div>
-// 					</Link>
-// 				))}
-// 				<Link to="/" />
-// 				<Link to="/" />
-// 			</div>
+// 		<Page headingBackgroundImage={this.props.headingBackgroundImage} headingSelected={this.props.headingSelected} backgroundImage={'/images/trees.jpg'}>
+// 			{artists.map((artist, index) => <ProducerTool key={index} {...artist} index={index} {...props} />)}
 // 		</Page>
 // 	)
 // }
 
-// dyanmic:
+// DYNAMIC VERSION (TEMPORARY):
+
 export default class extends React.Component {
 	state = {}
-	getProducerTools = async () => {
-		return await axios.get(`${env.apiUrl}/producer-tools`).then((r) => r.data)
+	componentDidMount = async () => {
+		if (this.props.tools) {
+			this.setState({ tools: this.props.tools })
+		} else {
+			let tools = await axios.get(`${env.apiUrl}/producer-tools`).then((r) => r.data)
+			this.setState({ tools })
+		}
 	}
-	componentWillMount = async () => {
-		const tools = await this.getProducerTools()
-		console.log(tools)
-		this.setState({ tools })
+	componentDidUpdate(prevProps) {
+		if (this.props.tools && JSON.stringify(prevProps.tools) !== JSON.stringify(this.props.tools)) {
+			this.setState({ tools: this.props.tools })
+		}
 	}
 	render = () => {
+		//  {this.state.tools.map((tool, index) => (
+		//  	<Link key={index} to={`producer-tools/${tool.page}`}>
+		//  		{}
+		//  		<img src={tool.imgSrc} alt="" />
+		//  		<div className="description">
+		//  			<h2>{tool.name}</h2>
+		//  			<div className="description-text">{tool.description}</div>
+		//  		</div>
+		//  	</Link>
 		return this.state.tools ? (
-			<Page>
-				<div className="grid">
-					{this.state.tools.map((tool, index) => (
-						<Link key={index} to={`producer-tools/${tool.page}`}>
-							<img src={tool.imgSrc} alt="" />
-							<h2>{tool.name}</h2>
-							<div className="description">{tool.description}</div>
-						</Link>
-					))}
-					<Link to="/" />
-					<Link to="/" />
-				</div>
+			<Page
+				headingBackgroundImage={this.props.headingBackgroundImage}
+				headingSelected={this.props.headingSelected}
+				selectHeading={() => this.props.selectHeading(this.props.pageName)}
+				isPreview={this.props.isPreview}
+				backgroundImage={'/images/trees.jpg'}
+			>
+				{this.state.tools.map((tool, index) => {
+					return (
+						<ProducerTool
+							key={index}
+							index={index}
+							isPreview={this.props.isPreview}
+							{...tool}
+							selectTool={() => {
+								this.props.selectTool(index)
+							}}
+							selected={this.props.selectedTool === index}
+						/>
+					)
+				})}
 			</Page>
 		) : (
 			<div />

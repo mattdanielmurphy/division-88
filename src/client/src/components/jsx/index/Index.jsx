@@ -37,19 +37,14 @@ export default class Index extends React.Component {
 	}
 	componentDidMount = async () => {
 		this.watchWindowResizing()
-		console.log('cells', this.props.cells)
+
 		this.setState({ rowHeight: this.rowHeight, cells: this.props.cells })
-		console.log(this.props.gridWidth)
 	}
 	componentDidUpdate(prevProps, prevState) {
 		if (prevProps.gridWidth !== this.props.gridWidth) this.setState({ rowHeight: this.rowHeight })
-		if (this.props.updateSent) {
-			console.log('updateSent')
-			this.setState({ cellsUpToDate: false, cells: this.props.cells })
-			this.props.updateReceived()
-		} else if (JSON.stringify(this.props.cells) !== JSON.stringify(prevProps.cells)) {
+		if (JSON.stringify(this.props.cells) !== JSON.stringify(prevProps.cells)) {
 			// this.forceUpdate()
-			console.log('update')
+
 			this.setState({ cellsUpToDate: false, cells: this.props.cells })
 		} else if (!this.state.cellsUpToDate) this.setState({ cellsUpToDate: true })
 	}
@@ -110,7 +105,7 @@ export default class Index extends React.Component {
 						</ResponsiveGridLayout>
 					)
 				) : (
-					<div></div>
+					<div />
 				)}
 			</div>
 		)
