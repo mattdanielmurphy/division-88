@@ -1,8 +1,8 @@
 import React from 'react'
-import ToggleButton from 'components/jsx/ToggleButton'
-import ColorPicker from 'components/jsx/admin/ColorPicker'
+import ToggleButton from '../ToggleButton'
+import ColorPicker from '../admin/ColorPicker'
 import axios from 'axios'
-import env from 'client-env'
+import env from '../../../client-env'
 
 export default class HeadingEditor extends React.Component {
 	state = {}
@@ -61,13 +61,13 @@ export default class HeadingEditor extends React.Component {
 	}
 	render = () =>
 		this.state.heading ? (
-			<div id="property-editor">
+			<div id='property-editor'>
 				<form onSubmit={(e) => this.handleSubmit(e)}>
-					<div className="property-input">
+					<div className='property-input'>
 						<label>heading background image</label>
 						<input
 							onChange={(e) => this.handleInputChange({ e })}
-							id="headingBackgroundImage"
+							id='headingBackgroundImage'
 							value={this.state.heading.headingBackgroundImage || ''}
 						/>
 					</div>

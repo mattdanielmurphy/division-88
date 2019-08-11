@@ -9,10 +9,10 @@ export default class AdminControls extends React.Component {
 		this.props.setScale(scale)
 	}
 	render = () => (
-		<div id="admin-panel">
+		<div id='admin-panel'>
 			<ChangeView setView={this.props.setView} setScale={this.props.setScale} />
 			{this.props.pageName === 'index' && (
-				<div className="undo-redo">
+				<div className='undo-redo'>
 					<button onClick={() => this.props.undoLayoutChange()}>Undo [u]</button>
 					<button onClick={() => this.props.redoLayoutChange()}>Redo [r]</button>
 				</div>

@@ -51,7 +51,7 @@ export default class Index extends React.Component {
 	render() {
 		let ResponsiveGridLayout = this.props.ResponsiveGridLayout
 		return (
-			<div id="index">
+			<div id='index'>
 				{this.state.cellsUpToDate ? (
 					this.props.layouts &&
 					this.state.cells && (
@@ -85,7 +85,7 @@ export default class Index extends React.Component {
 						>
 							{this.state.cells.map((cell, index) => (
 								<div
-									className="grid-item"
+									className='grid-item'
 									onClick={(e) => this.handleClickGridItem(index, e)}
 									key={index}
 								>

@@ -1,10 +1,10 @@
 import React from 'react'
-import ToggleButton from 'components/jsx/ToggleButton'
-import NonVideoOptions from 'components/jsx/admin/NonVideoOptions'
-import ColorPicker from 'components/jsx/admin/ColorPicker'
-import ReleasesTable from 'components/jsx/admin/ReleasesTable'
+import ToggleButton from '../ToggleButton'
+import NonVideoOptions from '../admin/NonVideoOptions'
+import ColorPicker from '../admin/ColorPicker'
+import ReleasesTable from '../admin/ReleasesTable'
 import axios from 'axios'
-import env from 'client-env'
+import env from '../../../client-env'
 
 export default class ArtistEditor extends React.Component {
 	state = {}
@@ -88,7 +88,9 @@ export default class ArtistEditor extends React.Component {
 		// update index when a new artist is selected
 		if (this.props.index !== prevProps.index) {
 			if (this.state.unsavedChanges) {
-				const discardChanges = confirm("You've made unsaved changes for this artist. Proceed and discard?")
+				const discardChanges = window.confirm(
+					"You've made unsaved changes for this artist. Proceed and discard?"
+				)
 				if (discardChanges) this.changeIndex()
 			} else this.changeIndex(this.props.index)
 		}
@@ -123,21 +125,21 @@ export default class ArtistEditor extends React.Component {
 	}
 	render = () =>
 		this.state.artist ? (
-			<div id="property-editor">
+			<div id='property-editor'>
 				<form onSubmit={(e) => this.handleSubmit(e)}>
-					<div className="property-input">
+					<div className='property-input'>
 						<label>name</label>
 						<input
 							onChange={(e) => this.handleInputChange({ e })}
-							id="name"
+							id='name'
 							value={this.state.artist.name || ''}
 						/>
 					</div>
-					<div className="property-input">
+					<div className='property-input'>
 						<label>page name</label>
 						<input
 							onChange={(e) => this.handleInputChange({ e })}
-							id="page"
+							id='page'
 							value={
 								this.state.artist.page ||
 								(this.state.artist.name && this.state.artist.name.toLowerCase().split(' ').join('-')) ||
@@ -148,19 +150,19 @@ export default class ArtistEditor extends React.Component {
 
 					<br />
 
-					<div className="property-input">
+					<div className='property-input'>
 						<label>bio</label>
 						<textarea
 							rows={6}
 							cols={60}
 							onKeyPress={(e) => this.handleTextareaKeyPress(e)}
 							onChange={(e) => this.handleInputChange({ e })}
-							id="description.bio"
+							id='description.bio'
 							value={(this.state.artist.description && this.state.artist.description.bio) || ''}
 						/>
 					</div>
 					<br />
-					<div className="property-input">
+					<div className='property-input'>
 						<label>description background color (default: darkgrey)</label>
 						<ColorPicker
 							color={
@@ -180,7 +182,7 @@ export default class ArtistEditor extends React.Component {
 							}}
 						/>
 					</div>
-					<div className="property-input">
+					<div className='property-input'>
 						<label>description text color (default: white)</label>
 						<ColorPicker
 							color={
@@ -208,12 +210,12 @@ export default class ArtistEditor extends React.Component {
 					{this.state.error}
 					<button>Submit changes</button>
 				</form>
-				<div id="create-new">
+				<div id='create-new'>
 					<button onClick={() => this.newArtist()}>Submit as new artist</button>
 				</div>
 				<button
 					onClick={() =>
-						confirm("Are you sure you want to delete this artist? (There's no going back!)") &&
+						window.confirm("Are you sure you want to delete this artist? (There's no going back!)") &&
 						this.deleteArtist()}
 				>
 					Delete artist
@@ -234,11 +236,11 @@ const ex = {
 		{
 			name: 'All Nighters',
 			spotifyUrl: 'https://open.spotify.com/album/3t9S03TNKktyKlNysyJS8k?si=ZJk-l8WKRW692NLHGnPlow',
-			cover: '/images/all-nighters.jpg'
+			cover: 'images/all-nighters.jpg'
 		}
 	],
 	name: 'Billy Wild',
 	page: 'billy-wild',
-	imgSrc: '/images/billy.jpg',
+	imgSrc: 'images/billy.jpg',
 	spotifyUrl: 'https://open.spotify.com/artist/6zNQ51HIfnzskqL2R82jYD?si=rEm8CzOpQIOnzqqCJIBFYQ'
 }

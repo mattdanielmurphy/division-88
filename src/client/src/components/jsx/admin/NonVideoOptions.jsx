@@ -1,38 +1,38 @@
 import React from 'react'
-import ColorPicker from 'components/jsx/admin/ColorPicker'
+import ColorPicker from '../admin/ColorPicker'
 
 export default class extends React.Component {
 	render = () => (
-		<div className="non-video-options">
-			<div className="property-input">
+		<div className='non-video-options'>
+			<div className='property-input'>
 				<label>link</label>
 				<input
 					onKeyPress={(e) => this.props.handleKeyPress(e)}
 					onChange={(e) => this.props.handleInputChange({ e })}
-					type="text"
-					id="link"
+					type='text'
+					id='link'
 					value={this.props.state.cell.link || ''}
 				/>
 			</div>
-			<div className="property-input">
+			<div className='property-input'>
 				<label>backgroundText: heading</label>
 				<input
 					onKeyPress={(e) => this.props.handleKeyPress(e)}
 					onChange={(e) => this.props.handleInputChange({ e })}
-					type="text"
-					id="backgroundText.heading"
+					type='text'
+					id='backgroundText.heading'
 					value={
 						this.props.state.cell.backgroundText ? this.props.state.cell.backgroundText.heading || '' : ''
 					}
 				/>
 			</div>
-			<div className="property-input">
+			<div className='property-input'>
 				<label>backgroundText: subheading</label>
 				<input
 					onKeyPress={(e) => this.props.handleKeyPress(e)}
 					onChange={(e) => this.props.handleInputChange({ e })}
-					type="text"
-					id="backgroundText.subheading"
+					type='text'
+					id='backgroundText.subheading'
 					value={
 						this.props.state.cell.backgroundText ? (
 							this.props.state.cell.backgroundText.subheading || ''
@@ -43,7 +43,7 @@ export default class extends React.Component {
 				/>
 			</div>
 			<br />
-			<div className="property-input">
+			<div className='property-input'>
 				<label>bottomText: background color</label>
 				<ColorPicker
 					color={
@@ -60,23 +60,23 @@ export default class extends React.Component {
 					}}
 				/>
 			</div>
-			<div className="property-input">
+			<div className='property-input'>
 				<label>bottomText: height (example: 10px)</label>
 				<input
 					onKeyPress={(e) => this.props.handleKeyPress(e)}
 					onChange={(e) => this.props.handleInputChange({ e })}
-					type="text"
-					id="bottomText.height"
+					type='text'
+					id='bottomText.height'
 					value={this.props.state.cell.bottomText ? this.props.state.cell.bottomText.height || '' : ''}
 				/>
 			</div>
-			<div className="property-input">
+			<div className='property-input'>
 				<label>bottomText: text</label>
 				<input
 					onKeyPress={(e) => this.props.handleKeyPress(e)}
 					onChange={(e) => this.props.handleInputChange({ e })}
-					type="text"
-					id="bottomText.text"
+					type='text'
+					id='bottomText.text'
 					value={this.props.state.cell.bottomText ? this.props.state.cell.bottomText.text || '' : ''}
 				/>
 			</div>

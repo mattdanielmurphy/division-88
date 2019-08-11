@@ -67,7 +67,7 @@ export default class OffCanvas extends React.Component {
 	}
 	render = () => (
 		<Menu right styles={this.getStyles()} isOpen={this.state.isOpen}>
-			<Nav toggleOpenClose={() => this.toggleOpenClose(e)} />
+			<Nav toggleOpenClose={() => this.toggleOpenClose()} />
 		</Menu>
 	)
 }

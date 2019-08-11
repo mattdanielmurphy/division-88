@@ -26,14 +26,14 @@ export default class PagePreview extends React.Component {
 		const Page = this.props.page
 		return (
 			<div
-				id="preview-wrapper"
+				id='preview-wrapper'
 				style={{
 					width: this.getWidth() * this.props.scale,
 					height: this.getHeight() * this.props.scale
 				}}
 			>
 				<div
-					id="preview"
+					id='preview'
 					className={this.props.view}
 					style={{
 						width: this.getWidth(),
@@ -45,6 +45,7 @@ export default class PagePreview extends React.Component {
 					<Header mobilePreview={this.props.view === 'mobile'} previewWidth={this.getWidth()} />
 					<Page
 						isPreview
+						pageName={this.props.pageName}
 						view={this.props.view}
 						gridWidth={this.getWidth()}
 						// Heading

@@ -2,13 +2,12 @@ import React from 'react'
 import { Editor } from 'slate-react'
 import { Value } from 'slate'
 import axios from 'axios'
-const env = require('client-env')
+import env from '../../client-env'
 
 export default class App extends React.Component {
 	state = {
 		value: Value.fromJSON(
-			// JSON.parse(this.props.text) ||
-			{
+			JSON.parse(this.props.text) || {
 				document: {
 					nodes: [
 						{
@@ -30,13 +29,16 @@ export default class App extends React.Component {
 	onChange = ({ value }) => {
 		// Check to see if the document has changed before saving.
 		if (value.document != this.state.value.document) {
-			axios.post(`${env.apiUrl}/about`, { text: JSON.stringify(value.toJSON()) }).catch((err) => console.log(err))
+			axios
+				.post(`${env.apiUrl}/about`, { text: JSON.stringify(value.toJSON()) })
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		}
 
 		this.setState({ value })
 	}
 
 	render() {
-		return <Editor value={this.state.value} onChange={this.onChange} />
+		return <Editor readOnly={!this.props.isPreview} value={this.state.value} onChange={this.onChange} />
 	}
 }

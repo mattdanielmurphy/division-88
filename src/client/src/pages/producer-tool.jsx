@@ -1,8 +1,8 @@
 import React from 'react'
-import { useRouteData } from 'react-static'
+
 import Page from '../components/jsx/Page'
 import axios from 'axios'
-import env from 'client-env'
+import env from '../client-env'
 
 class ProducerTool extends React.Component {
 	state = {
@@ -18,9 +18,9 @@ class ProducerTool extends React.Component {
 	}
 	render = () => {
 		return (
-			<section className="text">
+			<section className='text'>
 				<p>{this.props.description.text}</p>
-				<a href={this.state.dropboxDirectUrl} className="button">
+				<a href={this.state.dropboxDirectUrl} className='button'>
 					Download
 				</a>
 			</section>
@@ -65,7 +65,7 @@ export default class extends React.Component {
 			<Page
 				headingBackgroundImage={this.props.headingBackgroundImage}
 				headingSelected={this.props.headingSelected}
-				id="producer-tool"
+				id='producer-tool'
 				heading={{ text: `${this.state.tool.name}: `, spanText: 'producer tool' }}
 				backgroundImage={this.state.tool.imgSrc}
 				// make sure this gets passed to ProducerTool from whereever, same for all instances of Page

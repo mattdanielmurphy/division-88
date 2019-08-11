@@ -2,17 +2,17 @@ import React from 'react'
 import ProducerTool from '../components/jsx/ProducerTool'
 import Page from '../components/jsx/Page'
 import axios from 'axios'
-import env from 'client-env'
+import env from '../client-env'
 
 // STATIC VERSION:
-// import { useRouteData } from 'react-static'
+//
 
 // export default (props) => {
 // 	let { artists } = useRouteData()
 // 	artists = Object.values(artists)
 
 // 	return (
-// 		<Page headingBackgroundImage={this.props.headingBackgroundImage} headingSelected={this.props.headingSelected} backgroundImage={'/images/trees.jpg'}>
+// 		<Page headingBackgroundImage={this.props.headingBackgroundImage} headingSelected={this.props.headingSelected} backgroundImage={'images/trees.jpg'}>
 // 			{artists.map((artist, index) => <ProducerTool key={index} {...artist} index={index} {...props} />)}
 // 		</Page>
 // 	)
@@ -51,7 +51,7 @@ export default class extends React.Component {
 				headingSelected={this.props.headingSelected}
 				selectHeading={() => this.props.selectHeading(this.props.pageName)}
 				isPreview={this.props.isPreview}
-				backgroundImage={'/images/trees.jpg'}
+				backgroundImage={'images/trees.jpg'}
 			>
 				{this.state.tools.map((tool, index) => {
 					return (

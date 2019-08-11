@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from './Router'
+import { Link } from 'react-router-dom'
 
 export default class Nav extends React.Component {
 	state = {
@@ -31,7 +31,7 @@ export default class Nav extends React.Component {
 		}
 	}
 	render = () => (
-		<div id="nav-wrapper">
+		<div id='nav-wrapper'>
 			<nav>
 				{this.state.links.map((link) => (
 					<Link

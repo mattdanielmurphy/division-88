@@ -1,8 +1,10 @@
 import React from 'react'
-import { Link } from 'components/jsx/Router'
-import { Container, Row, Col } from 'react-grid-system'
-import artists from '../components/js/artists'
+
+import { Link } from 'react-router-dom'
 import Image from '../components/jsx/Image'
+import Page from '../components/jsx/Page'
+import axios from 'axios'
+import env from '../client-env'
 
 class SpotifyPlayer extends React.Component {
 	state = { loading: true }
@@ -17,16 +19,16 @@ class SpotifyPlayer extends React.Component {
 		let src = this.getEmbedUrl()
 		return (
 			<div>
-				{this.state.loading && <div></div>}
+				{this.state.loading && <div />}
 				<iframe
 					onLoad={() => this.setState({ loading: false })}
-					className="spotify-iframe"
+					className='spotify-iframe'
 					src={src}
-					width="300"
-					height="380"
-					frameBorder="0"
-					allowtransparency="true"
-					allow="encrypted-media"
+					width='300'
+					height='380'
+					frameBorder='0'
+					allowtransparency='true'
+					allow='encrypted-media'
 				/>
 			</div>
 		)
@@ -35,15 +37,15 @@ class SpotifyPlayer extends React.Component {
 }
 
 const Releases = ({ artist }) => (
-	<div id="releases">
-		<div className="right">
+	<div id='releases'>
+		<div className='right'>
 			{artist.releases.map((release, index) => (
-				<div key={index} className="release">
+				<div key={index} className='release'>
 					<h2>{release.name}</h2>
-					<div className="left">
+					<div className='left'>
 						<img src={release.cover} alt={`${release.name} album cover artwork`} />
 					</div>
-					<div className="right">
+					<div className='right'>
 						<SpotifyPlayer spotifyUrl={release.spotifyUrl} />
 					</div>
 				</div>
@@ -53,26 +55,50 @@ const Releases = ({ artist }) => (
 )
 
 const TopTen = ({ artist }) => (
-	<div id="top-ten">
+	<div id='top-ten'>
 		<h2>Top ten tracks</h2>
 		<SpotifyPlayer spotifyUrl={artist.spotifyUrl} />
 	</div>
 )
 
-export default class Artist extends React.Component {
-	state = {
-		artist: artists.find((artist) => artist.page === this.props.artistName) || artists[0]
+// static version:
+
+// export default () => {
+// 	const { artist } = useRouteData()
+// 	return (
+// 		<Page id="artist" heading={{ text: `${artist.name}: `, spanText: 'releases' }} backgroundImage={artist.imgSrc}>
+// 			<TopTen artist={artist} />
+// 			{artist.releases.length > 0 && <Releases artist={artist} />}
+// 		</Page>
+// 	)
+// }
+
+// 100% dynamic (temporary)
+
+export default class extends React.Component {
+	state = {}
+	getArtist() {
+		const name = this.props.match.params.artist
+		return axios.get(`${env.apiUrl}/artists/${name}`).then((r) => r.data)
 	}
-	render = () => (
-		<div id="artist" className="main-container">
-			<div className="h1">
-				<h1>
-					{this.state.artist.name}: <span>Releases</span>
-				</h1>
-			</div>
-			<Image src={this.state.artist.imgSrc} />
-			<TopTen artist={this.state.artist} />
-			{this.state.artist.releases.length > 0 && <Releases artist={this.state.artist} />}
-		</div>
-	)
+	componentDidMount = async () => {
+		const artist = await this.getArtist()
+
+		this.setState({ artist })
+	}
+	render = () => {
+		return this.state.artist ? (
+			<Page
+				id='artist'
+				heading={{ text: `${this.state.artist.name}` }}
+				headingBackgroundImage={this.state.artist.imgSrc}
+				isPreview={this.props.isPreview}
+			>
+				<TopTen artist={this.state.artist} />
+				{this.state.artist.releases.length > 0 && <Releases artist={this.state.artist} />}
+			</Page>
+		) : (
+			<div />
+		)
+	}
 }

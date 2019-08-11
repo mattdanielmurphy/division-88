@@ -1,8 +1,8 @@
 import React from 'react'
-import ToggleButton from 'components/jsx/ToggleButton'
-import NonVideoOptions from 'components/jsx/admin/NonVideoOptions'
+import ToggleButton from '../ToggleButton'
+import NonVideoOptions from '../admin/NonVideoOptions'
 import axios from 'axios'
-import env from 'client-env'
+import env from '../../../client-env'
 
 export default class CellEditor extends React.Component {
 	state = {}
@@ -138,15 +138,15 @@ export default class CellEditor extends React.Component {
 		// update index when a new cell is selected
 		if (this.props.index !== prevProps.index) {
 			if (this.state.unsavedChanges) {
-				const discardChanges = confirm("You've made unsaved changes for this cell. Proceed and discard?")
+				const discardChanges = window.confirm("You've made unsaved changes for this cell. Proceed and discard?")
 				if (discardChanges) this.changeIndex()
 			} else this.changeIndex(this.props.index)
 		}
 	}
 	render = () =>
 		this.state.cell ? (
-			<div id="property-editor">
-				<div className="video-toggle">
+			<div id='property-editor'>
+				<div className='video-toggle'>
 					<ToggleButton enabled={this.state.cell.video} toggle={this.toggleVideoMode}>
 						Toggle Video
 					</ToggleButton>
@@ -155,25 +155,25 @@ export default class CellEditor extends React.Component {
 				<br />
 
 				<form onSubmit={(e) => this.handleSubmit(e)}>
-					<div className="property-input">
+					<div className='property-input'>
 						<label>image url</label>
 						<input
 							onKeyPress={(e) => this.handleKeyPress(e)}
 							onChange={(e) => this.handleInputChange({ e })}
-							type="text"
-							id="imgSrc"
+							type='text'
+							id='imgSrc'
 							value={this.state.cell.imgSrc || ''}
 						/>
 					</div>
 					<br />
 					{this.state.cell.video ? (
-						<div className="property-input">
+						<div className='property-input'>
 							<label>video link:</label>
 							<input
 								onKeyPress={(e) => this.handleKeyPress(e)}
 								onChange={(e) => this.handleInputChange({ e })}
-								type="text"
-								id="videoSrc"
+								type='text'
+								id='videoSrc'
 								value={this.state.cell.videoSrc || ''}
 							/>
 						</div>
@@ -189,12 +189,12 @@ export default class CellEditor extends React.Component {
 					{this.state.error}
 					<button>Submit changes</button>
 				</form>
-				<div id="create-new">
+				<div id='create-new'>
 					<button onClick={() => this.newCell()}>Submit as new cell</button>
 				</div>
 				<button
 					onClick={() =>
-						confirm("Are you sure you want to delete this cell? (There's no going back!)") &&
+						window.confirm("Are you sure you want to delete this cell? (There's no going back!)") &&
 						this.deleteCell()}
 				>
 					Delete cell

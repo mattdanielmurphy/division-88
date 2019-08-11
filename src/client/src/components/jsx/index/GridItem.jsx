@@ -1,6 +1,6 @@
 import React from 'react'
 import Video from '../Video'
-import { Link } from '../Router'
+import { Link } from 'react-router-dom'
 
 class GridItemContentContainer extends React.Component {
 	render = () =>
@@ -20,19 +20,19 @@ class BottomText extends React.Component {
 		style: { height: this.props.height, backgroundColor: this.props.backgroundColor }
 	}
 	render = () => (
-		<div className="bottom-text" style={this.state.style}>
+		<div className='bottom-text' style={this.state.style}>
 			{this.props.text}
 		</div>
 	)
 }
 
 const BackgroundText = (props) => (
-	<div className="background-text">
-		<div className="heading" key="heading">
+	<div className='background-text'>
+		<div className='heading' key='heading'>
 			{props.heading}
 		</div>
 		{props.subheading && (
-			<div className="subheading" key="subheading">
+			<div className='subheading' key='subheading'>
 				{props.subheading}
 			</div>
 		)}

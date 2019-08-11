@@ -1,36 +1,35 @@
 import React from 'react'
-import { useRouteData } from 'react-static'
+
 import axios from 'axios'
 import Auth0Lock from 'auth0-lock'
 
-const env = require('client-env')
-
-import AdminControls from 'components/jsx/admin/AdminControls'
-import PagePreview from 'components/jsx/admin/PagePreview'
-import CellEditor from 'components/jsx/admin/CellEditor'
-import ArtistEditor from 'components/jsx/admin/ArtistEditor'
-import ToolEditor from 'components/jsx/admin/ToolEditor'
-import HeadingEditor from 'components/jsx/admin/HeadingEditor'
+import AdminControls from '../components/jsx/admin/AdminControls'
+import PagePreview from '../components/jsx/admin/PagePreview'
+import CellEditor from '../components/jsx/admin/CellEditor'
+import ArtistEditor from '../components/jsx/admin/ArtistEditor'
+import ToolEditor from '../components/jsx/admin/ToolEditor'
+import HeadingEditor from '../components/jsx/admin/HeadingEditor'
 
 import Index from './AdminIndex'
-import Artists from 'pages/artists'
-import Artist from 'containers/Artist'
-import ProducerTools from 'pages/producer-tools'
-import ProducerTool from 'pages/producer-tool'
-import About from 'pages/about'
+import Artists from '../pages/artists'
+import Artist from '../pages/artist'
+import ProducerTools from '../pages/producer-tools'
+import ProducerTool from '../pages/producer-tool'
+import About from '../pages/about'
+
+import env from '../client-env'
 
 class Editor extends React.Component {
 	render = () => {
-		console.log(this.props.selectedHeading)
 		if (this.props.selectedHeading)
 			return (
 				<HeadingEditor
-					pageName={this.props.pageName}
+					pageName={this.props.match.params.page}
 					selectedHeading={this.props.selectedHeading}
 					updateHeading={(heading) => this.props.updateHeading(heading)}
 				/>
 			)
-		else if (this.props.pageName === 'artists')
+		else if (this.props.match.params.page === 'artists')
 			return (
 				<ArtistEditor
 					index={this.props.selectedArtist}
@@ -38,7 +37,7 @@ class Editor extends React.Component {
 					refreshArtists={(index, artist) => this.props.refreshArtists(index, artist)}
 				/>
 			)
-		else if (this.props.pageName === 'index')
+		else if (this.props.match.params.page === 'index')
 			return (
 				<CellEditor
 					index={this.props.selectedCell}
@@ -47,7 +46,7 @@ class Editor extends React.Component {
 					videoMode={this.props.selectedCell.video}
 				/>
 			)
-		else if (this.props.pageName === 'producer-tools')
+		else if (this.props.match.params.page === 'producer-tools')
 			return (
 				<ToolEditor
 					index={this.props.selectedTool}
@@ -55,7 +54,7 @@ class Editor extends React.Component {
 					refreshTools={(index, tool) => this.props.refreshTools(index, tool)}
 				/>
 			)
-		else if (this.props.pageName === 'about') return <div>about editor</div>
+		else if (this.props.match.params.page === 'about') return <div>about editor</div>
 		else return <div />
 	}
 }
@@ -69,7 +68,7 @@ const pages = {
 	about: About
 }
 
-class Admin extends React.Component {
+export default class Admin extends React.Component {
 	state = {
 		view: 'mobile',
 		scale: 1,
@@ -150,7 +149,6 @@ class Admin extends React.Component {
 	selectArtist = (index) => this.setState({ selectedArtist: index, selectedHeading: undefined })
 	selectTool = (index) => this.setState({ selectedTool: index, selectedHeading: undefined })
 	selectHeading = (pageName) => {
-		console.log('select heading', pageName)
 		this.setState({
 			selectedHeading: pageName,
 			selectedCell: undefined,
@@ -233,7 +231,7 @@ class Admin extends React.Component {
 	}
 	getHeadingBackgroundImage = async () => {
 		const headingBackgroundImage = await axios
-			.get(`${env.apiUrl}/page-info/${this.props.pageName}`)
+			.get(`${env.apiUrl}/page-info/${this.props.match.params.page}`)
 			.then((r) => r.data.headingBackgroundImage)
 		this.setState({ headingBackgroundImage })
 		return headingBackgroundImage
@@ -247,28 +245,30 @@ class Admin extends React.Component {
 	}
 	getDataForPage = async () => {
 		const getHeadingData = new Promise((res, rej) => this.getHeadingBackgroundImage().then((r) => res(r)))
-		const getPageData = new Promise((res, rej) => this.getPageData().then((r) => res(r)))
+		const getPageData = new Promise((res, rej) =>
+			this.getPageData(this.props.match.params.page).then((r) => res(r))
+		)
 		await Promise.all([ getHeadingData, getPageData ])
 		this.setState({ dataReady: true })
 	}
 	componentDidUpdate(prevProps) {
-		if (this.props.pageName !== prevProps.pageName) {
-			this.setState({
-				dataReady: false,
-				selectedArtist: undefined,
-				selectedTool: undefined,
-				selectedCell: undefined,
-				selectedHeading: undefined
-			})
-			this.getDataForPage()
-			// bring values back from temp storage once component updated (used to properly refresh data... unfortunately necessary)
-		} else if (this.state.cellsTemp) {
-			this.setState({ cells: this.state.cellsTemp, cellsTemp: undefined })
-		} else if (this.state.artistsTemp) {
-			this.setState({ artists: this.state.artistsTemp, artistsTemp: undefined })
-		} else if (this.state.toolsTemp) {
-			this.setState({ tools: this.state.toolsTemp, toolsTemp: undefined })
-		}
+		// if (this.props.match.params.page !== prevProps.pageName) {
+		// 	this.setState({
+		// 		dataReady: false,
+		// 		selectedArtist: undefined,
+		// 		selectedTool: undefined,
+		// 		selectedCell: undefined,
+		// 		selectedHeading: undefined
+		// 	})
+		// 	this.getDataForPage()
+		// 	// bring values back from temp storage once component updated (used to properly refresh data... unfortunately necessary)
+		// } else if (this.state.cellsTemp) {
+		// 	this.setState({ cells: this.state.cellsTemp, cellsTemp: undefined })
+		// } else if (this.state.artistsTemp) {
+		// 	this.setState({ artists: this.state.artistsTemp, artistsTemp: undefined })
+		// } else if (this.state.toolsTemp) {
+		// 	this.setState({ tools: this.state.toolsTemp, toolsTemp: undefined })
+		// }
 	}
 	componentDidMount() {
 		this.getDataForPage()
@@ -279,18 +279,18 @@ class Admin extends React.Component {
 	render = () => {
 		if (this.state.authenticated) {
 			return (
-				<div id="admin-root">
+				<div id='admin-root'>
 					<AdminControls
 						setScale={(scale) => this.setScale(scale)}
 						setView={(view) => this.setView(view)}
-						pageName={this.props.pageName}
+						pageName={this.props.match.params.page}
 						undoLayoutChange={() => this.undoLayoutChange()}
 						redoLayoutChange={() => this.redoLayoutChange()}
 					/>
-					{this.state.dataReady && (
+					{this.state.dataReady ? (
 						<PagePreview
-							pageName={this.props.pageName}
-							page={this.props.page}
+							pageName={this.props.match.params.page}
+							page={pages[this.props.match.params.page]}
 							view={this.state.view}
 							scale={this.state.scale}
 							// Heading
@@ -314,6 +314,8 @@ class Admin extends React.Component {
 							// About
 							aboutText={this.state.aboutText}
 						/>
+					) : (
+						<div>loading...</div>
 					)}
 					<Editor
 						{...this.props}
@@ -340,9 +342,4 @@ class Admin extends React.Component {
 			)
 		}
 	}
-}
-export default () => {
-	const { page, index } = useRouteData()
-
-	return <Admin page={pages[page]} pageName={page} index={index} />
 }

@@ -1,22 +1,40 @@
 import React from 'react'
-import { Root, Routes } from 'react-static'
-
-import { Router } from 'components/jsx/Router'
-import Header from 'components/jsx/Header'
-import Footer from 'components/jsx/Footer'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import Header from '../Header'
+import Footer from '../Footer'
+import Index from '../../../pages/index'
+import Artists from '../../../pages/artists'
+import Artist from '../../../pages/artist'
+import ProducerTools from '../../../pages/producer-tools'
+import ProducerTool from '../../../pages/producer-tool'
+import About from '../../../pages/about'
+import Admin from '../../../containers/Admin'
 
 export default class extends React.Component {
 	render = () => (
-		<Root>
-			<Header />
-			<div id="content">
-				<React.Suspense fallback={<em></em>}>
-					<Router>
-						<Routes path="*" />
-					</Router>
-				</React.Suspense>
-			</div>
-			<Footer />
-		</Root>
+		<div>
+			<Router>
+				<Header />
+				<Route exact path='/' component={Index} />
+				<Route exact path='/artists' component={Artists} />
+				<Route path='/artists/:artist' component={Artist} />
+				<Route exact path='/producer-tools' component={ProducerTools} />
+				<Route path='/producer-tools/:tool' component={ProducerTool} />
+				<Route path='/about' component={About} />
+				<Route path='/admin/:page' component={Admin} />
+				<Footer />
+			</Router>
+		</div>
+		// <Root>
+		// 	<Header />
+		// 	<div id='content'>
+		// 		<React.Suspense fallback={<em />}>
+		// 			<Router>
+		// 				<Routes path='*' />
+		// 			</Router>
+		// 		</React.Suspense>
+		// 	</div>
+		// 	<Footer />
+		// </Root>
 	)
 }

@@ -1,9 +1,8 @@
 import React from 'react'
 import { Textfit } from 'react-textfit'
-import { WidthProvider } from 'react-grid-layout'
 import { SizeMe } from 'react-sizeme'
-import env from 'client-env'
 import axios from 'axios'
+import env from '../../client-env'
 
 // class HeadingWithoutBackgroundImage extends React.Component {
 // 	render = () => (
@@ -58,9 +57,9 @@ class Heading extends React.Component {
 				? 'selected'
 				: ''}`}
 			style={this.state.style}
-			onClick={() => this.props.selectHeading()}
+			onClick={() => (this.props.isPreview ? this.props.selectHeading() : {})}
 		>
-			<Textfit mode="single" max={50}>
+			<Textfit mode='single' max={50}>
 				{this.props.text}
 				{this.props.spanText && <span>{this.props.spanText}</span>}
 			</Textfit>
@@ -75,7 +74,10 @@ export default class Page extends React.Component {
 	// heading
 	// OPTIONAL:
 	//
-	getPathname = () => window.location.pathname.replace(/\/(admin)*/g, '')
+	getPathname = () =>
+		/(?:\/admin)?\/(\w+)\/?/.exec(window.location.pathname)
+			? /(?:\/admin)?\/(\w+)\/?/.exec(window.location.pathname)[1]
+			: ''
 	getPageName = () => this.getPathname().split('-').join(' ')
 	state = {
 		id: this.props.id,
@@ -98,10 +100,12 @@ export default class Page extends React.Component {
 	getParentElementsBeforeBody(element) {
 		const parentElements = []
 		const getParentElement = (element) => {
-			element = element.parentElement
-			if (element.tagName === 'BODY') return
-			parentElements.push(element)
-			getParentElement(element)
+			if (element) {
+				element = element.parentElement
+				if (element.tagName === 'BODY') return
+				parentElements.push(element)
+				getParentElement(element)
+			}
 		}
 		getParentElement(element)
 		return parentElements
@@ -110,9 +114,24 @@ export default class Page extends React.Component {
 		const parentElements = this.getParentElementsBeforeBody(document.querySelector('#content'))
 		parentElements.forEach((element) => (element.style.height = '100%'))
 	}
-	componentDidMount() {
+	getHeadingBackgroundImage = async () => {
+		const headingBackgroundImage = await axios
+			.get(`${env.apiUrl}/page-info/${this.props.pageName}`)
+			.then((r) => r.data.headingBackgroundImage)
+		console.log(headingBackgroundImage, this.props.pageName)
+		return headingBackgroundImage
+	}
+	componentDidMount = async () => {
 		this.setParentElementsTo100PercentHeight()
-		this.setState({ id: this.getPathname() || 'index', pageName: this.getPageName(), heading: this.getHeading() })
+		console.log(this.getPageName())
+		const headingBackgroundImage =
+			this.props.headingBackgroundImage || this.props.pageName ? await this.getHeadingBackgroundImage() : ''
+		this.setState({
+			headingBackgroundImage,
+			id: this.props.id || this.getPathname() || 'index',
+			pageName: this.getPageName(),
+			heading: this.getHeading()
+		})
 	}
 	render = () => {
 		return (
@@ -123,7 +142,7 @@ export default class Page extends React.Component {
 							{!this.props.noHeading && (
 								<Heading
 									{...this.state.heading}
-									headingBackgroundImage={this.props.headingBackgroundImage}
+									headingBackgroundImage={this.state.headingBackgroundImage}
 									isPreview={this.props.isPreview}
 									selectHeading={() => this.props.selectHeading()}
 									headingSelected={this.props.headingSelected}

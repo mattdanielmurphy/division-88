@@ -1,0 +1,52 @@
+{
+	"name": "react-static-example-basic",
+	"private": true,
+	"scripts": {
+		"start": "react-static start",
+		"stage": "react-static build --staging",
+		"build": "react-static build",
+		"analyze": "react-static build --analyze",
+		"serve": "serve dist -p 3000"
+	},
+	"dependencies": {
+		"@material-ui/core": "^4.3.0",
+		"@reach/router": "^1.2.1",
+		"auth0-lock": "^11.17.0",
+		"axios": "^0.18.0",
+		"circular-json": "^0.5.9",
+		"immutable": "^4.0.0-rc.12",
+		"loglevel": "^1.6.3",
+		"material-table": "^1.43.0",
+		"react": "^16.8.2",
+		"react-burger-menu": "^2.6.10",
+		"react-color": "^2.17.3",
+		"react-dom": "^16.8.2",
+		"react-fittext": "^1.0.0",
+		"react-grid-layout": "^0.16.6",
+		"react-grid-system": "^4.4.6",
+		"react-icons": "^3.7.0",
+		"react-iframe": "^1.8.0",
+		"react-progressive-image": "^0.6.0",
+		"react-responsive": "^7.0.0",
+		"react-sizeme": "^2.6.7",
+		"react-static": "^7.0.0",
+		"react-static-plugin-reach-router": "^7.0.0",
+		"react-static-plugin-sass": "^7.1.0",
+		"react-static-plugin-sitemap": "^7.0.0",
+		"react-static-plugin-source-filesystem": "^7.0.0",
+		"react-textfit": "^1.1.0",
+		"slate": "^0.47.4",
+		"slate-react": "^0.22.4"
+	},
+	"devDependencies": {
+		"babel-eslint": "9.x",
+		"eslint": "5.x",
+		"eslint-config-react-app": "^3.0.8",
+		"eslint-config-react-tools": "1.x.x",
+		"eslint-plugin-flowtype": "2.x",
+		"eslint-plugin-import": "2.x",
+		"eslint-plugin-jsx-a11y": "6.x",
+		"eslint-plugin-react": "7.x",
+		"serve": "10.1.2"
+	}
+}
