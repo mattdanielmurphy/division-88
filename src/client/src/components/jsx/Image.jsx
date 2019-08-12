@@ -1,5 +1,4 @@
 import React from 'react'
-import GridItem from './index/GridItem'
 // import ProgressiveImage from 'react-progressive-image'
 
 export default class Image extends React.Component {

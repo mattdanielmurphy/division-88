@@ -1,8 +1,6 @@
 import React from 'react'
-import ToggleButton from '../ToggleButton'
-import ColorPicker from '../admin/ColorPicker'
 import axios from 'axios'
-import env from '../../../client-env'
+import env from '../../../../client-env'
 
 export default class HeadingEditor extends React.Component {
 	state = {}

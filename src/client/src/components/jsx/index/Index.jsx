@@ -33,7 +33,8 @@ export default class Index extends React.Component {
 		if (this.state.gridItemHoveredUpon === gridItemIndex) this.updateGridItemHover()
 	}
 	handleClickGridItem(index, e) {
-		this.props.selectCell(index)
+		console.log(this.props)
+		if (this.props.isPreview) this.props.selectCell(index)
 	}
 	componentDidMount = async () => {
 		this.watchWindowResizing()

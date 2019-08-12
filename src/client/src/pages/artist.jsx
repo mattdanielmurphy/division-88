@@ -1,7 +1,5 @@
 import React from 'react'
 
-import { Link } from 'react-router-dom'
-import Image from '../components/jsx/Image'
 import Page from '../components/jsx/Page'
 import axios from 'axios'
 import env from '../client-env'
@@ -21,6 +19,7 @@ class SpotifyPlayer extends React.Component {
 			<div>
 				{this.state.loading && <div />}
 				<iframe
+					title={`spotify-iframe-${src}`}
 					onLoad={() => this.setState({ loading: false })}
 					className='spotify-iframe'
 					src={src}

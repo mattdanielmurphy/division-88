@@ -1,8 +1,8 @@
 import React from 'react'
-import ToggleButton from '../ToggleButton'
-import NonVideoOptions from '../admin/NonVideoOptions'
+import ToggleButton from '../../ToggleButton'
+import NonVideoOptions from '../NonVideoOptions'
 import axios from 'axios'
-import env from '../../../client-env'
+import env from '../../../../client-env'
 
 export default class CellEditor extends React.Component {
 	state = {}
@@ -109,7 +109,7 @@ export default class CellEditor extends React.Component {
 	}
 	newCell = async () => {
 		if (this.validateCell()) {
-			const layouts = await axios.get(`${env.apiUrl}/grids/index/layouts`).then((r) => r.data)
+			// const layouts = await axios.get(`${env.apiUrl}/grids/index/layouts`).then((r) => r.data)
 			const obj = {
 				newLayouts: {
 					desktop: { w: 12, h: 4, x: 0, minW: 4, minH: 2 },

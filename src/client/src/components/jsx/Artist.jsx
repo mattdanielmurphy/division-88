@@ -1,10 +1,7 @@
-import ArtistName from './ArtistName'
 import { Link } from 'react-router-dom'
 import Image from './Image'
 import React from 'react'
 import baseUrl from '../js/baseUrl'
-// import { Textfit } from 'react-textfit'
-const ReactFitText = require('react-fittext')
 
 class ArtistWrapper extends React.Component {
 	render = () => {

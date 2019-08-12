@@ -49,3 +49,13 @@
 		border: 2px solid red;
 	}
 }
+
+.firebaseui-idp-list {
+	list-style: none;
+	padding: 0;
+	text-align: center;
+}
+
+.firebaseui-idp-text.firebaseui-idp-text-short {
+	display: none;
+}

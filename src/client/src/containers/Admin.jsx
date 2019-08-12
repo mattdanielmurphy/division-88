@@ -1,14 +1,15 @@
 import React from 'react'
-
 import axios from 'axios'
-import Auth0Lock from 'auth0-lock'
+import withFirebaseAuth from 'react-with-firebase-auth'
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
 
+import env from '../client-env'
+
+import Page from '../components/jsx/Page'
 import AdminControls from '../components/jsx/admin/AdminControls'
 import PagePreview from '../components/jsx/admin/PagePreview'
-import CellEditor from '../components/jsx/admin/CellEditor'
-import ArtistEditor from '../components/jsx/admin/ArtistEditor'
-import ToolEditor from '../components/jsx/admin/ToolEditor'
-import HeadingEditor from '../components/jsx/admin/HeadingEditor'
+import Editor from '../components/jsx/admin/editor/Editor'
 
 import Index from './AdminIndex'
 import Artists from '../pages/artists'
@@ -16,48 +17,6 @@ import Artist from '../pages/artist'
 import ProducerTools from '../pages/producer-tools'
 import ProducerTool from '../pages/producer-tool'
 import About from '../pages/about'
-
-import env from '../client-env'
-
-class Editor extends React.Component {
-	render = () => {
-		if (this.props.selectedHeading)
-			return (
-				<HeadingEditor
-					pageName={this.props.match.params.page}
-					selectedHeading={this.props.selectedHeading}
-					updateHeading={(heading) => this.props.updateHeading(heading)}
-				/>
-			)
-		else if (this.props.match.params.page === 'artists')
-			return (
-				<ArtistEditor
-					index={this.props.selectedArtist}
-					updateArtists={(index, artist) => this.props.updateArtists(index, artist)}
-					refreshArtists={(index, artist) => this.props.refreshArtists(index, artist)}
-				/>
-			)
-		else if (this.props.match.params.page === 'index')
-			return (
-				<CellEditor
-					index={this.props.selectedCell}
-					updateGrid={({ layouts, cells }) => this.props.updateGrid({ layouts, cells })}
-					refreshGrid={({ cells }) => this.props.refreshGrid({ cells })}
-					videoMode={this.props.selectedCell.video}
-				/>
-			)
-		else if (this.props.match.params.page === 'producer-tools')
-			return (
-				<ToolEditor
-					index={this.props.selectedTool}
-					updateTools={(index, tool) => this.props.updateTools(index, tool)}
-					refreshTools={(index, tool) => this.props.refreshTools(index, tool)}
-				/>
-			)
-		else if (this.props.match.params.page === 'about') return <div>about editor</div>
-		else return <div />
-	}
-}
 
 const pages = {
 	index: Index,
@@ -80,36 +39,8 @@ export default class Admin extends React.Component {
 		selectedHeading: undefined,
 		authenticated: true // REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION
 	}
-	// auth
-	signIn() {
-		this.cancelCountdown()
-		this.lock.show()
-	}
-	startCountdown() {
-		if (this.interval) return
-		this.interval = setInterval(() => {
-			this.setState({ countdown: this.state.countdown - 1 })
-			if (this.state.countdown === 0) this.signIn()
-		}, 1000)
-	}
-	cancelCountdown = () => clearInterval(this.interval)
-	setTokenIfProvided() {
-		this.lock.on('authenticated', ({ accessToken }) => {
-			this.setState({ authenticated: true })
-			this.cancelCountdown()
-		})
-	}
-
 	setScale = (scale) => this.setState({ scale })
 	setView = (view) => this.setState({ view })
-	authenticate() {
-		this.lock = new Auth0Lock('kWHysVBkljt5AhDWF62CKNK46HQSCkkw', 'dvsn88.auth0.com', {
-			allowSignUp: false,
-			responseType: 'code'
-		})
-		this.setTokenIfProvided()
-		this.startCountdown()
-	}
 	updateGrid = ({ layouts, cells }) => {
 		if (layouts && cells) this.setState({ layouts, cells })
 		else if (layouts) this.setState({ layouts })
@@ -270,27 +201,56 @@ export default class Admin extends React.Component {
 		// 	this.setState({ tools: this.state.toolsTemp, toolsTemp: undefined })
 		// }
 	}
+	setUpFirebaseAuthUI() {
+		// const ui = new firebaseui.auth.AuthUI(firebase.auth())
+		// const uiConfig = {
+		// 	callbacks: {
+		// 		signInSuccessWithAuthResult: (authResult, redirectUrl) => {
+		// 			this.setState({ authenticated: true })
+		// 			return true
+		// 		},
+		// 		uiShown: () => (document.getElementById('loader').style.display = 'none')
+		// 	},
+		// 	signInFlow: 'popup',
+		// 	signInSuccessUrl: `${env.appUrl}/admin`,
+		// 	signInOptions: [ firebase.auth.GoogleAuthProvider.PROVIDER_ID ]
+		// }
+		// ui.start('#firebaseui-auth-container', uiConfig)
+		// firebase
+		// 	.auth()
+		// 	.onAuthStateChanged(
+		// 		(user) => (user ? this.setState({ authenticated: true }) : this.setState({ authenticated: false }))
+		// 	)
+	}
+	signOut = () => firebase.auth().signOut()
+	setPageName() {
+		console.log(this.props.match.params.page)
+		this.setState({ pageName: this.props.match.params.page })
+	}
 	componentDidMount() {
 		this.getDataForPage()
 		this.addSpaceToTopOfBody()
 		this.setKeyBindings()
 		this.setBodyBackground()
+		this.setPageName()
+		this.setUpFirebaseAuthUI()
 	}
 	render = () => {
-		if (this.state.authenticated) {
+		if (this.state.authenticated && this.state.pageName) {
 			return (
 				<div id='admin-root'>
 					<AdminControls
 						setScale={(scale) => this.setScale(scale)}
 						setView={(view) => this.setView(view)}
-						pageName={this.props.match.params.page}
+						pageName={this.state.pageName}
 						undoLayoutChange={() => this.undoLayoutChange()}
 						redoLayoutChange={() => this.redoLayoutChange()}
 					/>
+					<button onClick={() => this.signOut()}>Sign out</button>
 					{this.state.dataReady ? (
 						<PagePreview
-							pageName={this.props.match.params.page}
-							page={pages[this.props.match.params.page]}
+							pageName={this.state.pageName}
+							page={pages[this.state.pageName]}
 							view={this.state.view}
 							scale={this.state.scale}
 							// Heading
@@ -332,13 +292,11 @@ export default class Admin extends React.Component {
 				</div>
 			)
 		} else {
-			this.authenticate()
 			return (
-				<div>
-					not authenticated
-					<button onClick={() => this.signIn()}>Sign in</button>
-					<div>Signing in automatically in {this.state.countdown}...</div>
-				</div>
+				<Page>
+					<div id='firebaseui-auth-container' />
+					<div id='loader'>Loading...</div>
+				</Page>
 			)
 		}
 	}

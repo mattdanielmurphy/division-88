@@ -1,30 +1,29 @@
 import React from 'react'
-import ToggleButton from '../ToggleButton'
-import NonVideoOptions from '../admin/NonVideoOptions'
-import ColorPicker from '../admin/ColorPicker'
-import ReleasesTable from '../admin/ReleasesTable'
+import ColorPicker from '../ColorPicker'
 import axios from 'axios'
-import env from '../../../client-env'
+import env from '../../../../client-env'
 
 export default class ArtistEditor extends React.Component {
 	state = {}
 	getArtist = async (index) => {
-		return await axios.get(`${env.apiUrl}/artists/index/${index}`).then((r) => r.data)
+		return await axios.get(`${env.apiUrl}/producer-tools/index/${index}`).then((r) => r.data)
 	}
 	handleSubmit = async (e) => {
 		if (e) e.preventDefault()
 		// just submit this modified value
 
-		const result = await axios.post(`${env.apiUrl}/artists/${this.state.index}`, this.state.artist).then((r) => {
-			this.setState({ artistFromDatabase: this.state.artist, unsavedChanges: false })
-			if (this.state.colorChange) {
-				this.props.refreshArtists(this.state.index, this.state.artist)
-				this.setState({ colorChange: false })
-			} else {
-				this.props.updateArtists(this.state.index, this.state.artist)
-			}
-			return r.data
-		})
+		const result = await axios
+			.post(`${env.apiUrl}/producer-tools/${this.state.index}`, this.state.artist)
+			.then((r) => {
+				this.setState({ artistFromDatabase: this.state.artist, unsavedChanges: false })
+				if (this.state.colorChange) {
+					this.props.refreshTools(this.state.index, this.state.artist)
+					this.setState({ colorChange: false })
+				} else {
+					this.props.updateTools(this.state.index, this.state.artist)
+				}
+				return r.data
+			})
 
 		return result
 	}
@@ -71,7 +70,7 @@ export default class ArtistEditor extends React.Component {
 	}
 	newArtist = async () => {
 		if (this.validateArtist()) {
-			axios.post(`${env.apiUrl}/artists/new`, this.state.artist).then((r) => {
+			axios.post(`${env.apiUrl}/producer-tools/new`, this.state.artist).then((r) => {
 				const { layouts, artists } = r.data
 				this.props.updateGrid({ layouts, artists })
 				this.changeIndex(r.data.index)
@@ -79,7 +78,7 @@ export default class ArtistEditor extends React.Component {
 		}
 	}
 	deleteArtist() {
-		axios.get(`${env.apiUrl}/grids/index/artists/${this.props.index}/delete`).then((r) => {
+		axios.get(`${env.apiUrl}/producer-tools/${this.props.index}/delete`).then((r) => {
 			const { layouts, artists } = r.data
 			this.props.updateGrid({ layouts, artists })
 		})
@@ -94,12 +93,6 @@ export default class ArtistEditor extends React.Component {
 				if (discardChanges) this.changeIndex()
 			} else this.changeIndex(this.props.index)
 		}
-	}
-	componentDidMount = async () => {
-		const artist = await this.getArtist(this.props.index)
-		this.setState({ artist, index: this.props.index })
-		window.onbeforeunload = null
-		this.setKeyBindings()
 	}
 	handleTextareaKeyPress(e) {
 		if (e.key === 'Enter') {
@@ -117,6 +110,12 @@ export default class ArtistEditor extends React.Component {
 				return
 			else if (e.key === 's') this.handleSubmit()
 		}
+	}
+	componentDidMount = async () => {
+		const artist = await this.getArtist(this.props.index)
+		this.setState({ artist, index: this.props.index })
+		window.onbeforeunload = null
+		this.setKeyBindings()
 	}
 	updateReleases = (data) => {
 		const artist = this.state.artist
@@ -151,14 +150,14 @@ export default class ArtistEditor extends React.Component {
 					<br />
 
 					<div className='property-input'>
-						<label>bio</label>
+						<label>description text</label>
 						<textarea
 							rows={6}
 							cols={60}
 							onKeyPress={(e) => this.handleTextareaKeyPress(e)}
 							onChange={(e) => this.handleInputChange({ e })}
-							id='description.bio'
-							value={(this.state.artist.description && this.state.artist.description.bio) || ''}
+							id='description.text'
+							value={(this.state.artist.description && this.state.artist.description.text) || ''}
 						/>
 					</div>
 					<br />
@@ -203,10 +202,6 @@ export default class ArtistEditor extends React.Component {
 						/>
 					</div>
 					<br />
-					<ReleasesTable data={this.state.artist.releases} updateData={(data) => this.updateReleases(data)} />
-					{/* <PropertyInput
-						value={this.state.description && this.state.description.bio}
-					></PropertyInput> */}
 					{this.state.error}
 					<button>Submit changes</button>
 				</form>
@@ -224,23 +219,4 @@ export default class ArtistEditor extends React.Component {
 		) : (
 			<div />
 		)
-}
-
-const ex = {
-	description: {
-		style: { backgroundColor: '#D2CFC1', color: '#2C25C5' },
-		bio:
-			'Bacon ipsum dolor amet meatloaf pig andouille kielbasa bacon picanha tenderloin. Ground round beef ribs rump, meatloaf spare ribs tongue brisket biltong leberkas pig kielbasa. Ribeye picanha sausage, tongue sirloin landjaeger flank venison ham hock tri-tip pork chop shank. Brisket fatback strip steak tail.'
-	},
-	releases: [
-		{
-			name: 'All Nighters',
-			spotifyUrl: 'https://open.spotify.com/album/3t9S03TNKktyKlNysyJS8k?si=ZJk-l8WKRW692NLHGnPlow',
-			cover: 'images/all-nighters.jpg'
-		}
-	],
-	name: 'Billy Wild',
-	page: 'billy-wild',
-	imgSrc: 'images/billy.jpg',
-	spotifyUrl: 'https://open.spotify.com/artist/6zNQ51HIfnzskqL2R82jYD?si=rEm8CzOpQIOnzqqCJIBFYQ'
 }

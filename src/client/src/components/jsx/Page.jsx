@@ -74,10 +74,11 @@ export default class Page extends React.Component {
 	// heading
 	// OPTIONAL:
 	//
-	getPathname = () =>
-		/(?:\/admin)?\/(\w+)\/?/.exec(window.location.pathname)
-			? /(?:\/admin)?\/(\w+)\/?/.exec(window.location.pathname)[1]
-			: ''
+	getPathname = () => {
+		let regexMatches = /(?:\/admin)?\/([A-Za-z\-_]+)\/?/.exec(window.location.pathname)
+
+		return regexMatches ? regexMatches[1] : ''
+	}
 	getPageName = () => this.getPathname().split('-').join(' ')
 	state = {
 		id: this.props.id,

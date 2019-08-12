@@ -2,9 +2,6 @@ import React from 'react'
 import { setConfiguration } from 'react-grid-system'
 
 import Root from './components/jsx/root/Root'
-
-import * as log from 'loglevel'
-
 import './styles/app.scss'
 
 setConfiguration({ gutterWidth: 0 })

@@ -28,7 +28,7 @@ export default class App extends React.Component {
 
 	onChange = ({ value }) => {
 		// Check to see if the document has changed before saving.
-		if (value.document != this.state.value.document) {
+		if (value.document !== this.state.value.document) {
 			axios
 				.post(`${env.apiUrl}/about`, { text: JSON.stringify(value.toJSON()) })
 				.then((res) => console.log(res))

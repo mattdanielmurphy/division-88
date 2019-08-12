@@ -1,7 +1,6 @@
 import { slide as Menu } from 'react-burger-menu'
 import Nav from './Nav'
 import React from 'react'
-import { relative } from 'upath'
 
 export default class OffCanvas extends React.Component {
 	state = { isOpen: false, width: 30, opacity: '0' }

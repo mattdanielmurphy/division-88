@@ -1,4 +1,3 @@
-/*global YT*/
 import React from 'react'
 import YouTube from 'react-youtube'
 import { FaPlay } from 'react-icons/fa'

@@ -1,5 +1,4 @@
 import React from 'react'
-import AdminIndex from '../../../containers/AdminIndex'
 import Header from '../Header'
 import Footer from '../Footer'
 
@@ -24,6 +23,7 @@ export default class PagePreview extends React.Component {
 	getHeight = () => this.state.dimensions[this.props.view].height
 	render = () => {
 		const Page = this.props.page
+		if (!Page) return <div>Loading...</div>
 		return (
 			<div
 				id='preview-wrapper'

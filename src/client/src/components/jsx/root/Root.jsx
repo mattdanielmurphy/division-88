@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Header from '../Header'
 import Footer from '../Footer'
 import Index from '../../../pages/index'
@@ -21,20 +21,10 @@ export default class extends React.Component {
 				<Route exact path='/producer-tools' component={ProducerTools} />
 				<Route path='/producer-tools/:tool' component={ProducerTool} />
 				<Route path='/about' component={About} />
+				<Route exact path='/admin' component={Admin} />
 				<Route path='/admin/:page' component={Admin} />
 				<Footer />
 			</Router>
 		</div>
-		// <Root>
-		// 	<Header />
-		// 	<div id='content'>
-		// 		<React.Suspense fallback={<em />}>
-		// 			<Router>
-		// 				<Routes path='*' />
-		// 			</Router>
-		// 		</React.Suspense>
-		// 	</div>
-		// 	<Footer />
-		// </Root>
 	)
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 import ChangeView from './ChangeView'
-import ToggleButton from '../ToggleButton'
 
 export default class AdminControls extends React.Component {
 	handleScaleSelect(e) {
