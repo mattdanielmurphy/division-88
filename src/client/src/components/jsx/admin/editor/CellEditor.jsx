@@ -2,6 +2,7 @@ import React from 'react'
 import ToggleButton from '../../ToggleButton'
 import NonVideoOptions from '../NonVideoOptions'
 import axios from 'axios'
+import ImageUploader from './ImageUploader'
 import env from '../../../../client-env'
 
 export default class CellEditor extends React.Component {
@@ -145,8 +146,8 @@ export default class CellEditor extends React.Component {
 	}
 	render = () =>
 		this.state.cell ? (
-			<div id='property-editor'>
-				<div className='video-toggle'>
+			<div id="property-editor">
+				<div className="video-toggle">
 					<ToggleButton enabled={this.state.cell.video} toggle={this.toggleVideoMode}>
 						Toggle Video
 					</ToggleButton>
@@ -155,25 +156,22 @@ export default class CellEditor extends React.Component {
 				<br />
 
 				<form onSubmit={(e) => this.handleSubmit(e)}>
-					<div className='property-input'>
-						<label>image url</label>
-						<input
-							onKeyPress={(e) => this.handleKeyPress(e)}
-							onChange={(e) => this.handleInputChange({ e })}
-							type='text'
-							id='imgSrc'
-							value={this.state.cell.imgSrc || ''}
+					<div className="property-input">
+						<label>image</label>
+						<ImageUploader
+							image={this.state.cell.imgSrc}
+							setImage={(url) => this.handleInputChange({ path: 'imgSrc', value: url })}
 						/>
 					</div>
 					<br />
 					{this.state.cell.video ? (
-						<div className='property-input'>
+						<div className="property-input">
 							<label>video link:</label>
 							<input
 								onKeyPress={(e) => this.handleKeyPress(e)}
 								onChange={(e) => this.handleInputChange({ e })}
-								type='text'
-								id='videoSrc'
+								type="text"
+								id="videoSrc"
 								value={this.state.cell.videoSrc || ''}
 							/>
 						</div>
@@ -189,7 +187,7 @@ export default class CellEditor extends React.Component {
 					{this.state.error}
 					<button>Submit changes</button>
 				</form>
-				<div id='create-new'>
+				<div id="create-new">
 					<button onClick={() => this.newCell()}>Submit as new cell</button>
 				</div>
 				<button

@@ -3,6 +3,7 @@ import ColorPicker from '../ColorPicker'
 import ReleasesTable from '../ReleasesTable'
 import axios from 'axios'
 import env from '../../../../client-env'
+import ImageUploader from './ImageUploader'
 
 export default class ArtistEditor extends React.Component {
 	state = {}
@@ -123,21 +124,21 @@ export default class ArtistEditor extends React.Component {
 	}
 	render = () =>
 		this.state.artist ? (
-			<div id='property-editor'>
+			<div id="property-editor">
 				<form onSubmit={(e) => this.handleSubmit(e)}>
-					<div className='property-input'>
+					<div className="property-input">
 						<label>name</label>
 						<input
 							onChange={(e) => this.handleInputChange({ e })}
-							id='name'
+							id="name"
 							value={this.state.artist.name || ''}
 						/>
 					</div>
-					<div className='property-input'>
+					<div className="property-input">
 						<label>page name</label>
 						<input
 							onChange={(e) => this.handleInputChange({ e })}
-							id='page'
+							id="page"
 							value={
 								this.state.artist.page ||
 								(this.state.artist.name && this.state.artist.name.toLowerCase().split(' ').join('-')) ||
@@ -145,22 +146,29 @@ export default class ArtistEditor extends React.Component {
 							}
 						/>
 					</div>
+					<div className="property-input">
+						<label>artist image</label>
+						<ImageUploader
+							image={this.state.artist.imgSrc}
+							setImage={(url) => this.handleInputChange({ path: 'imgSrc', value: url })}
+						/>
+					</div>
 
 					<br />
 
-					<div className='property-input'>
+					<div className="property-input">
 						<label>bio</label>
 						<textarea
 							rows={6}
 							cols={60}
 							onKeyPress={(e) => this.handleTextareaKeyPress(e)}
 							onChange={(e) => this.handleInputChange({ e })}
-							id='description.bio'
+							id="description.bio"
 							value={(this.state.artist.description && this.state.artist.description.bio) || ''}
 						/>
 					</div>
 					<br />
-					<div className='property-input'>
+					<div className="property-input">
 						<label>description background color (default: darkgrey)</label>
 						<ColorPicker
 							color={
@@ -180,7 +188,7 @@ export default class ArtistEditor extends React.Component {
 							}}
 						/>
 					</div>
-					<div className='property-input'>
+					<div className="property-input">
 						<label>description text color (default: white)</label>
 						<ColorPicker
 							color={
@@ -208,7 +216,7 @@ export default class ArtistEditor extends React.Component {
 					{this.state.error}
 					<button>Submit changes</button>
 				</form>
-				<div id='create-new'>
+				<div id="create-new">
 					<button onClick={() => this.newArtist()}>Submit as new artist</button>
 				</div>
 				<button

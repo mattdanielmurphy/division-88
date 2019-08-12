@@ -52,8 +52,8 @@ class Admin extends React.Component {
 		selectedArtist: 0,
 		selectedTool: 0,
 		dataReady: false,
-		selectedHeading: undefined,
-		authenticated: true // REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION
+		selectedHeading: undefined
+		// authenticated: true // REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION
 	}
 	setScale = (scale) => this.setState({ scale })
 	setView = (view) => this.setState({ view })
@@ -257,7 +257,7 @@ class Admin extends React.Component {
 				<button onClick={signInWithGoogle}>Sign in</button>
 			</Page>
 		) : (
-			<div id='admin-root'>
+			<div id="admin-root">
 				<AdminControls
 					setScale={(scale) => this.setScale(scale)}
 					setView={(view) => this.setView(view)}

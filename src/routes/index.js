@@ -6,6 +6,7 @@ const producerTools = require('./producer-tools')
 const workInProgress = require('./work-in-progress')
 const pageInfo = require('./page-info')
 const about = require('./about')
+const images = require('./images')
 const auth = require('./auth')
 
 routes.get('/', (req, res) => res.status(200).json('All good'))
@@ -18,5 +19,6 @@ routes.use('/about', about)
 routes.use('/auth', auth)
 routes.use('/wip', workInProgress)
 routes.use('/page-info', pageInfo)
+routes.use('/images', images)
 
 module.exports = routes
