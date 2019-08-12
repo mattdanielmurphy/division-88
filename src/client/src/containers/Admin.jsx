@@ -238,6 +238,7 @@ class Admin extends React.Component {
 		// 		(user) => (user ? this.setState({ authenticated: true }) : this.setState({ authenticated: false }))
 		// 	)
 	}
+	o
 	signOut = () => firebase.auth().signOut()
 	getPageName = () => this.props.match.params.page
 	componentDidMount() {
