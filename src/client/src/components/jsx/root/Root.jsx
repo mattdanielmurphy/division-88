@@ -21,7 +21,7 @@ export default class extends React.Component {
 				<Route exact path='/producer-tools' component={ProducerTools} />
 				<Route path='/producer-tools/:tool' component={ProducerTool} />
 				<Route path='/about' component={About} />
-				<Route exact path='/admin' component={Admin} />
+				<Route exact path='/admin' render={(props) => <Admin match={{ params: { page: 'index' } }} />} />
 				<Route path='/admin/:page' component={Admin} />
 				<Footer />
 			</Router>

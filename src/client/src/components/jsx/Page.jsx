@@ -124,7 +124,6 @@ export default class Page extends React.Component {
 	}
 	componentDidMount = async () => {
 		this.setParentElementsTo100PercentHeight()
-		console.log(this.getPageName())
 		const headingBackgroundImage =
 			this.props.headingBackgroundImage || this.props.pageName ? await this.getHeadingBackgroundImage() : ''
 		this.setState({

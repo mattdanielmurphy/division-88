@@ -7,18 +7,6 @@ import Page from '../components/jsx/Page'
 import axios from 'axios'
 import env from '../client-env'
 
-// TODO: Replace with your project's config object
-const config = {
-	apiKey: 'AIzaSyBSdDsj2JJuAI_9V-z5-qwW45YDdQmBoyE',
-	authDomain: 'division-88-6430e.firebaseapp.com',
-	databaseURL: 'https://division-88-6430e.firebaseio.com',
-	storageBucket: 'gs://division-88-6430e.appspot.com/'
-}
-firebase.initializeApp(config)
-
-// Get a reference to the storage service, which is used to create references in your storage bucket
-// const storage = firebase.storage()
-
 class ProfilePage extends Component {
 	state = {
 		username: '',

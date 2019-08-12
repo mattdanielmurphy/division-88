@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import withFirebaseAuth from 'react-with-firebase-auth'
-import * as firebase from 'firebase/app'
+import firebase from 'firebase/app'
 import 'firebase/auth'
 
 import env from '../client-env'
@@ -27,7 +27,23 @@ const pages = {
 	about: About
 }
 
-export default class Admin extends React.Component {
+const firebaseConfig = {
+	apiKey: 'AIzaSyBSdDsj2JJuAI_9V-z5-qwW45YDdQmBoyE',
+	authDomain: 'division-88-6430e.firebaseapp.com',
+	databaseURL: 'https://division-88-6430e.firebaseio.com',
+	projectId: 'division-88-6430e',
+	storageBucket: 'division-88-6430e.appspot.com',
+	messagingSenderId: '1059847851928'
+}
+
+const firebaseApp = firebase.initializeApp(firebaseConfig)
+
+const firebaseAppAuth = firebaseApp.auth()
+const providers = {
+	googleProvider: new firebase.auth.GoogleAuthProvider()
+}
+
+class Admin extends React.Component {
 	state = {
 		view: 'mobile',
 		scale: 1,
@@ -167,23 +183,23 @@ export default class Admin extends React.Component {
 		this.setState({ headingBackgroundImage })
 		return headingBackgroundImage
 	}
-	getPageData = async (pageName) => {
-		if (pageName === 'artists') return await this.getArtistsFromDatabase()
-		else if (pageName === 'artist') return await this.getArtistFromDatabase()
-		else if (pageName === 'producer-tools') return await this.getProducerToolsFromDatabase()
-		else if (pageName === 'index') return await this.getGridFromDatabase()
-		else if (pageName === 'about') return await this.getAboutTextFromDatabase()
+	getPageData = async () => {
+		const page = this.getPageName()
+
+		if (page === 'artists') return await this.getArtistsFromDatabase()
+		else if (page === 'artist') return await this.getArtistFromDatabase()
+		else if (page === 'producer-tools') return await this.getProducerToolsFromDatabase()
+		else if (page === 'index') return await this.getGridFromDatabase()
+		else if (page === 'about') return await this.getAboutTextFromDatabase()
 	}
-	getDataForPage = async () => {
+	getDataForPage = async (pageName) => {
 		const getHeadingData = new Promise((res, rej) => this.getHeadingBackgroundImage().then((r) => res(r)))
-		const getPageData = new Promise((res, rej) =>
-			this.getPageData(this.props.match.params.page).then((r) => res(r))
-		)
+		const getPageData = new Promise((res, rej) => this.getPageData(pageName).then((r) => res(r)))
 		await Promise.all([ getHeadingData, getPageData ])
 		this.setState({ dataReady: true })
 	}
 	componentDidUpdate(prevProps) {
-		// if (this.props.match.params.page !== prevProps.pageName) {
+		// if (this.props.match.params.page !== this.state.pageName) {
 		// 	this.setState({
 		// 		dataReady: false,
 		// 		selectedArtist: undefined,
@@ -223,81 +239,80 @@ export default class Admin extends React.Component {
 		// 	)
 	}
 	signOut = () => firebase.auth().signOut()
-	setPageName() {
-		console.log(this.props.match.params.page)
-		this.setState({ pageName: this.props.match.params.page })
-	}
+	getPageName = () => this.props.match.params.page
 	componentDidMount() {
 		this.getDataForPage()
 		this.addSpaceToTopOfBody()
 		this.setKeyBindings()
 		this.setBodyBackground()
-		this.setPageName()
 		this.setUpFirebaseAuthUI()
 	}
 	render = () => {
-		if (this.state.authenticated && this.state.pageName) {
-			return (
-				<div id='admin-root'>
-					<AdminControls
-						setScale={(scale) => this.setScale(scale)}
-						setView={(view) => this.setView(view)}
-						pageName={this.state.pageName}
-						undoLayoutChange={() => this.undoLayoutChange()}
-						redoLayoutChange={() => this.redoLayoutChange()}
+		const { user, signOut, signInWithGoogle } = this.props
+
+		return !!!user ? (
+			<Page>
+				<h1>Please sign in:</h1>
+				<button onClick={signInWithGoogle}>Sign in</button>
+			</Page>
+		) : (
+			<div id='admin-root'>
+				<AdminControls
+					setScale={(scale) => this.setScale(scale)}
+					setView={(view) => this.setView(view)}
+					pageName={this.getPageName()}
+					undoLayoutChange={() => this.undoLayoutChange()}
+					redoLayoutChange={() => this.redoLayoutChange()}
+					signOut={signOut}
+				/>
+				{this.state.dataReady ? (
+					<PagePreview
+						pageName={this.getPageName()}
+						page={pages[this.getPageName()]}
+						view={this.state.view}
+						scale={this.state.scale}
+						// Heading
+						headingBackgroundImage={this.state.headingBackgroundImage}
+						selectHeading={(pageName) => this.selectHeading(pageName)}
+						headingSelected={this.state.selectedHeading}
+						// Grid
+						selectCell={(index) => this.selectCell(index)}
+						selectedCell={this.state.selectedCell}
+						layouts={this.state.layouts}
+						cells={this.state.cells}
+						onLayoutChange={(layout, layouts) => this.onLayoutChange(layout, layouts)}
+						// Artists
+						selectArtist={(artist) => this.selectArtist(artist)}
+						selectedArtist={this.state.selectedArtist}
+						artists={this.state.artists}
+						// Producer Tools
+						selectTool={(tool) => this.selectTool(tool)}
+						selectedTool={this.state.selectedTool}
+						tools={this.state.tools}
+						// About
+						aboutText={this.state.aboutText}
 					/>
-					<button onClick={() => this.signOut()}>Sign out</button>
-					{this.state.dataReady ? (
-						<PagePreview
-							pageName={this.state.pageName}
-							page={pages[this.state.pageName]}
-							view={this.state.view}
-							scale={this.state.scale}
-							// Heading
-							headingBackgroundImage={this.state.headingBackgroundImage}
-							selectHeading={(pageName) => this.selectHeading(pageName)}
-							headingSelected={this.state.selectedHeading}
-							// Grid
-							selectCell={(index) => this.selectCell(index)}
-							selectedCell={this.state.selectedCell}
-							layouts={this.state.layouts}
-							cells={this.state.cells}
-							onLayoutChange={(layout, layouts) => this.onLayoutChange(layout, layouts)}
-							// Artists
-							selectArtist={(artist) => this.selectArtist(artist)}
-							selectedArtist={this.state.selectedArtist}
-							artists={this.state.artists}
-							// Producer Tools
-							selectTool={(tool) => this.selectTool(tool)}
-							selectedTool={this.state.selectedTool}
-							tools={this.state.tools}
-							// About
-							aboutText={this.state.aboutText}
-						/>
-					) : (
-						<div>loading...</div>
-					)}
-					<Editor
-						{...this.props}
-						{...this.state}
-						selectedHeading={this.state.selectedHeading}
-						updateHeading={(heading) => this.updateHeading(heading)}
-						updateArtists={(index, artist) => this.updateArtists(index, artist)}
-						refreshArtists={(index, artist) => this.refreshArtists(index, artist)}
-						updateGrid={({ layouts, cells }) => this.updateGrid({ layouts, cells })}
-						refreshGrid={({ cells }) => this.refreshGrid({ cells })}
-						updateTools={(index, tool) => this.updateTools(index, tool)}
-						refreshTools={(index, tool) => this.refreshTools(index, tool)}
-					/>
-				</div>
-			)
-		} else {
-			return (
-				<Page>
-					<div id='firebaseui-auth-container' />
-					<div id='loader'>Loading...</div>
-				</Page>
-			)
-		}
+				) : (
+					<div>loading...</div>
+				)}
+				<Editor
+					{...this.props}
+					{...this.state}
+					selectedHeading={this.state.selectedHeading}
+					updateHeading={(heading) => this.updateHeading(heading)}
+					updateArtists={(index, artist) => this.updateArtists(index, artist)}
+					refreshArtists={(index, artist) => this.refreshArtists(index, artist)}
+					updateGrid={({ layouts, cells }) => this.updateGrid({ layouts, cells })}
+					refreshGrid={({ cells }) => this.refreshGrid({ cells })}
+					updateTools={(index, tool) => this.updateTools(index, tool)}
+					refreshTools={(index, tool) => this.refreshTools(index, tool)}
+				/>
+			</div>
+		)
 	}
 }
+
+export default withFirebaseAuth({
+	providers,
+	firebaseAppAuth
+})(Admin)
