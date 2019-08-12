@@ -4,41 +4,6 @@ import { SizeMe } from 'react-sizeme'
 import axios from 'axios'
 import env from '../../client-env'
 
-// class HeadingWithoutBackgroundImage extends React.Component {
-// 	render = () => (
-// 		<div className="top-heading">
-// 			<Textfit mode="single" max={50}>
-// 				{this.props.children}
-// 			</Textfit>
-// 		</div>
-// 	)
-// }
-
-// class HeadingWithBackgroundImage extends React.Component {
-// 	render = () => (
-// 		<div className="top-heading background-image" style={{ backgroundImage: `url(${this.props.image})` }}>
-// 			<Textfit mode="single" max={50}>
-// 				{this.props.children}
-// 			</Textfit>
-// 		</div>
-// 	)
-// }
-
-// class Heading extends React.Component {
-// 	render = () => {
-// 		return this.props.backgroundImage ? (
-// 			<HeadingWithBackgroundImage image={this.props.backgroundImage}>
-// 				{this.props.heading.text}
-// 				<span>{this.props.heading.spanText}</span>
-// 			</HeadingWithBackgroundImage>
-// 		) : (
-// 			<HeadingWithoutBackgroundImage>
-// 				{this.props.heading.text}
-// 				<span>{this.props.heading.spanText}</span>
-// 			</HeadingWithoutBackgroundImage>
-// 		)
-// 	}
-// }
 class Heading extends React.Component {
 	state = {
 		style: { backgroundImage: this.props.headingBackgroundImage ? `url(${this.props.headingBackgroundImage})` : '' }
@@ -68,18 +33,11 @@ class Heading extends React.Component {
 }
 
 export default class Page extends React.Component {
-	// PROPS
-	// REQUIRED:
-	// id
-	// heading
-	// OPTIONAL:
-	//
-	getPathname = () => {
+	getPathName = () => {
 		let regexMatches = /(?:\/admin)?\/([A-Za-z\-_]+)\/?/.exec(window.location.pathname)
-
 		return regexMatches ? regexMatches[1] : ''
 	}
-	getPageName = () => this.getPathname().split('-').join(' ')
+	getPageName = () => this.getPathName().split('-').join(' ')
 	state = {
 		id: this.props.id,
 		heading: '',
@@ -99,10 +57,12 @@ export default class Page extends React.Component {
 		return `main-container ${view}`
 	}
 	getParentElementsBeforeBody(element) {
+		console.log(element)
 		const parentElements = []
 		const getParentElement = (element) => {
 			if (element) {
 				element = element.parentElement
+				console.log(element)
 				if (element.tagName === 'BODY') return
 				parentElements.push(element)
 				getParentElement(element)
@@ -112,26 +72,34 @@ export default class Page extends React.Component {
 		return parentElements
 	}
 	setParentElementsTo100PercentHeight() {
-		const parentElements = this.getParentElementsBeforeBody(document.querySelector('#content'))
+		const parentElements = this.getParentElementsBeforeBody(document.querySelector('.main-container'))
+		console.log(parentElements)
 		parentElements.forEach((element) => (element.style.height = '100%'))
 	}
 	getHeadingBackgroundImage = async () => {
 		const headingBackgroundImage = await axios
-			.get(`${env.apiUrl}/page-info/${this.props.pageName}`)
+			.get(`${env.apiUrl}/page-info/${this.getPathName()}`)
 			.then((r) => r.data.headingBackgroundImage)
-		console.log(headingBackgroundImage, this.props.pageName)
+		console.log(headingBackgroundImage, this.getPageName())
 		return headingBackgroundImage
 	}
+	componentDidUpdate(prevProps, prevState) {
+		if (this.state.id !== prevState.id && !this.props.isPreview) this.setParentElementsTo100PercentHeight()
+		if (this.props.headingBackgroundImage !== prevProps.headingBackgroundImage)
+			this.setState({ headingBackgroundImage: this.props.headingBackgroundImage })
+	}
 	componentDidMount = async () => {
-		this.setParentElementsTo100PercentHeight()
+		if (!this.props.isPreview) this.setParentElementsTo100PercentHeight()
 		const headingBackgroundImage =
-			this.props.headingBackgroundImage || this.props.pageName ? await this.getHeadingBackgroundImage() : ''
+			this.props.headingBackgroundImage || this.getPageName() ? await this.getHeadingBackgroundImage() : ''
 		this.setState({
 			headingBackgroundImage,
-			id: this.props.id || this.getPathname() || 'index',
+			id: this.props.id || this.getPathName() || 'index',
 			pageName: this.getPageName(),
 			heading: this.getHeading()
 		})
+
+		// why headingbackgroundimage is not being set: being set in state before props come in
 	}
 	render = () => {
 		return (
@@ -148,7 +116,7 @@ export default class Page extends React.Component {
 									headingSelected={this.props.headingSelected}
 								/>
 							)}
-							<main>{this.props.children}</main>
+							<main id='content'>{this.props.children}</main>
 						</div>
 					) : (
 						<div />

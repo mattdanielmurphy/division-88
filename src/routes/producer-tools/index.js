@@ -10,7 +10,7 @@ producerTools.get('/', fetchProducerTools)
 producerTools.get('/:name', fetchProducerToolByName)
 producerTools.get('/index/:index', fetchProducerToolByIndex)
 producerTools.get('/:producerTool/delete', deleteProducerTool)
-producerTools.post('/:index', updateProducerTool)
 producerTools.post('/new', newProducerTool)
+producerTools.post('/:index', updateProducerTool)
 
 module.exports = producerTools

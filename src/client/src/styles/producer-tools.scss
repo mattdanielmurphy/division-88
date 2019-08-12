@@ -16,7 +16,6 @@
 	.artist {
 		position: relative;
 		align-items: center;
-		font-size: 14px;
 		&:hover {
 			cursor: pointer;
 			.img {
@@ -34,6 +33,7 @@
 			max-width: 100%;
 		}
 		.description {
+			font-size: 1rem;
 			padding: 2rem 1rem;
 			display: grid;
 			color: black;

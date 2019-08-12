@@ -64,20 +64,24 @@ export default class Artist extends React.Component {
 			page={this.props.page}
 			setHovering={(hovering) => this.setHovering(hovering)}
 		>
-			<div className='artist'>
-				<Image src={this.props.imgSrc} />
-				<div className={`description-outer-wrapper align-${this.state.alignment}`}>
-					<div className='description' style={this.getDescriptionStyle()}>
-						<div className='text'>
-							<div className='artist-name'>{this.props.name}</div>
-							<div className='bio'>{this.props.description.bio}</div>
-							<div className='see-releases' style={this.getSeeReleasesStyle()}>
-								<span>></span> See releases
+			{this.props.description ? (
+				<div className='artist'>
+					<Image src={this.props.imgSrc} />
+					<div className={`description-outer-wrapper align-${this.state.alignment}`}>
+						<div className='description' style={this.getDescriptionStyle()}>
+							<div className='text'>
+								<div className='artist-name'>{this.props.name}</div>
+								<div className='bio'>{this.props.description.bio}</div>
+								<div className='see-releases' style={this.getSeeReleasesStyle()}>
+									<span>></span> See releases
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			) : (
+				<div />
+			)}
 		</ArtistWrapper>
 	)
 }

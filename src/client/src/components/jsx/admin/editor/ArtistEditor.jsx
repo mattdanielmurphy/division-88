@@ -59,28 +59,30 @@ export default class ArtistEditor extends React.Component {
 		this.setState({ index, artist, artistFromDatabase: artist, unsavedChanges: false })
 	}
 	validateArtist() {
-		const cell = this.state.artist
-		const valid = cell.video ? cell.videoSrc : cell.imgSrc
-		if (valid) {
-			this.setState({ error: undefined })
-		} else {
-			this.setState({ error: 'Error: You must provide at least a background image' })
-		}
+		const { imgSrc, name, description, bio, style, spotifyUrl, releases } = this.state.artist
+		// const valid = imgSrc && name && description && bio && style && spotifyUrl
+		const valid = true
+		if (valid) this.setState({ error: undefined })
+		else this.setState({ error: 'Error: You are missing a required field' })
 		return valid
 	}
 	newArtist = async () => {
 		if (this.validateArtist()) {
+			console.log(this.state.artist)
+			delete this.state.artist._id
+			delete this.state.artist.__v
 			axios.post(`${env.apiUrl}/artists/new`, this.state.artist).then((r) => {
-				const { layouts, artists } = r.data
-				this.props.updateGrid({ layouts, artists })
-				this.changeIndex(r.data.index)
+				const { index, artist } = r.data
+				this.props.refreshArtists(index, artist)
+				this.changeIndex(index)
 			})
 		}
 	}
 	deleteArtist() {
-		axios.get(`${env.apiUrl}/grids/index/artists/${this.props.index}/delete`).then((r) => {
-			const { layouts, artists } = r.data
-			this.props.updateGrid({ layouts, artists })
+		this.setState({ artist: undefined, index: 0 }, () => {
+			axios.get(`${env.apiUrl}/artists/${this.props.index}/delete`).then((r) => {
+				this.props.refreshArtists(this.props.index, undefined, 0)
+			})
 		})
 	}
 	componentDidUpdate = async (prevProps) => {
@@ -124,21 +126,21 @@ export default class ArtistEditor extends React.Component {
 	}
 	render = () =>
 		this.state.artist ? (
-			<div id="property-editor">
+			<div id='property-editor'>
 				<form onSubmit={(e) => this.handleSubmit(e)}>
-					<div className="property-input">
+					<div className='property-input'>
 						<label>name</label>
 						<input
 							onChange={(e) => this.handleInputChange({ e })}
-							id="name"
+							id='name'
 							value={this.state.artist.name || ''}
 						/>
 					</div>
-					<div className="property-input">
+					<div className='property-input'>
 						<label>page name</label>
 						<input
 							onChange={(e) => this.handleInputChange({ e })}
-							id="page"
+							id='page'
 							value={
 								this.state.artist.page ||
 								(this.state.artist.name && this.state.artist.name.toLowerCase().split(' ').join('-')) ||
@@ -146,7 +148,7 @@ export default class ArtistEditor extends React.Component {
 							}
 						/>
 					</div>
-					<div className="property-input">
+					<div className='property-input'>
 						<label>artist image</label>
 						<ImageUploader
 							image={this.state.artist.imgSrc}
@@ -156,20 +158,20 @@ export default class ArtistEditor extends React.Component {
 
 					<br />
 
-					<div className="property-input">
+					<div className='property-input'>
 						<label>bio</label>
 						<textarea
 							rows={6}
 							cols={60}
 							onKeyPress={(e) => this.handleTextareaKeyPress(e)}
 							onChange={(e) => this.handleInputChange({ e })}
-							id="description.bio"
+							id='description.bio'
 							value={(this.state.artist.description && this.state.artist.description.bio) || ''}
 						/>
 					</div>
 					<br />
-					<div className="property-input">
-						<label>description background color (default: darkgrey)</label>
+					<div className='property-input'>
+						<label>description background color</label>
 						<ColorPicker
 							color={
 								(this.state.artist.description &&
@@ -188,8 +190,8 @@ export default class ArtistEditor extends React.Component {
 							}}
 						/>
 					</div>
-					<div className="property-input">
-						<label>description text color (default: white)</label>
+					<div className='property-input'>
+						<label>description text color</label>
 						<ColorPicker
 							color={
 								(this.state.artist.description &&
@@ -214,9 +216,9 @@ export default class ArtistEditor extends React.Component {
 						value={this.state.description && this.state.description.bio}
 					></PropertyInput> */}
 					{this.state.error}
-					<button>Submit changes</button>
+					<button>Submit changes [S]</button>
 				</form>
-				<div id="create-new">
+				<div id='create-new'>
 					<button onClick={() => this.newArtist()}>Submit as new artist</button>
 				</div>
 				<button

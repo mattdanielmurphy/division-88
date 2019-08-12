@@ -1,13 +1,19 @@
 .image-uploader-preview {
 	max-width: 150px;
 }
+
 html,
 body,
 #root {
 	height: 100%;
 }
 
-#content {
+main {
+	max-width: 100%;
+	overflow-x: hidden;
+}
+
+.main-container {
 	min-height: calc(100% - 10rem);
 	overflow: hidden;
 }
@@ -63,14 +69,15 @@ body {
 
 a {
 	text-decoration: none;
-	color: white;
+	color: #4a91e4;
 	&[aria-current='page'] {
 		&:hover {
 			color: white;
 		}
 	}
 	&:hover {
-		color: #ddd;
+		cursor: pointer;
+		color: #1f88ff;
 	}
 }
 
@@ -91,8 +98,13 @@ button {
 	color: white;
 	border: none;
 	margin: .2em;
+	transition: background .3s ease-in-out;
 	&.enabled {
 		background: red;
+	}
+	&:hover {
+		cursor: pointer;
+		background: #555;
 	}
 }
 

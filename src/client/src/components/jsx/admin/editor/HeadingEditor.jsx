@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import env from '../../../../client-env'
+import ImageUploader from './ImageUploader'
 
 export default class HeadingEditor extends React.Component {
 	state = {}
@@ -63,10 +64,9 @@ export default class HeadingEditor extends React.Component {
 				<form onSubmit={(e) => this.handleSubmit(e)}>
 					<div className='property-input'>
 						<label>heading background image</label>
-						<input
-							onChange={(e) => this.handleInputChange({ e })}
-							id='headingBackgroundImage'
-							value={this.state.heading.headingBackgroundImage || ''}
+						<ImageUploader
+							image={this.state.heading.headingBackgroundImage}
+							setImage={(url) => this.handleInputChange({ path: 'headingBackgroundImage', value: url })}
 						/>
 					</div>
 					{this.state.error}

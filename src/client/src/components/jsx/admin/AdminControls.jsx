@@ -16,7 +16,9 @@ export default class AdminControls extends React.Component {
 					<button onClick={() => this.props.redoLayoutChange()}>Redo [r]</button>
 				</div>
 			)}
-			<button onClick={this.props.signOut}>Sign out</button>
+			<div className='sign-out'>
+				<button onClick={this.props.signOut}>Sign out</button>
+			</div>
 		</div>
 	)
 }

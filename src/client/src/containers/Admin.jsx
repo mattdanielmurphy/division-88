@@ -53,7 +53,6 @@ class Admin extends React.Component {
 		selectedTool: 0,
 		dataReady: false,
 		selectedHeading: undefined
-		// authenticated: true // REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION REMOVE FOR PRODUCTION
 	}
 	setScale = (scale) => this.setState({ scale })
 	setView = (view) => this.setState({ view })
@@ -63,27 +62,61 @@ class Admin extends React.Component {
 		else if (cells) this.setState({ cells })
 	}
 	refreshGrid = ({ cells }) => {
-		this.setState({ cells: {}, cellsTemp: cells })
+		const { cellsTemp } = this.state
+		// only refresh if not currently refreshing (otherwise will wipe out value)
+		if (cellsTemp) this.setState({ cellsTemp: {}, cells: cellsTemp })
+		else this.setState({ cells: {}, cellsTemp: cells })
 	}
 	updateArtists = (index, artist) => {
-		const artists = this.state.artists
-		artists[index] = artist
-		this.setState({ artists })
+		const { artists, artistsTemp } = this.state
+		if (artistsTemp) {
+			artistsTemp[index] = artist
+			this.setState({ artistsTemp, artists: artists })
+		} else {
+			artists[index] = artist
+			this.setState({ artists, artistsTemp })
+		}
 	}
-	refreshArtists = (index, artist) => {
-		const artists = this.state.artists
-		artists[index] = artist
-		this.setState({ artists: undefined, artistsTemp: artists })
+	refreshArtists = (index, artist, newIndex) => {
+		const { artists, artistsTemp } = this.state
+		// only refresh if not currently refreshing (otherwise will wipe out value)
+		if (artistsTemp) {
+			artistsTemp[index] = artist
+			this.setState({ artistsTemp: undefined, artists: artistsTemp })
+		} else {
+			artists[index] = artist
+			this.setState({ artists: undefined, artistsTemp: artists })
+		}
+		if (newIndex !== undefined) {
+			window.location.reload()
+			this.setState({ selectedArtist: newIndex })
+		}
 	}
 	updateTools = (index, tool) => {
-		const tools = this.state.tools
-		tools[index] = tool
-		this.setState({ tools })
+		const { tools, toolsTemp } = this.state
+		if (toolsTemp) {
+			toolsTemp[index] = tool
+			this.setState({ toolsTemp, tools })
+		} else {
+			tools[index] = tool
+			this.setState({ tools, toolsTemp })
+		}
 	}
-	refreshTools = (index, tool) => {
-		const tools = this.state.tools
-		tools[index] = tool
-		this.setState({ tools: undefined, toolsTemp: tools })
+	refreshTools = (index, tool, newIndex) => {
+		const { tools, toolsTemp } = this.state
+		// only refresh if not currently refreshing (otherwise will wipe out value)
+		if (toolsTemp) {
+			toolsTemp[index] = tool
+			this.setState({ toolsTemp: undefined, tools: toolsTemp })
+		} else {
+			tools[index] = tool
+			this.setState({ tools: undefined, toolsTemp: tools })
+		}
+		if (newIndex !== undefined) {
+			this.setState({ selectedtool: newIndex })
+			console.log('new index')
+			window.location.reload()
+		}
 	}
 	updateHeading = (heading) => {
 		this.setState({ headingBackgroundImage: heading.headingBackgroundImage })
@@ -198,73 +231,51 @@ class Admin extends React.Component {
 		await Promise.all([ getHeadingData, getPageData ])
 		this.setState({ dataReady: true })
 	}
-	componentDidUpdate(prevProps) {
-		// if (this.props.match.params.page !== this.state.pageName) {
-		// 	this.setState({
-		// 		dataReady: false,
-		// 		selectedArtist: undefined,
-		// 		selectedTool: undefined,
-		// 		selectedCell: undefined,
-		// 		selectedHeading: undefined
-		// 	})
-		// 	this.getDataForPage()
-		// 	// bring values back from temp storage once component updated (used to properly refresh data... unfortunately necessary)
-		// } else if (this.state.cellsTemp) {
-		// 	this.setState({ cells: this.state.cellsTemp, cellsTemp: undefined })
-		// } else if (this.state.artistsTemp) {
-		// 	this.setState({ artists: this.state.artistsTemp, artistsTemp: undefined })
-		// } else if (this.state.toolsTemp) {
-		// 	this.setState({ tools: this.state.toolsTemp, toolsTemp: undefined })
-		// }
+	componentDidUpdate(prevProps, prevState) {
+		if (this.props.match.params.page !== prevProps.match.params.page) {
+			this.setState({
+				dataReady: false,
+				selectedArtist: undefined,
+				selectedTool: undefined,
+				selectedCell: undefined,
+				selectedHeading: undefined
+			})
+			this.getDataForPage()
+			// bring values back from temp storage once component updated (used to properly refresh data... unfortunately necessary)
+		} else if (this.state.cellsTemp) this.setState({ cells: this.state.cellsTemp, cellsTemp: undefined })
+		else if (this.state.artistsTemp) this.setState({ artists: this.state.artistsTemp, artistsTemp: undefined })
+		else if (this.state.toolsTemp) this.setState({ tools: this.state.toolsTemp, toolsTemp: undefined })
 	}
-	setUpFirebaseAuthUI() {
-		// const ui = new firebaseui.auth.AuthUI(firebase.auth())
-		// const uiConfig = {
-		// 	callbacks: {
-		// 		signInSuccessWithAuthResult: (authResult, redirectUrl) => {
-		// 			this.setState({ authenticated: true })
-		// 			return true
-		// 		},
-		// 		uiShown: () => (document.getElementById('loader').style.display = 'none')
-		// 	},
-		// 	signInFlow: 'popup',
-		// 	signInSuccessUrl: `${env.appUrl}/admin`,
-		// 	signInOptions: [ firebase.auth.GoogleAuthProvider.PROVIDER_ID ]
-		// }
-		// ui.start('#firebaseui-auth-container', uiConfig)
-		// firebase
-		// 	.auth()
-		// 	.onAuthStateChanged(
-		// 		(user) => (user ? this.setState({ authenticated: true }) : this.setState({ authenticated: false }))
-		// 	)
-	}
-	o
 	signOut = () => firebase.auth().signOut()
 	getPageName = () => this.props.match.params.page
+	handleClickSignIn(e) {
+		e.preventDefault()
+		this.props.signInWithGoogle()
+	}
 	componentDidMount() {
 		this.getDataForPage()
 		this.addSpaceToTopOfBody()
 		this.setKeyBindings()
 		this.setBodyBackground()
-		this.setUpFirebaseAuthUI()
 	}
-	render = () => {
-		const { user, signOut, signInWithGoogle } = this.props
-
-		return !!!user ? (
-			<Page>
-				<h1>Please sign in:</h1>
-				<button onClick={signInWithGoogle}>Sign in</button>
+	render = () =>
+		!!!this.props.user ? (
+			<Page heading='Authorization Required'>
+				<section className='text sign-in-prompt'>
+					<p>
+						<button onClick={(e) => this.handleClickSignIn(e)}>sign in</button>
+					</p>
+				</section>
 			</Page>
 		) : (
-			<div id="admin-root">
+			<div id='admin-root'>
 				<AdminControls
 					setScale={(scale) => this.setScale(scale)}
 					setView={(view) => this.setView(view)}
 					pageName={this.getPageName()}
 					undoLayoutChange={() => this.undoLayoutChange()}
 					redoLayoutChange={() => this.redoLayoutChange()}
-					signOut={signOut}
+					signOut={() => this.props.signOut()}
 				/>
 				{this.state.dataReady ? (
 					<PagePreview
@@ -302,15 +313,14 @@ class Admin extends React.Component {
 					selectedHeading={this.state.selectedHeading}
 					updateHeading={(heading) => this.updateHeading(heading)}
 					updateArtists={(index, artist) => this.updateArtists(index, artist)}
-					refreshArtists={(index, artist) => this.refreshArtists(index, artist)}
+					refreshArtists={(index, artist, newIndex) => this.refreshArtists(index, artist, newIndex)}
 					updateGrid={({ layouts, cells }) => this.updateGrid({ layouts, cells })}
 					refreshGrid={({ cells }) => this.refreshGrid({ cells })}
 					updateTools={(index, tool) => this.updateTools(index, tool)}
-					refreshTools={(index, tool) => this.refreshTools(index, tool)}
+					refreshTools={(index, tool, newIndex) => this.refreshTools(index, tool, newIndex)}
 				/>
 			</div>
 		)
-	}
 }
 
 export default withFirebaseAuth({

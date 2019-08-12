@@ -1,4 +1,4 @@
 module.exports = {
-	apiUrl: 'http://localhost/api',
-	appUrl: 'http://localhost:3000'
+	apiUrl: 'https://division-88-6430e.firebaseapp.com/api',
+	appUrl: 'https://division-88-6430e.web.app'
 }

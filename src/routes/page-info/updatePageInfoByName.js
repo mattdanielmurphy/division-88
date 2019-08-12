@@ -5,5 +5,5 @@ module.exports = async (req, res) => {
 	const newInfo = req.body
 
 	console.log(newInfo)
-	PageInfo.findOneAndUpdate({ page: name }, newInfo, { new: true }).then((result) => res.json(result))
+	PageInfo.findOneAndUpdate({ page: name }, newInfo, { new: true, upsert: true }).then((result) => res.json(result))
 }

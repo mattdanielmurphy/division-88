@@ -40,22 +40,21 @@ export default class ImageUploader extends React.Component {
 	render() {
 		return (
 			<div>
-				<form>
-					<label>Image preview:</label>
+				<div>
+					{this.state.imageUrl && <img className='image-uploader-preview' src={this.state.imageUrl} />}
 					{this.state.isUploading && <p>Progress: {this.state.progress}</p>}
-					{this.state.imageUrl && <img className="image-uploader-preview" src={this.state.imageUrl} />}
-					<input type="text" value={this.state.imageUrl} onChange={(e) => this.handleChange(e)} />
-					<FileUploader
-						accept="image/*"
-						name="image"
-						randomizeFilename
-						storageRef={firebase.storage().ref('images')}
-						onUploadStart={this.handleUploadStart}
-						onUploadError={this.handleUploadError}
-						onUploadSuccess={this.handleUploadSuccess}
-						onProgress={this.handleProgress}
-					/>
-				</form>
+				</div>
+				<FileUploader
+					accept='image/*'
+					name='image'
+					randomizeFilename
+					storageRef={firebase.storage().ref('images')}
+					onUploadStart={this.handleUploadStart}
+					onUploadError={this.handleUploadError}
+					onUploadSuccess={this.handleUploadSuccess}
+					onProgress={this.handleProgress}
+				/>
+				<input type='text' value={this.state.imageUrl} onChange={(e) => this.handleChange(e)} />
 			</div>
 		)
 	}

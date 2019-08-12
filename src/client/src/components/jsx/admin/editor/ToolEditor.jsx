@@ -60,8 +60,7 @@ export default class ArtistEditor extends React.Component {
 		this.setState({ index, artist, artistFromDatabase: artist, unsavedChanges: false })
 	}
 	validateArtist() {
-		const cell = this.state.artist
-		const valid = cell.video ? cell.videoSrc : cell.imgSrc
+		const valid = true
 		if (valid) {
 			this.setState({ error: undefined })
 		} else {
@@ -71,17 +70,21 @@ export default class ArtistEditor extends React.Component {
 	}
 	newArtist = async () => {
 		if (this.validateArtist()) {
+			delete this.state.artist._id
+			delete this.state.artist.__v
 			axios.post(`${env.apiUrl}/producer-tools/new`, this.state.artist).then((r) => {
-				const { layouts, artists } = r.data
-				this.props.updateGrid({ layouts, artists })
-				this.changeIndex(r.data.index)
+				const { index, tool } = r.data
+				this.props.refreshTools(index, tool, index)
+				this.changeIndex(index)
 			})
 		}
 	}
 	deleteArtist() {
-		axios.get(`${env.apiUrl}/producer-tools/${this.props.index}/delete`).then((r) => {
-			const { layouts, artists } = r.data
-			this.props.updateGrid({ layouts, artists })
+		this.changeIndex(0)
+		this.setState({ artist: undefined, index: 0 }, () => {
+			axios
+				.get(`${env.apiUrl}/producer-tools/${this.props.index}/delete`)
+				.then((r) => this.props.refreshTools(this.props.index, undefined, 0))
 		})
 	}
 	componentDidUpdate = async (prevProps) => {
@@ -125,21 +128,21 @@ export default class ArtistEditor extends React.Component {
 	}
 	render = () =>
 		this.state.artist ? (
-			<div id="property-editor">
+			<div id='property-editor'>
 				<form onSubmit={(e) => this.handleSubmit(e)}>
-					<div className="property-input">
+					<div className='property-input'>
 						<label>name</label>
 						<input
 							onChange={(e) => this.handleInputChange({ e })}
-							id="name"
+							id='name'
 							value={this.state.artist.name || ''}
 						/>
 					</div>
-					<div className="property-input">
+					<div className='property-input'>
 						<label>page name</label>
 						<input
 							onChange={(e) => this.handleInputChange({ e })}
-							id="page"
+							id='page'
 							value={
 								this.state.artist.page ||
 								(this.state.artist.name && this.state.artist.name.toLowerCase().split(' ').join('-')) ||
@@ -147,7 +150,7 @@ export default class ArtistEditor extends React.Component {
 							}
 						/>
 					</div>
-					<div className="property-input">
+					<div className='property-input'>
 						<label>image</label>
 						<ImageUploader
 							image={this.state.artist.imgSrc}
@@ -157,20 +160,20 @@ export default class ArtistEditor extends React.Component {
 
 					<br />
 
-					<div className="property-input">
+					<div className='property-input'>
 						<label>description text</label>
 						<textarea
 							rows={6}
 							cols={60}
 							onKeyPress={(e) => this.handleTextareaKeyPress(e)}
 							onChange={(e) => this.handleInputChange({ e })}
-							id="description.text"
+							id='description.text'
 							value={(this.state.artist.description && this.state.artist.description.text) || ''}
 						/>
 					</div>
 					<br />
-					<div className="property-input">
-						<label>description background color (default: darkgrey)</label>
+					<div className='property-input'>
+						<label>description background color</label>
 						<ColorPicker
 							color={
 								(this.state.artist.description &&
@@ -189,8 +192,8 @@ export default class ArtistEditor extends React.Component {
 							}}
 						/>
 					</div>
-					<div className="property-input">
-						<label>description text color (default: white)</label>
+					<div className='property-input'>
+						<label>description text color</label>
 						<ColorPicker
 							color={
 								(this.state.artist.description &&
@@ -211,17 +214,18 @@ export default class ArtistEditor extends React.Component {
 					</div>
 					<br />
 					{this.state.error}
-					<button>Submit changes</button>
+					<button>Submit changes [S]</button>
 				</form>
-				<div id="create-new">
-					<button onClick={() => this.newArtist()}>Submit as new artist</button>
+				<div id='create-new'>
+					<button onClick={() => this.newArtist()}>Submit as new producer tool</button>
 				</div>
 				<button
 					onClick={() =>
-						window.confirm("Are you sure you want to delete this artist? (There's no going back!)") &&
-						this.deleteArtist()}
+						window.confirm(
+							"Are you sure you want to delete this producer tool? (There's no going back!)"
+						) && this.deleteArtist()}
 				>
-					Delete artist
+					Delete producer tool
 				</button>
 			</div>
 		) : (
