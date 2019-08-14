@@ -1,6 +1,6 @@
 import React from 'react'
 import Page from '../components/jsx/Page'
-import AboutTextEditor from '../components/jsx/AboutTextEditor'
+import TextEditor from '../components/jsx/admin/editor/text-editor/TextEditor'
 import Axios from 'axios'
 import env from '../client-env'
 
@@ -21,8 +21,8 @@ export default class extends React.Component {
 			selectHeading={() => this.props.selectHeading()}
 		>
 			{this.props.aboutText || this.state.text ? (
-				<section className='text'>
-					<AboutTextEditor text={this.props.aboutText || this.state.text} isPreview={this.props.isPreview} />
+				<section className="text">
+					<TextEditor text={this.props.aboutText || this.state.text} isPreview={this.props.isPreview} />
 				</section>
 			) : (
 				<div />

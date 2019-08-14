@@ -17,6 +17,8 @@ import Artist from '../pages/artist'
 import ProducerTools from '../pages/producer-tools'
 import ProducerTool from '../pages/producer-tool'
 import About from '../pages/about'
+import Posts from '../pages/posts'
+import Post from '../pages/post'
 
 const pages = {
 	index: Index,
@@ -24,7 +26,9 @@ const pages = {
 	artist: Artist,
 	'producer-tools': ProducerTools,
 	'producer-tool': ProducerTool,
-	about: About
+	about: About,
+	posts: Posts,
+	post: Post
 }
 
 const firebaseConfig = {
@@ -218,12 +222,14 @@ class Admin extends React.Component {
 	}
 	getPageData = async () => {
 		const page = this.getPageName()
+		this.setState({ pageName: page })
 
 		if (page === 'artists') return await this.getArtistsFromDatabase()
 		else if (page === 'artist') return await this.getArtistFromDatabase()
 		else if (page === 'producer-tools') return await this.getProducerToolsFromDatabase()
 		else if (page === 'index') return await this.getGridFromDatabase()
 		else if (page === 'about') return await this.getAboutTextFromDatabase()
+		else if (page === 'posts') return await this.getPostName()
 	}
 	getDataForPage = async (pageName) => {
 		const getHeadingData = new Promise((res, rej) => this.getHeadingBackgroundImage().then((r) => res(r)))
@@ -248,11 +254,13 @@ class Admin extends React.Component {
 	}
 	signOut = () => firebase.auth().signOut()
 	getPageName = () => this.props.match.params.page
+	getPostName = () => this.props.match.params.post
 	handleClickSignIn(e) {
 		e.preventDefault()
 		this.props.signInWithGoogle()
 	}
 	componentDidMount() {
+		console.log('admin, props', this.props)
 		this.getDataForPage()
 		this.addSpaceToTopOfBody()
 		this.setKeyBindings()
@@ -260,25 +268,26 @@ class Admin extends React.Component {
 	}
 	render = () =>
 		!!!this.props.user ? (
-			<Page heading='Authorization Required'>
-				<section className='text sign-in-prompt'>
+			<Page heading="Authorization Required">
+				<section className="text sign-in-prompt">
 					<p>
 						<button onClick={(e) => this.handleClickSignIn(e)}>sign in</button>
 					</p>
 				</section>
 			</Page>
 		) : (
-			<div id='admin-root'>
+			<div id="admin-root">
 				<AdminControls
 					setScale={(scale) => this.setScale(scale)}
 					setView={(view) => this.setView(view)}
-					pageName={this.getPageName()}
+					pageName={() => this.getPageName()}
 					undoLayoutChange={() => this.undoLayoutChange()}
 					redoLayoutChange={() => this.redoLayoutChange()}
 					signOut={() => this.props.signOut()}
 				/>
 				{this.state.dataReady ? (
 					<PagePreview
+						postName={this.getPostName()}
 						pageName={this.getPageName()}
 						page={pages[this.getPageName()]}
 						view={this.state.view}

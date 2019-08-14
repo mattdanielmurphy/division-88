@@ -1,11 +1,9 @@
-const functions = require('firebase-functions') // production-mode specificm
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const cors = require('cors')
 
 const routes = require('./routes')
-
 const { env } = require('./server-env')
 
 const app = express()
@@ -23,6 +21,4 @@ mongoose.Promise = global.Promise // override decprecated promise
 app.use(cors({ origin: true }), bodyParser.json())
 app.use('/api', routes)
 
-let api = functions.https.onRequest(app) // production-mode specific
-
-module.exports = { api } // production-mode specific
+app.listen(80, () => console.log(`App listening on ${'localhost'}:${80}...`)) // dev-mode specific

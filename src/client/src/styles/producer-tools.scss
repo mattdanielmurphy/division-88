@@ -76,6 +76,7 @@
 	.artist {
 		.description-outer-wrapper {
 			overflow: hidden;
+			width: 100%;
 			&.align-left {
 				grid-column: 1 / span 1;
 				// left: 1%;
@@ -102,6 +103,7 @@
 			height: 22rem;
 		}
 		.description-outer-wrapper {
+			width: 100%;
 			overflow: hidden;
 			position: absolute;
 			// max-width: 500px;

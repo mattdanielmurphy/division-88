@@ -19,13 +19,9 @@
 		"deploy": "bash scripts/set-dev-env.sh && concurrently -k \"yarn api-server\" \"yarn build-react-static\"",
 		"dev": "bash scripts/set-dev-env.sh && concurrently -k \"yarn api-server-watch\" \"yarn dev-server\"",
 		"api-server": "node src/index.js",
-		"api-server-watch": "nodemon src/index.js",
-		"build-react-static": "yarn wait-on http://localhost/api && bash scripts/set-prod-env.sh && bash scripts/build-client.sh && firebase deploy",
-		"dev-server": "yarn wait-on http://localhost/api && cd src/client && yarn start"
-	},
-	"nodemonConfig": {
-		"ignore": [ "src/client/*" ],
-		"delay": "2500"
+		"api-server-watch": "supervisor src/index.js",
+		"build-react-static": "bash scripts/set-prod-env.sh && bash scripts/build-client.sh && firebase deploy",
+		"dev-server": "cd src/client && yarn start"
 	},
 	"dependencies": {
 		"axios": "^0.19.0",

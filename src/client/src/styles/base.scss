@@ -68,6 +68,14 @@ body {
 }
 
 a {
+	color: white;
+	text-decoration: none;
+	&:visited {
+		color: white;
+	}
+}
+
+section.text a {
 	text-decoration: none;
 	color: #4a91e4;
 	&[aria-current='page'] {
