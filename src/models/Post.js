@@ -2,7 +2,12 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const PostSchema = new Schema({
-	text: { type: String, required: true },
+	text: {
+		type: String,
+		default:
+			'"{"document":{"nodes":[{"object":"block","type":"paragraph","nodes":[{"object":"text","text":"Click to edit."}]}]}}"'
+	},
+	tableData: { type: Object },
 	title: { type: String, required: true },
 	category: { type: String, required: true },
 	index: { type: Number, required: true }
