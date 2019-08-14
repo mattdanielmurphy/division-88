@@ -1,5 +1,5 @@
 import React from 'react'
-import { Textfit } from 'react-textfit'
+import { Textfit } from 'react-textfit-17'
 import { SizeMe } from 'react-sizeme'
 import axios from 'axios'
 import env from '../../client-env'

@@ -9783,9 +9783,10 @@ react-spinkit@^3.0.0:
     object-assign "^4.1.0"
     prop-types "^15.5.8"
 
-react-textfit@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-textfit/-/react-textfit-1.1.0.tgz#088855580f2e7aad269efc81b734bf636877d0e1"
+react-textfit-17@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-textfit-17/-/react-textfit-17-1.1.1.tgz#6e2b532e5b3c53f94b0766ede3db0668c970bddc"
+  integrity sha512-nntLIX2CyGxbAhuHUMV8YuXs8BXDk6pW4yP8dvgtvy2EjI7kJvmIgKPb1vBryKcNTCXn3JL567Fw+G3/N1bQBA==
   dependencies:
     process "^0.11.9"
     prop-types "^15.5.10"
