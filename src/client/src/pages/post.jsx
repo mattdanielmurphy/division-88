@@ -11,9 +11,16 @@ export default class extends React.Component {
 			? this.props.postName.split('-').join(' ')
 			: this.props.match.params.post.split('-').join(' ')
 	}
-	getPost = async (postTitle) => {
-		const post = await axios.get(`${env.apiUrl}/posts/${postTitle}`).then((r) => r.data)
-		this.setState({ post })
+	getPost = async postTitle => {
+		const post = await axios
+			.get(`${env.apiUrl}/posts/${postTitle}`)
+			.then(r => r.data)
+
+		if (typeof post === 'object') this.setState({ post })
+		else {
+			console.log(`post not found`)
+			this.setState({ title: 'Post not found' })
+		}
 	}
 	componentDidMount() {
 		this.getPost(this.state.link)
@@ -28,7 +35,10 @@ export default class extends React.Component {
 		>
 			{this.state.post ? (
 				<section className="text">
-					<TextEditor text={this.state.post.text} isPreview={this.props.isPreview} />
+					<TextEditor
+						text={this.state.post.text}
+						isPreview={this.props.isPreview}
+					/>
 				</section>
 			) : (
 				<div />
