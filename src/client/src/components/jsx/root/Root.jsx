@@ -1,17 +1,17 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Header from "../Header";
-import Footer from "../Footer";
-import Index from "../../../pages/index";
-import Artists from "../../../pages/artists";
-import Artist from "../../../pages/artist";
-import ProducerTools from "../../../pages/producer-tools";
-import ProducerTool from "../../../pages/producer-tool";
-import About from "../../../pages/about";
-import Admin from "../../../containers/Admin";
-import Posts from "../../../pages/posts";
-import Post from "../../../pages/post";
-import AdminPosts from "../../../pages/admin-posts";
+import React from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import Header from '../Header'
+import Footer from '../Footer'
+import Index from '../../../pages/index'
+import Artists from '../../../pages/artists'
+import Artist from '../../../pages/artist'
+import ProducerTools from '../../../pages/producer-tools'
+import ProducerTool from '../../../pages/producer-tool'
+import About from '../../../pages/about'
+import Admin from '../../../containers/Admin'
+import Posts from '../../../pages/posts'
+import Post from '../../../pages/post'
+import AdminPosts from '../../../pages/admin-posts'
 
 export default class extends React.Component {
 	render = () => (
@@ -37,7 +37,7 @@ export default class extends React.Component {
 						exact
 						path="/admin"
 						render={props => (
-							<Admin match={{ params: { page: "index" } }} />
+							<Admin match={{ params: { page: 'index' } }} />
 						)}
 					/>
 					<Route exact path="/admin/posts" component={AdminPosts} />
@@ -49,7 +49,7 @@ export default class extends React.Component {
 								{...props}
 								match={{
 									params: {
-										page: "post",
+										page: 'post',
 										post: props.match.params.post
 									}
 								}}
@@ -63,5 +63,5 @@ export default class extends React.Component {
 				<Footer />
 			</Router>
 		</div>
-	);
+	)
 }
