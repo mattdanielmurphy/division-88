@@ -12,6 +12,7 @@ import Admin from '../../../containers/Admin'
 import Posts from '../../../pages/posts'
 import Post from '../../../pages/post'
 import AdminPosts from '../../../pages/admin-posts'
+import NotFound from '../../../pages/404'
 
 export default class extends React.Component {
 	render = () => (
@@ -58,6 +59,7 @@ export default class extends React.Component {
 					/>
 					<Route exact path="/posts" component={Posts} />
 					<Route exact path="/posts/:post" component={Post} />
+					<Route component={NotFound}></Route>
 				</Switch>
 
 				<Footer />
