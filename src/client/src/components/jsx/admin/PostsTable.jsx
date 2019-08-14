@@ -5,7 +5,10 @@ export default class Editable extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			columns: [ { title: 'Title', field: 'title' }, { title: 'Category', field: 'category' } ]
+			columns: [
+				{ title: 'Title', field: 'title' },
+				{ title: 'Category', field: 'category' }
+			]
 		}
 	}
 
@@ -19,16 +22,17 @@ export default class Editable extends React.Component {
 					{
 						icon: 'insert_drive_file',
 						tooltip: 'Edit text',
-						onClick: (event, rowData) => this.props.editPost(rowData.title)
+						onClick: (event, rowData) =>
+							this.props.editPost(rowData.title)
 					}
 				]}
 				editable={{
-					onRowAdd: (newData) =>
+					onRowAdd: newData =>
 						new Promise((resolve, reject) => {
 							setTimeout(() => {
 								{
 									let data = this.props.data
-									if (typeof data !== 'array') data = []
+									if (typeof data !== 'object') data = []
 									data.push(newData)
 									this.props.updateData(data)
 									resolve()
@@ -49,7 +53,7 @@ export default class Editable extends React.Component {
 								resolve()
 							}, 1000)
 						}),
-					onRowDelete: (oldData) =>
+					onRowDelete: oldData =>
 						new Promise((resolve, reject) => {
 							setTimeout(() => {
 								{
