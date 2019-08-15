@@ -1,13 +1,21 @@
 import React from 'react'
 import Page from '../components/jsx/Page'
 import TextEditor from '../components/jsx/admin/editor/text-editor/TextEditor'
-import Axios from 'axios'
+import axios from 'axios'
 import env from '../client-env'
 
 export default class extends React.Component {
 	state = {}
+	updateValue = value => {
+		axios
+			.post(`${env.apiUrl}/about`, {
+				text: JSON.stringify(value.toJSON())
+			})
+			.then(res => console.log(res))
+			.catch(err => console.log(err))
+	}
 	getAboutText = async () => {
-		const text = await Axios.get(`${env.apiUrl}/about/text`).then((r) => r.data)
+		const text = await axios.get(`${env.apiUrl}/about/text`).then(r => r.data)
 		this.setState({ text })
 	}
 	componentDidMount() {
@@ -22,7 +30,11 @@ export default class extends React.Component {
 		>
 			{this.props.aboutText || this.state.text ? (
 				<section className="text">
-					<TextEditor text={this.props.aboutText || this.state.text} isPreview={this.props.isPreview} />
+					<TextEditor
+						text={this.props.aboutText || this.state.text}
+						isPreview={this.props.isPreview}
+						updateValue={value => this.updateValue(value)}
+					/>
 				</section>
 			) : (
 				<div />
