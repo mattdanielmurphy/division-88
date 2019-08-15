@@ -7,16 +7,11 @@ import env from '../../client-env'
 class Heading extends React.Component {
 	state = {
 		style: {
-			backgroundImage: this.props.headingBackgroundImage
-				? `url(${this.props.headingBackgroundImage})`
-				: ''
+			backgroundImage: this.props.headingBackgroundImage ? `url(${this.props.headingBackgroundImage})` : ''
 		}
 	}
 	componentDidUpdate(prevProps) {
-		if (
-			prevProps.headingBackgroundImage !==
-			this.props.headingBackgroundImage
-		) {
+		if (prevProps.headingBackgroundImage !== this.props.headingBackgroundImage) {
 			if (this.props.headingBackgroundImage)
 				this.setState({
 					style: {
@@ -31,27 +26,32 @@ class Heading extends React.Component {
 	}
 	render = () => (
 		<div
-			className={`top-heading ${
-				this.props.headingBackgroundImage ? 'background-image' : ''
-			} ${this.props.headingSelected ? 'selected' : ''}`}
+			className={`top-heading ${this.props.headingBackgroundImage ? 'background-image' : ''} ${
+				this.props.headingSelected ? 'selected' : ''
+			}`}
 			style={this.state.style}
-			onClick={() =>
-				this.props.isPreview ? this.props.selectHeading() : {}
-			}
+			onClick={() => (this.props.isPreview ? this.props.selectHeading() : {})}
 		>
-			<Textfit mode="single" max={50}>
-				{this.props.text}
-				{this.props.spanText && <span>{this.props.spanText}</span>}
-			</Textfit>
+			<div className="heading">
+				<Textfit mode="single" max={50}>
+					{this.props.text}
+					{this.props.spanText && <span>{this.props.spanText}</span>}
+				</Textfit>
+			</div>
+			{this.props.subheading && (
+				<div className="subheading">
+					<Textfit mode="single" max={35}>
+						{this.props.subheading}
+					</Textfit>
+				</div>
+			)}
 		</div>
 	)
 }
 
 export default class Page extends React.Component {
 	getPathName = () => {
-		let regexMatches = /(?:\/admin)?\/([A-Za-z\-_]+)\/?/.exec(
-			window.location.pathname
-		)
+		let regexMatches = /(?:\/admin)?\/([A-Za-z\-_]+)\/?/.exec(window.location.pathname)
 		return regexMatches ? regexMatches[1] : ''
 	}
 	getPageName = () =>
@@ -66,17 +66,14 @@ export default class Page extends React.Component {
 	getHeading() {
 		if (this.props.heading) {
 			// if string provided instead of object, assume it heading text
-			return typeof this.props.heading === 'object'
-				? this.props.heading
-				: { text: this.props.heading }
+			return typeof this.props.heading === 'object' ? this.props.heading : { text: this.props.heading }
 		} else return { text: this.getPageName() }
 	}
 	getMainContainerClassName({ width }) {
 		const tablet = 768
 		const desktop = 1366
 
-		const view =
-			width < tablet ? 'mobile' : width < desktop ? 'tablet' : 'desktop'
+		const view = width < tablet ? 'mobile' : width < desktop ? 'tablet' : 'desktop'
 		return `main-container ${view}`
 	}
 	getParentElementsBeforeBody(element) {
@@ -93,9 +90,7 @@ export default class Page extends React.Component {
 		return parentElements
 	}
 	setParentElementsTo100PercentHeight() {
-		const parentElements = this.getParentElementsBeforeBody(
-			document.querySelector('.main-container')
-		)
+		const parentElements = this.getParentElementsBeforeBody(document.querySelector('.main-container'))
 		parentElements.forEach(element => (element.style.height = '100%'))
 	}
 	getHeadingBackgroundImage = async () => {
@@ -105,12 +100,8 @@ export default class Page extends React.Component {
 		return headingBackgroundImage
 	}
 	componentDidUpdate(prevProps, prevState) {
-		if (this.state.id !== prevState.id && !this.props.isPreview)
-			this.setParentElementsTo100PercentHeight()
-		if (
-			this.props.headingBackgroundImage !==
-			prevProps.headingBackgroundImage
-		)
+		if (this.state.id !== prevState.id && !this.props.isPreview) this.setParentElementsTo100PercentHeight()
+		if (this.props.headingBackgroundImage !== prevProps.headingBackgroundImage)
 			this.setState({
 				headingBackgroundImage: this.props.headingBackgroundImage
 			})
@@ -118,9 +109,7 @@ export default class Page extends React.Component {
 	componentDidMount = async () => {
 		if (!this.props.isPreview) this.setParentElementsTo100PercentHeight()
 		const headingBackgroundImage =
-			this.props.headingBackgroundImage || this.getPageName()
-				? await this.getHeadingBackgroundImage()
-				: ''
+			this.props.headingBackgroundImage || this.getPageName() ? await this.getHeadingBackgroundImage() : ''
 		this.setState({
 			headingBackgroundImage,
 			id: this.props.id || this.getPathName() || 'index',
@@ -135,20 +124,14 @@ export default class Page extends React.Component {
 			<SizeMe>
 				{({ size }) =>
 					this.state.id ? (
-						<div
-							id={this.state.id}
-							className={this.getMainContainerClassName(size)}
-						>
+						<div id={this.state.id} className={this.getMainContainerClassName(size)}>
 							{!this.props.noHeading && (
 								<Heading
 									{...this.state.heading}
-									headingBackgroundImage={
-										this.state.headingBackgroundImage
-									}
+									subheading={this.props.subheading}
+									headingBackgroundImage={this.state.headingBackgroundImage}
 									isPreview={this.props.isPreview}
-									selectHeading={() =>
-										this.props.selectHeading()
-									}
+									selectHeading={() => this.props.selectHeading()}
 									headingSelected={this.props.headingSelected}
 								/>
 							)}
