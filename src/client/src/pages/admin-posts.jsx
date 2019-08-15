@@ -5,24 +5,26 @@ import PostsTable from '../components/jsx/admin/PostsTable'
 import Page from '../components/jsx/Page'
 import { Redirect } from 'react-router'
 
-export default class NewPost extends React.Component {
+export default class AdminPosts extends React.Component {
 	state = {}
-	getPosts = async () => axios.get(`${env.apiUrl}/posts`).then((r) => r.data)
-	updatePosts = (posts) => {
+	getPosts = async () => axios.get(`${env.apiUrl}/posts`).then(r => r.data)
+	updatePost = post => {
+		const posts = this.state.posts
+		posts[post.index] = post
 		this.setState({ posts })
-		axios.post(`${env.apiUrl}/posts`, posts)
+		axios.post(`${env.apiUrl}/posts/${post.index}`, post)
 	}
+	deletePost = post => {}
 	handleInputChange = ({ e, path, value }) => {
 		if (e) {
-			const path = e.target.id
-			const value = e.target.value
-			this.updateHeadingValue(path, value)
-		} else {
-			this.updateHeadingValue(path, value)
+			path = e.target.id
+			value = e.target.value
 		}
+
+		this.updateHeadingValue(path, value)
 	}
 	setKeyBindings = () => {
-		document.onkeypress = (e) => {
+		document.onkeypress = e => {
 			if (
 				e.target.hasAttribute('data-slate-editor') ||
 				e.target.tagName === 'INPUT' ||
@@ -32,7 +34,7 @@ export default class NewPost extends React.Component {
 			else if (e.key === 's') this.handleSubmit()
 		}
 	}
-	editPost = (title) => this.setState({ redirect: title.split(' ').join('-') })
+	editPost = title => this.setState({ redirect: title.split(' ').join('-') })
 	componentDidMount = async () => {
 		const posts = await this.getPosts()
 		this.setState({ posts })
@@ -41,12 +43,12 @@ export default class NewPost extends React.Component {
 	}
 	render = () => (
 		<Page>
-			{this.state.redirect && <Redirect to={`/admin/posts/${this.state.redirect}`} />}
+			{this.state.redirect && <Redirect push to={`${this.state.redirect}`} />}
 			{this.state.posts ? (
 				<PostsTable
-					editPost={(title) => this.editPost(title)}
+					editPost={title => this.editPost(title)}
 					data={this.state.posts}
-					updateData={(posts) => this.updatePosts(posts)}
+					updatePost={post => this.updatePost(post)}
 				/>
 			) : (
 				<div>Loading...</div>
