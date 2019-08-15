@@ -133,12 +133,12 @@ class Admin extends React.Component {
 		const body = document.getElementsByTagName('body')[0]
 		body.style.marginTop = '6rem'
 	}
-	selectCell = index =>
+	selectCell = index => {
+		console.log('select cell - Admin.jsx')
 		this.setState({ selectedCell: index, selectedHeading: undefined })
-	selectArtist = index =>
-		this.setState({ selectedArtist: index, selectedHeading: undefined })
-	selectTool = index =>
-		this.setState({ selectedTool: index, selectedHeading: undefined })
+	}
+	selectArtist = index => this.setState({ selectedArtist: index, selectedHeading: undefined })
+	selectTool = index => this.setState({ selectedTool: index, selectedHeading: undefined })
 	selectHeading = pageName => {
 		this.setState({
 			selectedHeading: pageName,
@@ -147,22 +147,14 @@ class Admin extends React.Component {
 			selectedTool: undefined
 		})
 	}
-	updateCell = (index, cell) =>
-		this.setState({ updatedCell: { index, cell } })
-	setBodyBackground = () =>
-		(document.getElementsByTagName('body')[0].style.backgroundColor =
-			'#222')
+	updateCell = (index, cell) => this.setState({ updatedCell: { index, cell } })
+	setBodyBackground = () => (document.getElementsByTagName('body')[0].style.backgroundColor = '#222')
 	// grid-specific
 	undoLayoutChange() {
 		const layouts = this.layoutsHistory[this.layoutsHistory.length - 2]
 		if (layouts) {
-			this.layoutsUndone.push(
-				this.layoutsHistory[this.layoutsHistory.length - 1]
-			)
-			this.layoutsHistory = this.layoutsHistory.slice(
-				0,
-				this.layoutsHistory.length - 2
-			)
+			this.layoutsUndone.push(this.layoutsHistory[this.layoutsHistory.length - 1])
+			this.layoutsHistory = this.layoutsHistory.slice(0, this.layoutsHistory.length - 2)
 			this.setState({ layouts })
 		}
 	}
@@ -170,16 +162,12 @@ class Admin extends React.Component {
 		if (!this.layoutsUndone) return
 		const layouts = this.layoutsUndone[this.layoutsUndone.length - 1]
 		if (layouts) {
-			this.layoutsUndone = this.layoutsUndone.slice(
-				0,
-				this.layoutsUndone.length - 1
-			)
+			this.layoutsUndone = this.layoutsUndone.slice(0, this.layoutsUndone.length - 1)
 			this.setState({ layouts })
 		}
 	}
 	onLayoutChange(layout, layouts) {
-		if (JSON.stringify(layout) === JSON.stringify(this.lastLayoutChange))
-			return
+		if (JSON.stringify(layout) === JSON.stringify(this.lastLayoutChange)) return
 		this.setState({ layouts })
 		this.lastLayoutChange = layout
 		if (!this.layoutsHistory) this.layoutsHistory = [layout]
@@ -205,42 +193,30 @@ class Admin extends React.Component {
 
 	// get data from database
 	getArtistsFromDatabase = async () => {
-		const artists = await axios
-			.get(`${env.apiUrl}/artists`)
-			.then(r => r.data)
+		const artists = await axios.get(`${env.apiUrl}/artists`).then(r => r.data)
 		this.setState({ artists })
 		return artists
 	}
 	getArtistFromDatabase = async index => {
-		const artist = await axios
-			.get(`${env.apiUrl}/artist/index/${index}`)
-			.then(r => r.data)
+		const artist = await axios.get(`${env.apiUrl}/artist/index/${index}`).then(r => r.data)
 		this.setState({ artist })
 		return artist
 	}
 	getProducerToolsFromDatabase = async index => {
-		const tools = await axios
-			.get(`${env.apiUrl}/producer-tools`)
-			.then(r => r.data)
+		const tools = await axios.get(`${env.apiUrl}/producer-tools`).then(r => r.data)
 		this.setState({ tools })
 		return tools
 	}
 	getGridFromDatabase = async () => {
-		const layouts = await axios
-			.get(`${env.apiUrl}/grids/index/layouts`)
-			.then(r => r.data)
-		const cells = await axios
-			.get(`${env.apiUrl}/grids/index/cells`)
-			.then(r => r.data)
+		const layouts = await axios.get(`${env.apiUrl}/grids/index/layouts`).then(r => r.data)
+		const cells = await axios.get(`${env.apiUrl}/grids/index/cells`).then(r => r.data)
 		this.setState({ cells, layouts })
 		this.layoutsHistory = [layouts]
 		this.layoutsUndone = []
 		return cells
 	}
 	getAboutTextFromDatabase = async index => {
-		const aboutText = await axios
-			.get(`${env.apiUrl}/about/text`)
-			.then(r => r.data)
+		const aboutText = await axios.get(`${env.apiUrl}/about/text`).then(r => r.data)
 		this.setState({ aboutText })
 		return aboutText
 	}
@@ -257,19 +233,14 @@ class Admin extends React.Component {
 
 		if (page === 'artists') return await this.getArtistsFromDatabase()
 		else if (page === 'artist') return await this.getArtistFromDatabase()
-		else if (page === 'producer-tools')
-			return await this.getProducerToolsFromDatabase()
+		else if (page === 'producer-tools') return await this.getProducerToolsFromDatabase()
 		else if (page === 'index') return await this.getGridFromDatabase()
 		else if (page === 'about') return await this.getAboutTextFromDatabase()
 		else if (page === 'posts') return await this.getPostName()
 	}
 	getDataForPage = async pageName => {
-		const getHeadingData = new Promise((res, rej) =>
-			this.getHeadingBackgroundImage().then(r => res(r))
-		)
-		const getPageData = new Promise((res, rej) =>
-			this.getPageData(pageName).then(r => res(r))
-		)
+		const getHeadingData = new Promise((res, rej) => this.getHeadingBackgroundImage().then(r => res(r)))
+		const getPageData = new Promise((res, rej) => this.getPageData(pageName).then(r => res(r)))
 		await Promise.all([getHeadingData, getPageData])
 		this.setState({ dataReady: true })
 	}
@@ -284,15 +255,13 @@ class Admin extends React.Component {
 			})
 			this.getDataForPage()
 			// bring values back from temp storage once component updated (used to properly refresh data... unfortunately necessary)
-		} else if (this.state.cellsTemp)
-			this.setState({ cells: this.state.cellsTemp, cellsTemp: undefined })
+		} else if (this.state.cellsTemp) this.setState({ cells: this.state.cellsTemp, cellsTemp: undefined })
 		else if (this.state.artistsTemp)
 			this.setState({
 				artists: this.state.artistsTemp,
 				artistsTemp: undefined
 			})
-		else if (this.state.toolsTemp)
-			this.setState({ tools: this.state.toolsTemp, toolsTemp: undefined })
+		else if (this.state.toolsTemp) this.setState({ tools: this.state.toolsTemp, toolsTemp: undefined })
 	}
 	signOut = () => firebase.auth().signOut()
 	getPageName = () => this.props.match.params.page
@@ -302,10 +271,7 @@ class Admin extends React.Component {
 		this.props.signInWithGoogle()
 	}
 	componentDidUpdate(prevProps) {
-		if (this.props.user !== prevProps.user) {
-			console.log(this.props.user)
-			this.setState({ loading: false })
-		}
+		if (this.props.user !== prevProps.user) this.setState({ loading: false })
 	}
 	componentDidMount() {
 		this.getDataForPage()
@@ -315,14 +281,12 @@ class Admin extends React.Component {
 	}
 	render = () =>
 		this.state.loading ? (
-			<Spinner className="loading text-center" name="line-scale-pulse-out" />
+			<Spinner className="loading text-center" name="ball-clip-rotate" />
 		) : this.props.user === null ? (
 			<Page heading="Authorization Required">
 				<section className="text sign-in-prompt">
 					<p>
-						<button onClick={e => this.handleClickSignIn(e)}>
-							sign in
-						</button>
+						<button onClick={e => this.handleClickSignIn(e)}>sign in</button>
 					</p>
 				</section>
 			</Page>
@@ -344,9 +308,7 @@ class Admin extends React.Component {
 						view={this.state.view}
 						scale={this.state.scale}
 						// Heading
-						headingBackgroundImage={
-							this.state.headingBackgroundImage
-						}
+						headingBackgroundImage={this.state.headingBackgroundImage}
 						selectHeading={pageName => this.selectHeading(pageName)}
 						headingSelected={this.state.selectedHeading}
 						// Grid
@@ -354,9 +316,7 @@ class Admin extends React.Component {
 						selectedCell={this.state.selectedCell}
 						layouts={this.state.layouts}
 						cells={this.state.cells}
-						onLayoutChange={(layout, layouts) =>
-							this.onLayoutChange(layout, layouts)
-						}
+						onLayoutChange={(layout, layouts) => this.onLayoutChange(layout, layouts)}
 						// Artists
 						selectArtist={artist => this.selectArtist(artist)}
 						selectedArtist={this.state.selectedArtist}
@@ -376,20 +336,12 @@ class Admin extends React.Component {
 					{...this.state}
 					selectedHeading={this.state.selectedHeading}
 					updateHeading={heading => this.updateHeading(heading)}
-					updateArtists={(index, artist) =>
-						this.updateArtists(index, artist)
-					}
-					refreshArtists={(index, artist, newIndex) =>
-						this.refreshArtists(index, artist, newIndex)
-					}
-					updateGrid={({ layouts, cells }) =>
-						this.updateGrid({ layouts, cells })
-					}
+					updateArtists={(index, artist) => this.updateArtists(index, artist)}
+					refreshArtists={(index, artist, newIndex) => this.refreshArtists(index, artist, newIndex)}
+					updateGrid={({ layouts, cells }) => this.updateGrid({ layouts, cells })}
 					refreshGrid={({ cells }) => this.refreshGrid({ cells })}
 					updateTools={(index, tool) => this.updateTools(index, tool)}
-					refreshTools={(index, tool, newIndex) =>
-						this.refreshTools(index, tool, newIndex)
-					}
+					refreshTools={(index, tool, newIndex) => this.refreshTools(index, tool, newIndex)}
 				/>
 			</div>
 		)
