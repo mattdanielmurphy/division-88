@@ -3,6 +3,7 @@ import axios from 'axios'
 import withFirebaseAuth from 'react-with-firebase-auth'
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import Spinner from 'react-spinkit'
 
 import env from '../client-env'
 
@@ -56,6 +57,7 @@ class Admin extends React.Component {
 		selectedCell: 0,
 		selectedArtist: 0,
 		selectedTool: 0,
+		loading: true,
 		dataReady: false,
 		selectedHeading: undefined
 	}
@@ -299,6 +301,12 @@ class Admin extends React.Component {
 		e.preventDefault()
 		this.props.signInWithGoogle()
 	}
+	componentDidUpdate(prevProps) {
+		if (this.props.user !== prevProps.user) {
+			console.log(this.props.user)
+			this.setState({ loading: false })
+		}
+	}
 	componentDidMount() {
 		this.getDataForPage()
 		this.addSpaceToTopOfBody()
@@ -306,7 +314,9 @@ class Admin extends React.Component {
 		this.setBodyBackground()
 	}
 	render = () =>
-		!!!this.props.user ? (
+		this.state.loading ? (
+			<Spinner className="loading text-center" name="line-scale-pulse-out" />
+		) : this.props.user === null ? (
 			<Page heading="Authorization Required">
 				<section className="text sign-in-prompt">
 					<p>
