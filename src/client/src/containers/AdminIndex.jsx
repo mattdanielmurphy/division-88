@@ -7,7 +7,7 @@ export default class AdminIndex extends React.Component {
 	render = () =>
 		this.props.cells ? (
 			<Index
-				selectCell={(index) => this.props.selectCell(index)}
+				selectCell={index => this.props.selectCell(index)}
 				selectedCell={this.props.selectedCell}
 				view={this.props.view}
 				layouts={this.props.layouts}

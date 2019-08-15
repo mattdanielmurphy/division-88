@@ -33,8 +33,7 @@ export default class Index extends React.Component {
 		if (this.state.gridItemHoveredUpon === gridItemIndex) this.updateGridItemHover()
 	}
 	handleClickGridItem(index, e) {
-		console.log(this.props)
-		if (this.props.isPreview) this.props.selectCell(index)
+		if (this.props.selectCell) this.props.selectCell(index)
 	}
 	componentDidMount = async () => {
 		this.watchWindowResizing()
@@ -52,7 +51,7 @@ export default class Index extends React.Component {
 	render() {
 		let ResponsiveGridLayout = this.props.ResponsiveGridLayout
 		return (
-			<div id='index'>
+			<div id="index">
 				{this.state.cellsUpToDate ? (
 					this.props.layouts &&
 					this.state.cells && (
@@ -80,14 +79,15 @@ export default class Index extends React.Component {
 								tablet: 12,
 								mobile: 12
 							}}
-							containerPadding={[ 0, 0 ]}
+							containerPadding={[0, 0]}
 							onLayoutChange={(layout, layouts) =>
-								this.props.onLayoutChange ? this.props.onLayoutChange(layout, layouts) : {}}
+								this.props.onLayoutChange ? this.props.onLayoutChange(layout, layouts) : {}
+							}
 						>
 							{this.state.cells.map((cell, index) => (
 								<div
-									className='grid-item'
-									onClick={(e) => this.handleClickGridItem(index, e)}
+									className="grid-item"
+									onClick={e => this.handleClickGridItem(index, e)}
 									key={index}
 								>
 									<GridItem
