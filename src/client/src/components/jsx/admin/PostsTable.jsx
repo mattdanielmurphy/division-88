@@ -5,10 +5,7 @@ export default class Editable extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			columns: [
-				{ title: 'Title', field: 'title' },
-				{ title: 'Category', field: 'category' }
-			]
+			columns: [{ title: 'Title', field: 'title' }, { title: 'Category', field: 'category' }]
 		}
 	}
 
@@ -22,45 +19,35 @@ export default class Editable extends React.Component {
 					{
 						icon: 'insert_drive_file',
 						tooltip: 'Edit text',
-						onClick: (event, rowData) =>
-							this.props.editPost(rowData.title)
+						onClick: (event, rowData) => this.props.editPost(rowData.title)
 					}
 				]}
 				editable={{
-					onRowAdd: newData =>
+					onRowAdd: post =>
 						new Promise((resolve, reject) => {
 							setTimeout(() => {
 								{
-									let data = this.props.data
-									if (typeof data !== 'object') data = []
-									data.push(newData)
-									this.props.updateData(data)
+									this.props.updatePost(post)
 									resolve()
 								}
 								resolve()
 							}, 1000)
 						}),
-					onRowUpdate: (newData, oldData) =>
+					onRowUpdate: (newPost, oldPost) =>
 						new Promise((resolve, reject) => {
 							setTimeout(() => {
 								{
-									const data = this.props.data
-									const index = data.indexOf(oldData)
-									data[index] = newData
-									this.props.updateData(data)
+									this.props.updatePost(newPost)
 									resolve()
 								}
 								resolve()
 							}, 1000)
 						}),
-					onRowDelete: oldData =>
+					onRowDelete: post =>
 						new Promise((resolve, reject) => {
 							setTimeout(() => {
 								{
-									let data = this.props.data
-									const index = data.indexOf(oldData)
-									data.splice(index, 1)
-									this.props.updateData(data)
+									this.props.deletePost(post)
 									resolve()
 								}
 								resolve()
