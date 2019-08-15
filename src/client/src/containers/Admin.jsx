@@ -30,14 +30,15 @@ const pages = {
 	posts: Posts,
 	post: Post
 }
+console.log(env.firebaseconfig.apikey)
 
 const firebaseConfig = {
-	apiKey: 'AIzaSyBSdDsj2JJuAI_9V-z5-qwW45YDdQmBoyE',
+	apiKey: env.firebaseconfig.apikey,
+	messagingSenderId: env.firebaseconfig.messagingsenderid,
 	authDomain: 'division-88-6430e.firebaseapp.com',
 	databaseURL: 'https://division-88-6430e.firebaseio.com',
 	projectId: 'division-88-6430e',
-	storageBucket: 'division-88-6430e.appspot.com',
-	messagingSenderId: '1059847851928'
+	storageBucket: 'division-88-6430e.appspot.com'
 }
 
 const firebaseApp = firebase.initializeApp(firebaseConfig)
