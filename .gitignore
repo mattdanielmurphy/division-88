@@ -66,3 +66,6 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+# firebase serviceAccount
+src/division-88-6430e-firebase-adminsdk-2xkkv-1f71869bce.json

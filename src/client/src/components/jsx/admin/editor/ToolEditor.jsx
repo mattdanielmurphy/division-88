@@ -12,9 +12,13 @@ export default class ArtistEditor extends React.Component {
 	handleSubmit = async (e) => {
 		if (e) e.preventDefault()
 		// just submit this modified value
+		const postObject = {
+			content: this.state.artist,
+			idToken: this.props.idToken
+		}
 
 		const result = await axios
-			.post(`${env.apiUrl}/producer-tools/${this.state.index}`, this.state.artist)
+			.post(`${env.apiUrl}/producer-tools/${this.state.index}`, postObject)
 			.then((r) => {
 				this.setState({ artistFromDatabase: this.state.artist, unsavedChanges: false })
 				if (this.state.colorChange) {
