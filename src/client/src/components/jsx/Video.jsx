@@ -2,43 +2,7 @@ import React from 'react'
 import YouTube from 'react-youtube'
 import { FaPlay } from 'react-icons/fa'
 import Image from './Image'
-import { SizeMe } from 'react-sizeme'
-
-// class VideoEl extends React.Component {
-// 	state = {}
-// 	render = () => {
-// 		return (
-// 			<div
-// 				className='video'
-// 				style={{
-// 					position: 'relative',
-// 					height: '100%',
-// 					display: this.props.loaded ? 'block' : 'none'
-// 				}}
-// 			>
-// 				<YouTube videoId='2g811Eo7K8U' opts={opts} onReady={this._onReady} />
-// 			</div>
-// 		)
-// 		{
-// 			/* <iframe
-// 					id={`video-${this.props.videoId}`}
-// 					style={{
-// 						position: 'absolute',
-// 						top: 0,
-// 						left: 0,
-// 						width: '100%',
-// 						height: '100%'
-// 					}}
-// 					webkitallowfullscreen='true'
-// 					mozallowfullscreen='true'
-// 					allowFullScreen
-// 					src={`https://www.youtube.com/embed/${this.props
-// 						.videoId}?enablejsapi=1&modestbranding=1?&origin=http://localhost:3000`}
-// 					frameBorder='0'
-// 				/> */
-// 		}
-// 	}
-// }
+import ReactResizeDetector from 'react-resize-detector'
 
 export default class Video extends React.Component {
   state = {
@@ -47,6 +11,7 @@ export default class Video extends React.Component {
       playerVars: {
         // https://developers.google.com/youtube/player_parameters
         autoplay: 1,
+        modestbranding: 1,
       },
     },
   }
@@ -80,10 +45,10 @@ export default class Video extends React.Component {
   setVideoDimensions = () => {
     this.setState({
       outerWidth: this.getWidth(),
-      opts: {
+      opts: Object.assign(this.state.opts, {
         height: this.getHeight(),
         width: this.getWidth(),
-      },
+      }),
     })
   }
   updateVideoDimensions = ({ height, width }) => {
@@ -97,31 +62,25 @@ export default class Video extends React.Component {
     width: this.getIFrame().clientWidth,
   })
   getHeightOfGridItem = () => this.containerEl.parentElement.clientHeight
-  getWidthOfGridItem = () => this.containerEl.parentElement.clientWidth
   componentDidMount = () => {
     this.setState({ mounted: true })
-    // this.setVideoDimensions()
+    this.setVideoDimensions()
   }
-  componentDidUpdate = (prevProps, prevState, snapshot) => {
-    console.log(this.size)
+  handleResize = (width) => {
     if (this.state.mounted && this.state.videoReady) {
       const gridItemHeight = this.getHeightOfGridItem()
-      const gridItemWidth = this.getWidthOfGridItem()
-      if (prevState.opts.height !== gridItemHeight) {
-        this.updateVideoDimensions({
-          height: gridItemHeight,
-          width: gridItemWidth,
-        })
-      }
+      this.updateVideoDimensions({
+        height: gridItemHeight,
+        width,
+      })
     }
   }
   render = () => (
-    <SizeMe>
-      {({ size }) => (
+    <ReactResizeDetector handleWidth onResize={(e) => this.handleResize(e)}>
+      {({ width }) => (
         <div
           ref={(containerEl) => {
             this.containerEl = containerEl
-            this.size = size
           }}
         >
           {this.state.userPressedPlayButton ? (
@@ -156,6 +115,6 @@ export default class Video extends React.Component {
           )}
         </div>
       )}
-    </SizeMe>
+    </ReactResizeDetector>
   )
 }

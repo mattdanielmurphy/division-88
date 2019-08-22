@@ -1,6 +1,6 @@
 import React from 'react'
 import { Textfit } from 'react-textfit-17'
-import { SizeMe } from 'react-sizeme'
+import ReactResizeDetector from 'react-resize-detector'
 import API from 'components/js/api'
 
 class Heading extends React.Component {
@@ -76,7 +76,7 @@ export default class Page extends React.Component {
         : { text: this.props.heading }
     } else return { text: this.getPageName() }
   }
-  getMainContainerClassName({ width }) {
+  getMainContainerClassName(width) {
     const tablet = 768
     const desktop = 1366
 
@@ -136,7 +136,6 @@ export default class Page extends React.Component {
           : ''
       }
     }
-    console.log(this.props.headingBackgroundImage || 'whatever')
     this.setState({
       headingBackgroundImage,
       id: this.props.id || this.getPathName() || 'index',
@@ -146,12 +145,12 @@ export default class Page extends React.Component {
   }
   render = () => {
     return (
-      <SizeMe>
-        {({ size }) =>
+      <ReactResizeDetector handleWidth>
+        {({ width }) =>
           this.state.id ? (
             <div
               id={this.state.id}
-              className={this.getMainContainerClassName(size)}
+              className={this.getMainContainerClassName(width)}
             >
               {!this.props.noHeading && (
                 <Heading
@@ -169,7 +168,7 @@ export default class Page extends React.Component {
             <div />
           )
         }
-      </SizeMe>
+      </ReactResizeDetector>
     )
   }
 }
