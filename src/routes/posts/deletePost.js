@@ -1,11 +1,11 @@
 const Post = require('../../models/Post')
 
 module.exports = async (req, res) => {
-	const index = req.params.post
-
-	const posts = await Post.find()
-	const id = posts[index].id
-	Post.findOneAndRemove({ _id: id }).then((result) => {
-		res.json(result)
-	})
+  const id = req.body['_id']
+  Post.findOneAndRemove({ _id: id })
+    .then((result) => {
+      console.log(result)
+      res.json(result)
+    })
+    .catch((err) => console.log(err))
 }

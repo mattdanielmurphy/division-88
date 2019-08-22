@@ -50,36 +50,34 @@ export default class CellEditor extends React.Component {
     this.handleSubmit(e)
   }
 
-  updateCellValue(path, value) {
-    const cell = Object.assign({}, this.state.cell)
-    function set(path, value) {
-      let schema = cell // a moving reference to internal objects within obj
-      let pList = path.split('.')
-      let length = pList.length
-      for (let i = 0; i < length - 1; i++) {
-        let elem = pList[i]
-        if (!schema[elem]) schema[elem] = {}
-        schema = schema[elem]
-      }
+  updateCellValue = async (path, value) => {
+    return await new Promise((resolve) => {
+      const cell = Object.assign({}, this.state.cell)
+      function set(path, value) {
+        let schema = cell // a moving reference to internal objects within obj
+        let pList = path.split('.')
+        let length = pList.length
+        for (let i = 0; i < length - 1; i++) {
+          let elem = pList[i]
+          if (!schema[elem]) schema[elem] = {}
+          schema = schema[elem]
+        }
 
-      schema[pList[length - 1]] = value
-    }
-    set(path, value)
-    this.setState({ cell, unsavedChanges: true })
-    // if (this.inputChangeInterval) clearInterval(this.inputChangeInterval)
-    // this.inputChangeInterval = setInterval(() => {
-    // 	this.handleSubmit()
-    // }, 500)
+        schema[pList[length - 1]] = value
+      }
+      set(path, value)
+      this.setState({ cell, unsavedChanges: true }, () => resolve())
+    })
   }
-  handleInputChange = ({ e, path, value, colorChange }) => {
+  handleInputChange = async ({ e, path, value, colorChange }) => {
+    if (colorChange) this.setState({ colorChange: true })
     if (e) {
-      const path = e.target.id
-      const value = e.target.value
-      this.updateCellValue(path, value)
-    } else {
-      this.updateCellValue(path, value)
-      if (colorChange) this.setState({ colorChange: true })
+      path = e.target.id
+      value = e.target.value
     }
+
+    await this.updateCellValue(path, value)
+    this.handleSubmit()
   }
   getCellsFromDatabase = async () => {
     return await this.props.AdminAPI.get('/grids/index/cells').then(
@@ -141,14 +139,13 @@ export default class CellEditor extends React.Component {
         },
         newCell: this.state.cell,
       }
-      this.props.AdminAPI.post(
-        '/grids/index/layouts/newCell',
-        obj,
-      ).then((r) => {
-        const { layouts, cells } = r.data
-        this.props.updateGrid({ layouts, cells })
-        this.changeIndex(r.data.index)
-      })
+      this.props.AdminAPI.post('/grids/index/layouts/newCell', obj).then(
+        (r) => {
+          const { layouts, cells } = r.data
+          this.props.updateGrid({ layouts, cells })
+          this.changeIndex(r.data.index)
+        },
+      )
     }
   }
   deleteCell() {
@@ -220,7 +217,6 @@ export default class CellEditor extends React.Component {
           )}
           <br />
           {this.state.error}
-          <button>Submit changes [S]</button>
         </form>
         <div id='create-new'>
           <button onClick={() => this.newCell()}>Submit as new cell</button>

@@ -2021,7 +2021,7 @@
     npmlog "^4.1.2"
     write-file-atomic "^2.3.0"
 
-"@material-ui/core@^4.3.0":
+"@material-ui/core@^4.3.3":
   version "4.3.3"
   resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-4.3.3.tgz#38a02331da7916c18e65c3dc56f3f6a67ba60c07"
   integrity sha512-wUQjoJEbtVWYi+R9gBWCPGy0O+c0oY8cAp2TugyB70f89ahq/cnfnTbMZl6O2arKe2xQlfAMzY8rOOy8UMzJoQ==
@@ -2042,6 +2042,13 @@
     prop-types "^15.7.2"
     react-transition-group "^4.0.0"
     warning "^4.0.1"
+
+"@material-ui/icons@^4.2.1":
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/@material-ui/icons/-/icons-4.2.1.tgz#fe2f1c4f60c24256d244a69d86d0c00e8ed4037e"
+  integrity sha512-FvSD5lUBJ66frI4l4AYAPy2CH14Zs2Dgm0o3oOMr33BdQtOAjCgbdOcvPBeaD1w6OQl31uNW3CKOE8xfPNxvUQ==
+  dependencies:
+    "@babel/runtime" "^7.2.0"
 
 "@material-ui/pickers@^3.2.2":
   version "3.2.3"
@@ -2328,6 +2335,13 @@
     "@svgr/plugin-jsx" "^4.1.0"
     "@svgr/plugin-svgo" "^4.0.3"
     loader-utils "^1.1.0"
+
+"@tinymce/tinymce-react@^3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@tinymce/tinymce-react/-/tinymce-react-3.3.1.tgz#fbb867402ef6a857f14bed7eb88e6306660c10f4"
+  integrity sha512-eCYHsdHAnCePnYh+k4YAar3wpW5LyRL87TGWNIOrtqwKJ82uQ/bin0UQheVvpQhcb9XgHCGONJNGH1jDQ8cj1A==
+  dependencies:
+    prop-types "^15.6.2"
 
 "@types/babel__core@^7.1.0":
   version "7.1.2"
@@ -12641,6 +12655,11 @@ tinycolor2@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
   integrity sha1-9PrTM0R7wLB9TcjpIJ2POaisd+g=
+
+tinymce@^5.0.14:
+  version "5.0.14"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.0.14.tgz#6ec70a5ec6e95819ba9f711a0ec11f8412805c00"
+  integrity sha512-dQai8m80HgcfZ7e+F4YJBr69+mQJSDNpZYJTAnGlGTBc5fKfu6R6G2tq/G9It//ylZ7H/e7yvBQ+WyZBPQCnkQ==
 
 tmp@^0.0.33:
   version "0.0.33"

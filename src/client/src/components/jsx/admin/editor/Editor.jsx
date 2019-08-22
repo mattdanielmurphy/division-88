@@ -10,7 +10,6 @@ export default class Editor extends React.Component {
       return (
         <HeadingEditor
           AdminAPI={this.props.AdminAPI}
-          idToken={this.props.idToken}
           pageName={this.props.match.params.page}
           selectedHeading={this.props.selectedHeading}
           updateHeading={(heading) => this.props.updateHeading(heading)}
@@ -23,7 +22,6 @@ export default class Editor extends React.Component {
       return (
         <ArtistEditor
           AdminAPI={this.props.AdminAPI}
-          idToken={this.props.idToken}
           index={this.props.selectedArtist}
           updateArtists={(index, artist) =>
             this.props.updateArtists(index, artist)
@@ -40,7 +38,6 @@ export default class Editor extends React.Component {
       return (
         <CellEditor
           AdminAPI={this.props.AdminAPI}
-          idToken={this.props.idToken}
           index={this.props.selectedCell}
           updateGrid={({ layouts, cells }) =>
             this.props.updateGrid({ layouts, cells })
@@ -56,14 +53,11 @@ export default class Editor extends React.Component {
       return (
         <ToolEditor
           AdminAPI={this.props.AdminAPI}
-          idToken={this.props.idToken}
           index={this.props.selectedTool}
           updateTools={(index, tool) => this.props.updateTools(index, tool)}
           refreshTools={(index, tool) => this.props.refreshTools(index, tool)}
         />
       )
-    else if (this.props.match.params.page === 'about')
-      return <div>about editor</div>
     else return <div />
   }
 }

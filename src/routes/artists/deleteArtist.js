@@ -1,11 +1,11 @@
 const Artist = require('../../models/Artist')
 
 module.exports = async (req, res) => {
-	const index = req.params.artist
-
-	const artists = await Artist.find()
-	const id = artists[index].id
-	Artist.findOneAndRemove({ _id: id }).then((result) => {
-		res.json(result)
-	})
+  const id = req.body['_id']
+  Artist.findOneAndRemove({ _id: id })
+    .then((result) => {
+      console.log(result)
+      res.json(result)
+    })
+    .catch((err) => console.log(err))
 }

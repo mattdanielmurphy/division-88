@@ -32,32 +32,34 @@ export default class ArtistEditor extends React.Component {
 
     return result
   }
-  updateArtistValue(path, value) {
-    const artist = Object.assign({}, this.state.artist)
-    function set(path, value) {
-      let schema = artist // a moving reference to internal objects within obj
-      let pList = path.split('.')
-      let length = pList.length
-      for (let i = 0; i < length - 1; i++) {
-        let elem = pList[i]
-        if (!schema[elem]) schema[elem] = {}
-        schema = schema[elem]
-      }
+  updateArtistValue = async (path, value) => {
+    return await new Promise((resolve) => {
+      const artist = Object.assign({}, this.state.artist)
+      function set(path, value) {
+        let schema = artist // a moving reference to internal objects within obj
+        let pList = path.split('.')
+        let length = pList.length
+        for (let i = 0; i < length - 1; i++) {
+          let elem = pList[i]
+          if (!schema[elem]) schema[elem] = {}
+          schema = schema[elem]
+        }
 
-      schema[pList[length - 1]] = value
-    }
-    set(path, value)
-    this.setState({ artist, unsavedChanges: true })
+        schema[pList[length - 1]] = value
+      }
+      set(path, value)
+      this.setState({ artist, unsavedChanges: true }, () => resolve())
+    })
   }
-  handleInputChange = ({ e, path, value, colorChange }) => {
+  handleInputChange = async ({ e, path, value, colorChange }) => {
+    if (colorChange) this.setState({ colorChange: true })
     if (e) {
-      const path = e.target.id
-      const value = e.target.value
-      this.updateArtistValue(path, value)
-    } else {
-      if (colorChange) this.setState({ colorChange: true })
-      this.updateArtistValue(path, value)
+      path = e.target.id
+      value = e.target.value
     }
+
+    await this.updateArtistValue(path, value)
+    this.handleSubmit()
   }
   changeIndex = async (index) => {
     const artist = await this.getArtist(index)
@@ -93,10 +95,15 @@ export default class ArtistEditor extends React.Component {
     }
   }
   deleteArtist() {
-    this.changeIndex(0)
-    this.setState({ artist: undefined, index: 0 }, () => {
-      API.get(`/producer-tools/${this.props.index}/delete`).then((r) =>
-        this.props.refreshTools(this.props.index, undefined, 0),
+    let newIndex = this.props.index - 1
+    if (newIndex < 0) newIndex = 0
+    this.changeIndex(newIndex)
+    const tool = this.state.artist
+    this.setState({ artist: undefined, index: newIndex }, () => {
+      this.props.AdminAPI.delete('/producer-tools', { data: tool }).then(
+        (r) => {
+          this.props.refreshTools(this.props.index, undefined, newIndex)
+        },
       )
     })
   }
@@ -172,9 +179,13 @@ export default class ArtistEditor extends React.Component {
             <ImageUploader
               AdminAPI={this.props.AdminAPI}
               image={this.state.artist.imgSrc}
-              setImage={(url) =>
-                this.handleInputChange({ path: 'imgSrc', value: url })
-              }
+              setImage={async (url) => {
+                await this.handleInputChange({
+                  path: 'imgSrc',
+                  value: url,
+                })
+                // this.handleSubmit()
+              }}
             />
           </div>
 
@@ -238,7 +249,6 @@ export default class ArtistEditor extends React.Component {
           </div>
           <br />
           {this.state.error}
-          <button>Submit changes [S]</button>
         </form>
         <div id='create-new'>
           <button onClick={() => this.newArtist()}>

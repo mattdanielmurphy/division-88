@@ -1,10 +1,11 @@
 const ProducerTool = require('../../models/ProducerTool')
 
 module.exports = async (req, res) => {
-  const index = req.params.index
-  const producerTools = await ProducerTool.find()
-  const id = producerTools[index].id
-  ProducerTool.findOneAndRemove({ _id: id }).then((result) => {
-    res.json(result)
-  })
+  const id = req.body['_id']
+  ProducerTool.findOneAndRemove({ _id: id })
+    .then((result) => {
+      console.log(result)
+      res.json(result)
+    })
+    .catch((err) => console.log(err))
 }

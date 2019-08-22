@@ -8,9 +8,9 @@ const deleteArtist = require('./deleteArtist')
 const newArtist = require('./newArtist')
 
 artists.get('/', fetchArtists)
+artists.delete('/', deleteArtist)
 artists.get('/index/:index', fetchArtistByIndex)
 artists.get('/:name', fetchArtistByName)
-artists.get('/:artist/delete', deleteArtist)
 artists.post('/new', isUserAuthenticated, newArtist)
 artists.post('/:index', isUserAuthenticated, updateArtist)
 

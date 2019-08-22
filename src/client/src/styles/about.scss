@@ -1,5 +1,13 @@
-#about {
-	.text {
-		margin-top: 2rem;
-	}
+#about,
+#admin-about {
+  .text {
+    margin-top: 2rem;
+  }
+}
+
+#admin-about {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 }

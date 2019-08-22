@@ -22,7 +22,7 @@ export default class extends React.Component {
         backgroundImage={'images/girl.jpg'}
       >
         {this.state.posts.map((post, index) => (
-          <div key={index}>
+          <div id='posts-list' key={index}>
             <Link to={`${post.title.split(' ').join('-')}`}>{post.title}</Link>
           </div>
         ))}

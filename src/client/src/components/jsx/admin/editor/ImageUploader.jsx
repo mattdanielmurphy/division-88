@@ -39,6 +39,11 @@ export default class ImageUploader extends React.Component {
     this.setState({ imageUrl: url })
     this.props.setImage(url)
   }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.image !== this.props.image) {
+      this.setState({ imageUrl: this.props.image })
+    }
+  }
 
   render() {
     return (

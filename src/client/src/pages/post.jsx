@@ -1,5 +1,5 @@
 import React from 'react'
-import TextEditor from '../components/jsx/admin/editor/text-editor/TextEditor'
+import TextEditor from 'components/jsx/admin/editor/TextEditor'
 import Page from '../components/jsx/Page'
 import API from 'components/js/api'
 
@@ -43,12 +43,8 @@ export default class extends React.Component {
     >
       {this.state.post ? (
         <section className='text'>
-          <div className='category'>category: {this.state.category}</div>
-          <TextEditor
-            text={this.state.post.text}
-            isPreview={this.props.isPreview}
-            updateValue={(value) => this.updateValue(value)}
-          />
+          {/*<div className='category'>category: {this.state.category}</div>*/}
+          <div dangerouslySetInnerHTML={{ __html: this.state.post.text }} />
         </section>
       ) : (
         <div />

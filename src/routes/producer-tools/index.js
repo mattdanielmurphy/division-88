@@ -10,7 +10,7 @@ const newProducerTool = require('./newProducerTool')
 producerTools.get('/', fetchProducerTools)
 producerTools.get('/:name', fetchProducerToolByName)
 producerTools.get('/index/:index', fetchProducerToolByIndex)
-producerTools.get('/:index/delete', deleteProducerTool)
+producerTools.delete('/', deleteProducerTool)
 producerTools.post('/new', isUserAuthenticated, newProducerTool)
 producerTools.post('/:index', isUserAuthenticated, updateProducerTool)
 

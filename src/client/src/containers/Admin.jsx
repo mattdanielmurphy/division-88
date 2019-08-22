@@ -19,6 +19,8 @@ import ProducerTool from '../pages/producer-tool'
 import About from '../pages/about'
 import Posts from '../pages/posts'
 import Post from '../pages/post'
+import AdminPost from '../pages/admin-post'
+import AdminAbout from '../pages/admin-about'
 import AdminPosts from '../pages/admin-posts'
 
 const pages = {
@@ -337,6 +339,20 @@ class Admin extends React.Component {
       </Page>
     ) : this.getPageName() === 'posts' ? (
       <AdminPosts AdminAPI={this.props.AdminAPI} />
+    ) : this.getPageName() === 'post' ? (
+      <AdminPost
+        history={this.props.history}
+        AdminAPI={this.props.AdminAPI}
+        postName={this.props.match.params.post}
+      />
+    ) : this.getPageName() === 'about' ? (
+      <AdminAbout
+        headingBackgroundImage={this.state.headingBackgroundImage}
+        history={this.props.history}
+        AdminAPI={this.props.AdminAPI}
+        postName={this.props.match.params.post}
+        updateHeading={(heading) => this.updateHeading(heading)}
+      />
     ) : (
       <div id='admin-root'>
         <AdminControls

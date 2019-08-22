@@ -1,128 +1,124 @@
 // DESKTOP & LOWER
 
 #artists {
-	.background-image {
-		background: url('../images/trees.jpg') no-repeat center/cover;
-		height: 6rem;
-	}
-	main {
-		display: grid;
-		grid-template-columns: 100%;
-		grid-gap: .3rem;
-	}
-	.artist-wrapper {
-		&.selected {
-			border: 2px solid red;
-		}
-	}
-	.artist {
-		position: relative;
-		align-items: center;
-		font-size: 14px;
-		&:hover {
-			cursor: pointer;
-			.img {
-				opacity: .8;
-			}
-		}
+  main {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-gap: 0.3rem;
+  }
+  .artist-wrapper {
+    &.selected {
+      border: 2px solid red;
+    }
+  }
+  .artist {
+    position: relative;
+    align-items: center;
+    font-size: 14px;
+    &:hover {
+      cursor: pointer;
+      .img {
+        opacity: 0.8;
+      }
+    }
 
-		.img {
-			transition: .3s ease;
-			grid-column: 1 / span 2;
-			height: 25%;
-			min-height: 300px;
-		}
-		.description-outer-wrapper {
-			max-width: 100%;
-		}
-		.description {
-			font-size: 1rem;
-			padding: 2rem 1rem;
-			display: grid;
-			color: black;
-			align-content: center;
-			height: 18rem;
-			.artist-name {
-				font-weight: 600;
-				font-size: 2rem;
-				line-height: 1;
-			}
-			.bio {
-				margin: 1rem 0 0.8rem 0;
-			}
-			.see-releases {
-				text-transform: uppercase;
-				font-weight: 700;
-				transition: ease-in-out .5s;
-				span {
-					position: relative;
-					top: -.03rem;
-				}
-			}
-		}
-		.text {
-			display: inline;
-			overflow: hidden;
-		}
-		h2 {
-			margin: .5rem 0 0 0;
-			line-height: 1;
-			display: inline-block;
-			font-weight: 300;
-		}
-	}
+    .img {
+      transition: 0.3s ease;
+      grid-column: 1 / span 2;
+      height: 25%;
+      min-height: 300px;
+    }
+    .description-outer-wrapper {
+      max-width: 100%;
+    }
+    .description {
+      font-size: 1rem;
+      padding: 2rem 1rem;
+      display: grid;
+      color: black;
+      align-content: center;
+      height: 18rem;
+      .artist-name {
+        font-weight: 600;
+        font-size: 2rem;
+        line-height: 1;
+      }
+      .bio {
+        margin: 1rem 0 0.8rem 0;
+      }
+      .see-releases {
+        text-transform: uppercase;
+        font-weight: 700;
+        transition: ease-in-out 0.5s;
+        span {
+          position: relative;
+          top: -0.03rem;
+        }
+      }
+    }
+    .text {
+      display: inline;
+      overflow: hidden;
+    }
+    h2 {
+      margin: 0.5rem 0 0 0;
+      line-height: 1;
+      display: inline-block;
+      font-weight: 300;
+    }
+  }
 }
 
 #artists.tablet {
-	main {
-		grid-template-columns: 50% 50%;
-	}
-	.artist {
-		.description-outer-wrapper {
-			width: 100%;
-			overflow: hidden;
-			&.align-left {
-				grid-column: 1 / span 1;
-				// left: 1%;
-			}
-			&.align-right {
-				grid-column: 2;
-				// right: 1%;
-			}
-		}
-	}
+  main {
+    grid-template-columns: 50% 50%;
+  }
+  .artist {
+    .description-outer-wrapper {
+      width: 100%;
+      overflow: hidden;
+      &.align-left {
+        grid-column: 1 / span 1;
+        // left: 1%;
+      }
+      &.align-right {
+        grid-column: 2;
+        // right: 1%;
+      }
+    }
+  }
 }
 
 #artists.desktop {
-	main {
-		grid-template-columns: 50% 50%;
-	}
-	.artist {
-		display: grid;
-		grid-template-columns: 50% 50%;
-		.img {
-			height: 22rem;
-		}
-		.description {
-			height: 22rem;
-		}
-		.description-outer-wrapper {
-			width: 100%;
-			overflow: hidden;
-			position: absolute;
-			// max-width: 500px;
-			&.align-left {
-				grid-column: 1 / span 1;
-				// left: 1%;
-				justify-self: start;
-			}
-			&.align-right {
-				grid-column: 2;
-				justify-self: end;
-				// right: 1%;
-			}
-		}
-	}
+  main {
+    grid-template-columns: 50% 50%;
+  }
+  .artist {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    .img {
+      height: 22rem;
+    }
+    .description {
+      height: 22rem;
+    }
+    .description-outer-wrapper {
+      width: 100%;
+      overflow: hidden;
+      position: absolute;
+      // max-width: 500px;
+      &.align-left {
+        grid-column: 1 / span 1;
+        // left: 1%;
+        justify-self: start;
+      }
+      &.align-right {
+        grid-column: 2;
+        justify-self: end;
+        // right: 1%;
+      }
+    }
+  }
 }
 
 // // DESKTOP-EXCLUSIVE

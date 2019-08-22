@@ -6,14 +6,28 @@ import { Redirect } from 'react-router'
 
 export default class AdminPosts extends React.Component {
   state = {}
-  createPost = (post) => this.props.AdminAPI.post('/posts/new', post)
+  createPost = async (post) => {
+    const newPost = await this.props.AdminAPI.post('/posts/new', post).then(
+      (r) => r.data,
+    )
+    const posts = [...this.state.posts, post]
+    this.setState({ posts })
+  }
   updatePost = (post) => {
     const posts = this.state.posts
     posts[post.index] = post
     this.setState({ posts })
     this.props.AdminAPI.post(`/posts/${post.index}`, post)
   }
-  deletePost = (post) => this.props.AdminAPI.get(`/posts/delete/${post.index}`)
+  deletePost = async (post) => {
+    await this.props.AdminAPI.delete('/posts', { data: post }).then(
+      (r) => r.data,
+    )
+    const posts = this.state.posts
+    const index = posts.findIndex((v) => v['_id'] === post['_id'])
+    posts.splice(index, 1)
+    this.setState({ posts })
+  }
   handleInputChange = ({ e, path, value }) => {
     if (e) {
       path = e.target.id
@@ -22,24 +36,12 @@ export default class AdminPosts extends React.Component {
 
     this.updateHeadingValue(path, value)
   }
-  setKeyBindings = () => {
-    document.onkeypress = (e) => {
-      if (
-        e.target.hasAttribute('data-slate-editor') ||
-        e.target.tagName === 'INPUT' ||
-        e.target.tagName === 'TEXTAREA'
-      )
-        return
-      else if (e.key === 's') this.handleSubmit()
-    }
-  }
   editPost = (title) => this.setState({ redirect: title.split(' ').join('-') })
   getPosts = async () => this.props.AdminAPI.get('/posts').then((r) => r.data)
   componentDidMount = async () => {
     const posts = await this.getPosts()
     this.setState({ posts })
     window.onbeforeunload = null
-    this.setKeyBindings()
   }
   render = () => (
     <Page>

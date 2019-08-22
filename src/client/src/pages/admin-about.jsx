@@ -1,14 +1,15 @@
 import React from 'react'
-import Page from '../components/jsx/Page'
 import TextEditor from 'components/jsx/admin/editor/TextEditor'
+import Page from '../components/jsx/Page'
 import API from 'components/js/api'
+import { Link, Redirect } from 'react-router-dom'
+import { Textfit } from 'react-textfit-17'
+import HeadingEditor from 'components/jsx/admin/editor/HeadingEditor'
 
 export default class extends React.Component {
   state = {}
   updateValue = (value) => {
-    this.props.AdminAPI.post('/about', {
-      text: JSON.stringify(value.toJSON()),
-    })
+    this.props.AdminAPI.post('/about', { text: value })
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
   }
@@ -21,17 +22,27 @@ export default class extends React.Component {
   }
   render = () => (
     <Page
+      heading='About'
+      id='admin-about'
       headingBackgroundImage={this.props.headingBackgroundImage}
       headingSelected={this.props.headingSelected}
-      selectHeading={() => this.props.selectHeading()}
     >
       {this.state.text ? (
         <section className='text'>
-          <div dangerouslySetInnerHTML={{ __html: this.state.text }} />
+          <TextEditor
+            text={this.state.text}
+            updateValue={(value) => this.updateValue(value)}
+          />
         </section>
       ) : (
-        <div>Loading...</div>
+        <div>loading...</div>
       )}
+      <HeadingEditor
+        AdminAPI={this.props.AdminAPI}
+        pageName='about'
+        selectedHeading='about'
+        updateHeading={(heading) => this.props.updateHeading(heading)}
+      />
     </Page>
   )
 }

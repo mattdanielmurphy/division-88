@@ -55,8 +55,8 @@ const isUserAuthenticated = (req, res, next) => {
   }
 }
 
-module.exports = isUserAuthenticated
+// module.exports = isUserAuthenticated
 // DEVMODE: no token needed:
-// module.exports = (req, res, next) => {
-//   next()
-// }
+module.exports = (req, res, next) => {
+  next()
+}
