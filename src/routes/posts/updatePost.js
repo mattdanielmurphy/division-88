@@ -2,9 +2,7 @@ const Post = require('../../models/Post')
 
 module.exports = async (req, res) => {
 	const index = req.params.index
-	const post = req.body.content
-  const idToken = req.body.idToken
-  const isAuthenticated = authenticateCall(idToken)
+	const post = req.body
 
 	console.log(`update post ${post}`)
 	Post.updateOne({ index }, post)

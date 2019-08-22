@@ -1,6 +1,5 @@
 import React from 'react'
-import axios from 'axios'
-import env from '../../../../client-env'
+
 import firebase from 'firebase'
 import FileUploader from 'react-firebase-file-uploader'
 
@@ -12,8 +11,7 @@ export default class ImageUploader extends React.Component {
     imageUrl: this.props.image,
   }
   saveImageToDB(url, filename) {
-    axios
-      .post(`${env.apiUrl}/images/new`, { url, filename })
+    this.props.AdminAPI.post('/images/new', { url, filename })
       .then((result) => console.log('result', result))
       .catch((err) => console.log(err))
   }

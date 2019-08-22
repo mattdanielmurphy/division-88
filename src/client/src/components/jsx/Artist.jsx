@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import Image from './Image'
 import React from 'react'
-import baseUrl from '../js/baseUrl'
 
 class ArtistWrapper extends React.Component {
 	render = () => {
@@ -16,8 +15,7 @@ class ArtistWrapper extends React.Component {
 			</div>
 		) : (
 			<Link
-				to={`${baseUrl()}/artists/${this.props.page}`}
-				// to={`${this.props.page}`}
+				to={this.props.page}
 				className={`artist-wrapper ${this.props.selected ? 'selected' : ''}`}
 				onMouseOver={() => this.props.setHovering(true)}
 				onMouseLeave={() => this.props.setHovering(false)}

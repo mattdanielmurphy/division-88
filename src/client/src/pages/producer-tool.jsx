@@ -1,8 +1,9 @@
 import React from 'react'
 
 import Page from '../components/jsx/Page'
-import axios from 'axios'
-import env from '../client-env'
+import API from 'components/js/api'
+import Spinner from 'react-spinkit'
+import FourOhFour from 'pages/404'
 
 class ProducerTool extends React.Component {
   state = {
@@ -30,57 +31,42 @@ class ProducerTool extends React.Component {
   }
 }
 
-//static version:
-
-// export default () => {
-// 	const { tool } = useRouteData()
-// 	return (
-// 		<Page headingBackgroundImage={this.props.headingBackgroundImage} headingSelected={this.props.headingSelected}
-// 			id="producer-tool"
-// 			heading={{ text: `${tool.name}: `, spanText: 'producer tool' }}
-// 			backgroundImage={tool.img}
-// 		>
-// 			<ProducerTool {...tool} />
-// 		</Page>
-// 	)
-// }
-
-// dyanmic version:
 export default class extends React.Component {
-  state = {}
+  state = { loading: true }
   getProducerToolNameFromUrl() {
     const location = String(window.location)
-    return /.*\/(.*)$/.exec(location)[1]
+    console.log(location)
+    return /.*\/(.*)\/$/.exec(location)[1]
   }
   getProducerTool() {
     const name = this.getProducerToolNameFromUrl()
-    return axios.get(`${env.apiUrl}/producer-tools/${name}`).then((r) => r.data)
+    console.log(name)
+    if (!name) return undefined
+    return API.get(`/producer-tools/${name}`).then((r) => r.data)
   }
   componentDidMount = async () => {
     const tool = await this.getProducerTool()
-
-    console.log(tool)
-    this.setState({ tool })
+    this.setState({ tool, loading: false })
   }
   render = () => {
-    return this.state.tool ? (
+    return this.state.loading ? (
+      <Spinner className='loading text-center' name='ball-clip-rotate' />
+    ) : this.state.tool ? (
       <Page
-        headingBackgroundImage={this.props.headingBackgroundImage}
+        headingBackgroundImage={this.state.tool.imgSrc}
         headingSelected={this.props.headingSelected}
         id='producer-tool'
         heading={{
           text: `${this.state.tool.name}: `,
           spanText: 'producer tool',
         }}
-        backgroundImage={this.state.tool.imgSrc}
-        // make sure this gets passed to ProducerTool from whereever, same for all instances of Page
         selectHeading={() => this.props.selectHeading(this.props.pageName)}
         isPreview={this.props.isPreview}
       >
         <ProducerTool {...this.state.tool} />
       </Page>
     ) : (
-      <div />
+      <FourOhFour />
     )
   }
 }

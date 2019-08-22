@@ -1,4 +1,5 @@
 const producerTools = require('express').Router()
+const isUserAuthenticated = require('../authMiddleware')
 const fetchProducerTools = require('./fetchProducerTools')
 const fetchProducerToolByName = require('./fetchProducerToolByName')
 const fetchProducerToolByIndex = require('./fetchProducerToolByIndex')
@@ -9,8 +10,8 @@ const newProducerTool = require('./newProducerTool')
 producerTools.get('/', fetchProducerTools)
 producerTools.get('/:name', fetchProducerToolByName)
 producerTools.get('/index/:index', fetchProducerToolByIndex)
-producerTools.get('/:producerTool/delete', deleteProducerTool)
-producerTools.post('/new', newProducerTool)
-producerTools.post('/:index', updateProducerTool)
+producerTools.get('/:index/delete', deleteProducerTool)
+producerTools.post('/new', isUserAuthenticated, newProducerTool)
+producerTools.post('/:index', isUserAuthenticated, updateProducerTool)
 
 module.exports = producerTools

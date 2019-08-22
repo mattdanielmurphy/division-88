@@ -1,8 +1,9 @@
 const grids = require('express').Router()
-const newGrid = require('./newGrid')
+const isUserAuthenticated = require('../authMiddleware')
+// const newGrid = require('./newGrid')
 const updateGrid = require('./updateGrid')
 
-grids.post('/new', newGrid)
-grids.post('/:page', updateGrid)
+// grids.post('/new', isUserAuthenticated, newGrid)
+grids.post('/:page', isUserAuthenticated, updateGrid)
 
 module.exports = grids

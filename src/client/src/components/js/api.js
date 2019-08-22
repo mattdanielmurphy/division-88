@@ -1,5 +1,6 @@
 import axios from 'axios'
+import env from 'client-env'
 
 export default axios.create({
-  baseURL: `http://jsonplaceholder.typicode.com/`,
+  baseURL: env.apiUrl,
 })

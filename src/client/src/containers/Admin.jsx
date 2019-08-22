@@ -1,11 +1,10 @@
 import React from 'react'
-import axios from 'axios'
 import withFirebaseAuth from 'react-with-firebase-auth'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import Spinner from 'react-spinkit'
-
-import env from '../client-env'
+import env from 'client-env'
+import axios from 'axios/index'
 
 import Page from '../components/jsx/Page'
 import AdminControls from '../components/jsx/admin/AdminControls'
@@ -183,7 +182,8 @@ class Admin extends React.Component {
     this.lastLayoutChange = layout
     if (!this.layoutsHistory) this.layoutsHistory = [layout]
     this.layoutsHistory.push(layouts)
-    axios.post(`${env.apiUrl}/grids/index`, { layouts })
+    console.log('updateGrid: localhost/api/grids/index', { layouts })
+    this.props.AdminAPI.post('/grids/index', { layouts })
   }
 
   setKeyBindings = () => {
@@ -204,47 +204,49 @@ class Admin extends React.Component {
 
   // get data from database
   getArtistsFromDatabase = async () => {
-    const artists = await axios.get(`${env.apiUrl}/artists`).then((r) => r.data)
+    const artists = await this.props.AdminAPI.get('/artists').then(
+      (r) => r.data,
+    )
     this.setState({ artists })
     return artists
   }
   getArtistFromDatabase = async (index) => {
-    const artist = await axios
-      .get(`${env.apiUrl}/artist/index/${index}`)
-      .then((r) => r.data)
+    const artist = await this.props.AdminAPI.get(`/artist/index/${index}`).then(
+      (r) => r.data,
+    )
     this.setState({ artist })
     return artist
   }
   getProducerToolsFromDatabase = async (index) => {
-    const tools = await axios
-      .get(`${env.apiUrl}/producer-tools`)
-      .then((r) => r.data)
+    const tools = await this.props.AdminAPI.get('/producer-tools').then(
+      (r) => r.data,
+    )
     this.setState({ tools })
     return tools
   }
   getGridFromDatabase = async () => {
-    const layouts = await axios
-      .get(`${env.apiUrl}/grids/index/layouts`)
-      .then((r) => r.data)
-    const cells = await axios
-      .get(`${env.apiUrl}/grids/index/cells`)
-      .then((r) => r.data)
+    const layouts = await this.props.AdminAPI.get('/grids/index/layouts').then(
+      (r) => r.data,
+    )
+    const cells = await this.props.AdminAPI.get('/grids/index/cells').then(
+      (r) => r.data,
+    )
     this.setState({ cells, layouts })
     this.layoutsHistory = [layouts]
     this.layoutsUndone = []
     return cells
   }
   getAboutTextFromDatabase = async (index) => {
-    const aboutText = await axios
-      .get(`${env.apiUrl}/about/text`)
-      .then((r) => r.data)
+    const aboutText = await this.props.AdminAPI.get('/about/text').then(
+      (r) => r.data,
+    )
     this.setState({ aboutText })
     return aboutText
   }
   getHeadingBackgroundImage = async () => {
-    const headingBackgroundImage = await axios
-      .get(`${env.apiUrl}/page-info/${this.props.match.params.page}`)
-      .then((r) => r.data.headingBackgroundImage)
+    const headingBackgroundImage = await this.props.AdminAPI.get(
+      `/page-info/${this.props.match.params.page}`,
+    ).then((r) => r.data.headingBackgroundImage)
     this.setState({ headingBackgroundImage })
     return headingBackgroundImage
   }
@@ -290,8 +292,8 @@ class Admin extends React.Component {
   }
   componentDidUpdate = (prevProps) => {
     if (this.props.user !== prevProps.user) {
-      this.setState({ loading: false })
       if (this.props.user) this.setToken()
+      this.setState({ loading: false })
     }
     if (this.props.match.params.page !== prevProps.match.params.page) {
       this.setDataNotReady()
@@ -334,7 +336,7 @@ class Admin extends React.Component {
         </section>
       </Page>
     ) : this.getPageName() === 'posts' ? (
-      <AdminPosts />
+      <AdminPosts AdminAPI={this.props.AdminAPI} />
     ) : (
       <div id='admin-root'>
         <AdminControls
@@ -347,6 +349,7 @@ class Admin extends React.Component {
         />
         {this.state.dataReady ? (
           <PagePreview
+            AdminAPI={this.props.AdminAPI}
             postName={this.getPostName()}
             pageName={this.getPageName()}
             page={pages[this.getPageName()]}
@@ -379,6 +382,7 @@ class Admin extends React.Component {
           <div>loading...</div>
         )}
         <Editor
+          AdminAPI={this.props.AdminAPI}
           {...this.props}
           {...this.state}
           selectedHeading={this.state.selectedHeading}
@@ -400,7 +404,43 @@ class Admin extends React.Component {
     )
 }
 
+class Auth extends React.Component {
+  state = {}
+  getIdToken = async () =>
+    await firebase
+      .auth()
+      .currentUser.getIdToken(/* forceRefresh */ true)
+      .catch((error) => console.log(error))
+  AdminAPI = axios.create({
+    baseURL: env.apiUrl,
+    headers: { 'access-token': this.state.idToken || 'hi' },
+  })
+  componentDidMount() {
+    this.AdminAPI.interceptors.request.use(
+      async (options) => {
+        options.headers['access-token'] = await this.state.idToken
+        return options
+      },
+      function(error) {
+        console.log('Request error: ', error)
+        return Promise.reject(error)
+      },
+    )
+  }
+  componentDidUpdate = async (prevProps) => {
+    if (this.props.user !== prevProps.user) {
+      if (this.props.user) {
+        const idToken = await this.getIdToken()
+        const idTokenPromise = new Promise((resolve) => resolve(idToken))
+        this.setState({ idToken: idTokenPromise })
+      }
+    }
+  }
+
+  render = () => <Admin {...this.props} AdminAPI={this.AdminAPI} />
+}
+
 export default withFirebaseAuth({
   providers,
   firebaseAppAuth,
-})(Admin)
+})(Auth)

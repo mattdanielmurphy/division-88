@@ -1,33 +1,35 @@
 {
-	"devDependencies": {
-		"@babel/cli": "^7.4.3",
-		"@babel/core": "^7.4.3",
-		"@babel/plugin-proposal-class-properties": "^7.4.0",
-		"@babel/preset-env": "^7.4.3",
-		"@babel/preset-react": "^7.0.0",
-		"@babel/runtime": "^7.0.0-beta.55",
-		"babel-watch": "^7.0.0",
-		"concurrently": "^4.1.0",
-		"rimraf": "^2.6.3"
-	},
-	"scripts": {
-		"get-packages": "yarn && cd src && yarn && cd client && yarn",
-		"build": "babel src --out-dir functions --copy-files --ignore src/node_modules --ignore src/client/node_modules",
-		"build-modules": "babel src --out-dir functions --ignore src/node_modules --ignore src/client/node_modules",
-		"prebuild-modules": "node node_modules/rimraf/bin functions",
-		"postbuild-modules": "cd functions && yarn && cd client && yarn",
-		"deploy": "bash scripts/set-dev-env.sh && concurrently -k \"yarn api-server\" \"yarn build-react-static\"",
-		"dev": "bash scripts/set-dev-env.sh && concurrently -k \"yarn api-server-watch\" \"yarn dev-server\"",
-		"api-server": "node src/index.js",
-		"api-server-watch": "supervisor src/index.js",
-		"build-react-static": "bash scripts/set-prod-env.sh && bash scripts/build-client.sh && firebase deploy",
-		"dev-server": "cd src/client && yarn start"
-	},
-	"dependencies": {
-		"axios": "^0.19.0",
-		"bcrypt": "^3.0.6",
-		"dotenv": "^8.0.0",
-		"wait-on": "^3.3.0"
-	},
-	"browserslist": [ "defaults" ]
+  "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/runtime": "^7.0.0-beta.55",
+    "babel-watch": "^7.0.0",
+    "concurrently": "^4.1.0",
+    "rimraf": "^2.6.3"
+  },
+  "scripts": {
+    "get-packages": "yarn && cd src && yarn && cd client && yarn",
+    "build": "babel src --out-dir functions --copy-files --ignore src/node_modules --ignore src/client/node_modules",
+    "build-modules": "babel src --out-dir functions --ignore src/node_modules --ignore src/client/node_modules",
+    "prebuild-modules": "node node_modules/rimraf/bin functions",
+    "postbuild-modules": "cd functions && yarn && cd client && yarn",
+    "deploy": "bash scripts/set-dev-env.sh && concurrently -k \"yarn api-server\" \"yarn build-react-static\"",
+    "dev": "bash scripts/set-dev-env.sh && concurrently -k \"yarn api-server-watch\" \"yarn dev-server\"",
+    "api-server": "node src/index.js",
+    "api-server-watch": "supervisor src/index.js",
+    "build-react-static": "bash scripts/set-prod-env.sh && bash scripts/build-client.sh && firebase deploy",
+    "dev-server": "cd src/client && yarn start"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "bcrypt": "^3.0.6",
+    "dotenv": "^8.0.0",
+    "wait-on": "^3.3.0"
+  },
+  "browserslist": [
+    "defaults"
+  ]
 }

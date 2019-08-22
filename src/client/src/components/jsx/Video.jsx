@@ -2,6 +2,7 @@ import React from 'react'
 import YouTube from 'react-youtube'
 import { FaPlay } from 'react-icons/fa'
 import Image from './Image'
+import { SizeMe } from 'react-sizeme'
 
 // class VideoEl extends React.Component {
 // 	state = {}
@@ -40,71 +41,121 @@ import Image from './Image'
 // }
 
 export default class Video extends React.Component {
-	state = {
-		videoId: this.props.videoSrc ? /\?v=(.*)/.exec(this.props.videoSrc)[1] : '',
-		opts: {
-			height: '390',
-			width: '640',
-			playerVars: {
-				// https://developers.google.com/youtube/player_parameters
-				autoplay: 1
-			}
-		}
-	}
-	onPlayerReady(event) {
-		if (this.state.videoLoaded) this.player.playVideo()
-		const playButton = document.getElementById(`play-video-${this.state.videoId}`)
-		playButton.addEventListener('click', () => (this.props.isPreview ? null : this.player.playVideo()))
-	}
-	loadVideo() {
-		if (this.props.isPreview) return
-		this.setState({ videoLoaded: true })
-	}
-	getStyle = () => ({
-		cursor: this.props.isPreview ? 'default' : 'pointer',
-		display: this.state.videoLoaded ? 'none' : 'block'
-	})
-	_onReady(event) {
-		// access to player in all event handlers via event.target
-		event.target.pauseVideo()
-		this.onPlayerReady()
-	}
-	componentDidMount = () => {
-		// if (!this.props.isPreview) {
-		// 	this.player = new YT.Player(`video-${this.state.videoId}`, {
-		// 		events: {
-		// 			onReady: () => this.onPlayerReady()
-		// 		}
-		// 	})
-		// }
-	}
-	render = () => (
-		<div>
-			{this.state.videoLoaded && !this.props.isPreview ? (
-				// <VideoEl videoId={this.state.videoId} loaded={this.state.videoLoaded} />
-				<div
-					className='video'
-					style={{
-						position: 'relative',
-						height: '100%',
-						display: this.props.loaded ? 'block' : 'none'
-					}}
-				>
-					<YouTube videoId={this.state.videoId} opts={this.state.opts} onReady={this._onReady} />
-				</div>
-			) : (
-				<div
-					onClick={() => this.loadVideo()}
-					id={`play-video-${this.state.videoId}`}
-					style={this.getStyle()}
-					className={`video-link wrapper`}
-				>
-					<Image src={this.props.imgSrc} selected={this.props.selected} />
-					<div className='icon-wrapper'>
-						<FaPlay className='icon' />
-					</div>
-				</div>
-			)}
-		</div>
-	)
+  state = {
+    videoId: this.props.videoSrc ? /\?v=(.*)/.exec(this.props.videoSrc)[1] : '',
+    opts: {
+      playerVars: {
+        // https://developers.google.com/youtube/player_parameters
+        autoplay: 1,
+      },
+    },
+  }
+  onPlayerReady(e) {
+    if (this.state.userPressedPlayButton) this.player.playVideo()
+    const playButton = document.getElementById(
+      `play-video-${this.state.videoId}`,
+    )
+    playButton.addEventListener('click', () =>
+      this.props.isPreview ? null : this.player.playVideo(),
+    )
+  }
+  handlePressPlayAndLoadVideo() {
+    if (this.props.isPreview) return
+    console.log(this.state.videoId)
+    this.setState({ userPressedPlayButton: true })
+  }
+  getStyle = () => ({
+    cursor: this.props.isPreview ? 'default' : 'pointer',
+    display: this.state.userPressedPlayButton ? 'none' : 'block',
+  })
+  _onReady(e) {
+    // don't autoplay if video has just been rerendered because of resizing but was paused
+    this.setState({ videoReady: true })
+    if (this.state.playing !== false) e.target.playVideo()
+  }
+  onPlay = (e) => this.setState({ playing: true })
+  onPause = (e) => this.setState({ playing: false })
+  getHeight = () => this.containerEl.clientHeight
+  getWidth = () => this.containerEl.clientWidth
+  setVideoDimensions = () => {
+    this.setState({
+      outerWidth: this.getWidth(),
+      opts: {
+        height: this.getHeight(),
+        width: this.getWidth(),
+      },
+    })
+  }
+  updateVideoDimensions = ({ height, width }) => {
+    this.getIFrame().height = height
+    this.getIFrame().width = width
+  }
+  getIFrame = () =>
+    this.containerEl.firstElementChild.firstElementChild.firstElementChild
+  getIFrameDimensions = () => ({
+    height: this.getIFrame().clientHeight,
+    width: this.getIFrame().clientWidth,
+  })
+  getHeightOfGridItem = () => this.containerEl.parentElement.clientHeight
+  getWidthOfGridItem = () => this.containerEl.parentElement.clientWidth
+  componentDidMount = () => {
+    this.setState({ mounted: true })
+    // this.setVideoDimensions()
+  }
+  componentDidUpdate = (prevProps, prevState, snapshot) => {
+    console.log(this.size)
+    if (this.state.mounted && this.state.videoReady) {
+      const gridItemHeight = this.getHeightOfGridItem()
+      const gridItemWidth = this.getWidthOfGridItem()
+      if (prevState.opts.height !== gridItemHeight) {
+        this.updateVideoDimensions({
+          height: gridItemHeight,
+          width: gridItemWidth,
+        })
+      }
+    }
+  }
+  render = () => (
+    <SizeMe>
+      {({ size }) => (
+        <div
+          ref={(containerEl) => {
+            this.containerEl = containerEl
+            this.size = size
+          }}
+        >
+          {this.state.userPressedPlayButton ? (
+            <div
+              className='video'
+              style={{
+                position: 'relative',
+                height: '100%',
+              }}
+            >
+              <YouTube
+                videoId={this.state.videoId}
+                opts={this.state.opts}
+                onReady={(e) => this._onReady(e)}
+                onPlay={(e) => this.onPlay(e)}
+                onPause={(e) => this.onPause(e)}
+                onError={(error) => console.log('Youtube error', error)}
+              />
+            </div>
+          ) : (
+            <div
+              onClick={() => this.handlePressPlayAndLoadVideo()}
+              id={`play-video-${this.state.videoId}`}
+              style={this.getStyle()}
+              className={`video-link wrapper`}
+            >
+              <Image src={this.props.imgSrc} selected={this.props.selected} />
+              <div className='icon-wrapper'>
+                <FaPlay className='icon' />
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </SizeMe>
+  )
 }

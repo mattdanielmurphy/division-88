@@ -1,20 +1,19 @@
 import React from 'react'
-import axios from 'axios'
-import env from '../client-env'
+
 import PostsTable from '../components/jsx/admin/PostsTable'
 import Page from '../components/jsx/Page'
 import { Redirect } from 'react-router'
 
 export default class AdminPosts extends React.Component {
   state = {}
-  createPost = (post) => axios.post(`${env.apiUrl}/posts/new`, post)
+  createPost = (post) => this.props.AdminAPI.post('/posts/new', post)
   updatePost = (post) => {
     const posts = this.state.posts
     posts[post.index] = post
     this.setState({ posts })
-    axios.post(`${env.apiUrl}/posts/${post.index}`, post)
+    this.props.AdminAPI.post(`/posts/${post.index}`, post)
   }
-  deletePost = (post) => axios.get(`${env.apiUrl}/posts/delete/${post.index}`)
+  deletePost = (post) => this.props.AdminAPI.get(`/posts/delete/${post.index}`)
   handleInputChange = ({ e, path, value }) => {
     if (e) {
       path = e.target.id
@@ -35,7 +34,7 @@ export default class AdminPosts extends React.Component {
     }
   }
   editPost = (title) => this.setState({ redirect: title.split(' ').join('-') })
-  getPosts = async () => axios.get(`${env.apiUrl}/posts`).then((r) => r.data)
+  getPosts = async () => this.props.AdminAPI.get('/posts').then((r) => r.data)
   componentDidMount = async () => {
     const posts = await this.getPosts()
     this.setState({ posts })

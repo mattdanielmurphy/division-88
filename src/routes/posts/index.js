@@ -1,4 +1,5 @@
 const posts = require('express').Router()
+const isUserAuthenticated = require('../authMiddleware')
 const fetchPosts = require('./fetchPosts')
 const fetchPostByIndex = require('./fetchPostByIndex')
 const fetchPostByName = require('./fetchPostByName')
@@ -10,7 +11,7 @@ posts.get('/', fetchPosts)
 posts.get('/index/:index', fetchPostByIndex)
 posts.get('/:name', fetchPostByName)
 posts.get('/:post/delete', deletePost)
-posts.post('/new', newPost)
-posts.post('/:index', updatePost)
+posts.post('/new', isUserAuthenticated, newPost)
+posts.post('/:index', isUserAuthenticated, updatePost)
 
 module.exports = posts
