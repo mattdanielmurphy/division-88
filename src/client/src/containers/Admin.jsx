@@ -344,7 +344,7 @@ class Admin extends React.Component {
       },
       {
         name: 'Billy',
-        uid: 'a7rpLoSNreZDcIFvmmQfTCNM60F2',
+        uid: 'V0pFoeI8Labgt2GKG4s8V7jZ8NU2',
       },
     ]
     const isAdmin = user && admins.find((admin) => admin.uid === user.uid)

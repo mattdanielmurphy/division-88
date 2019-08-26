@@ -14,22 +14,26 @@ main {
 }
 
 .main-container {
+  margin-top: 7rem;
   min-height: calc(100% - 10rem);
   overflow: hidden;
 }
 
 .top-heading {
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
   width: 100%;
   padding: 6rem 0 2rem 0;
   &.selected {
     border: 2px solid red;
   }
   div {
+    margin: 0 auto;
+    max-width: 1200px;
     padding: 0 1rem;
   }
-  text-align: center;
-  font-family: 'Libre Baskerville', serif;
+  text-align: right;
+  font-family: 'Josefin Sans', serif;
   font-weight: 700;
   span {
     text-transform: lowercase;

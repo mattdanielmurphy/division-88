@@ -25,11 +25,12 @@ export default class extends Component {
   render = () => {
     return this.state.artists ? (
       <Page
-        headingBackgroundImage={this.props.headingBackgroundImage}
-        headingSelected={this.props.headingSelected}
-        selectHeading={() => this.props.selectHeading('artists')}
+        // headingBackgroundImage={this.props.headingBackgroundImage}
+        // headingSelected={this.props.headingSelected}
+        // selectHeading={() => this.props.selectHeading('artists')}
         isPreview={this.props.isPreview}
-        pageName='artists'
+        noHeading
+        // pageName='artists'
       >
         {this.state.artists.map((artist, index) => {
           return (

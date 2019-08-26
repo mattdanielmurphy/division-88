@@ -7,14 +7,11 @@
 }
 header {
   max-width: 2560px;
-  display: grid;
   align-items: center;
   text-align: center;
   text-transform: uppercase;
   margin: 0 auto;
-  padding: 1.5rem 2rem 0 2rem;
-  grid-template-columns: minmax(35px, 70px) 3fr;
-  justify-items: stretch;
+  padding: 1rem 2rem 0 2rem;
   #logo {
     text-align: center;
     justify-self: right;
@@ -35,12 +32,13 @@ header {
   }
   #nav-wrapper {
     display: inline-grid;
-    justify-items: end;
     // max-width: 500px;
     nav {
       display: inline-grid;
       grid-template-columns: auto auto auto auto;
       justify-items: stretch;
+      grid-column-gap: 0.9rem;
+      margin-bottom: 1rem;
       width: 100%;
       max-width: 360px;
       font-size: 0.9rem;

@@ -95,10 +95,15 @@ export default class extends React.Component {
         headingBackgroundImage={this.state.artist.imgSrc}
         isPreview={this.props.isPreview}
       >
-        <TopTen artist={this.state.artist} />
-        {this.state.artist.releases.length > 0 && (
-          <Releases artist={this.state.artist} />
-        )}
+        <div className='left'>
+          <TopTen artist={this.state.artist} />
+          {this.state.artist.releases.length > 0 && (
+            <Releases artist={this.state.artist} />
+          )}
+        </div>
+        <div className='right'>
+          <div className='bio'>{this.state.artist.description.bio}</div>
+        </div>
       </Page>
     ) : (
       <FourOhFour />

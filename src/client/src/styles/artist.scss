@@ -1,55 +1,68 @@
 #artist {
-	h2 {
-		margin: 1rem 0 1rem 0;
-	}
-	#top-ten {
-		margin: 2rem auto 0 auto;
-		max-width: 800px;
-		text-align: center;
-	}
-	#releases {
-		margin: 2rem auto 0 auto;
-		text-align: center;
-		.release {
-			display: grid;
-			grid-template-columns: 100%;
-			align-content: center;
-			img {
-				width: 100%;
-				margin-bottom: 2rem;
-			}
-		}
-		.left,
-		.right {
-			display: inline-grid;
-			align-content: center;
-			@media (max-width: 800px) {
-				display: block;
-			}
-		}
-	}
-	&.tablet {
-		#releases {
-			max-width: 800px;
-			.release {
-				grid-template-columns: minmax(30px, 500px) 1fr;
-				grid-column-gap: 2rem;
-				h2 {
-					grid-column: 1 / span 2;
-				}
-			}
-		}
-	}
-	&.desktop {
-		#releases {
-			max-width: 800px;
-			.release {
-				grid-template-columns: minmax(30px, 500px) 1fr;
-				grid-column-gap: 2rem;
-				h2 {
-					grid-column: 1 / span 2;
-				}
-			}
-		}
-	}
+  h2 {
+    margin: 1rem 0 1rem 0;
+  }
+  #top-ten {
+    margin: 2rem auto 0 auto;
+    max-width: 800px;
+    text-align: center;
+  }
+  .bio {
+    font-size: 1.1rem;
+    margin-top: 6rem;
+    max-width: 43rem;
+  }
+  #releases {
+    margin: 2rem auto 0 auto;
+    text-align: center;
+    .release {
+      display: grid;
+      grid-template-columns: 100%;
+      align-content: center;
+      img {
+        width: 100%;
+        margin-bottom: 2rem;
+      }
+    }
+    .left,
+    .right {
+      display: inline-grid;
+      align-content: center;
+      @media (max-width: 800px) {
+        display: block;
+      }
+    }
+  }
+  &.tablet {
+    main {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+    }
+    #releases {
+      max-width: 800px;
+      .release {
+        grid-template-columns: minmax(30px, 500px) 1fr;
+        grid-column-gap: 2rem;
+        h2 {
+          grid-column: 1 / span 2;
+        }
+      }
+    }
+  }
+  &.desktop {
+    main {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+    }
+    #releases {
+      max-width: 800px;
+      .release {
+        grid-template-columns: minmax(30px, 500px) 1fr;
+        grid-column-gap: 2rem;
+        h2 {
+          grid-column: 1 / span 2;
+        }
+      }
+    }
+  }
 }
