@@ -15,7 +15,6 @@ export default class CellEditor extends React.Component {
       `/grids/index/cells/${index}`,
       cell,
     ).then((r) => {
-      this.setState({ cellFromDatabase: cell })
       return r.data
     })
     return result
@@ -29,18 +28,10 @@ export default class CellEditor extends React.Component {
       this.state.cell,
     ).then((r) => {
       const cells = this.state.cells.slice()
-      this.setState({
-        cellFromDatabase: this.state.cell,
-        cells,
-        unsavedChanges: false,
-      })
       cells[this.state.index] = this.state.cell
-      if (this.state.colorChange) {
-        this.props.refreshGrid({ cells })
-        this.setState({ colorChange: false })
-      } else {
-        this.props.updateGrid({ cells })
-      }
+      this.setState({
+        cells,
+      })
       return r.data
     })
     return result
@@ -53,6 +44,8 @@ export default class CellEditor extends React.Component {
   updateCellValue = async (path, value) => {
     return await new Promise((resolve) => {
       const cell = Object.assign({}, this.state.cell)
+
+      console.table({ cell })
       function set(path, value) {
         let schema = cell // a moving reference to internal objects within obj
         let pList = path.split('.')
@@ -64,8 +57,11 @@ export default class CellEditor extends React.Component {
         }
 
         schema[pList[length - 1]] = value
+        console.log(path, value)
       }
       set(path, value)
+      let updatedCell = cell
+      console.table({ updatedCell })
       this.setState({ cell, unsavedChanges: true }, () => resolve())
     })
   }
@@ -102,7 +98,6 @@ export default class CellEditor extends React.Component {
       index,
       cell,
       cellFromDatabase: cell,
-      unsavedChanges: false,
     })
   }
   validateCell() {
@@ -149,7 +144,8 @@ export default class CellEditor extends React.Component {
     }
   }
   deleteCell() {
-    this.props.AdminAPI.get(
+    console.log('del cell', this.state.index)
+    this.props.AdminAPI.post(
       `/grids/index/cells/${this.state.index}/delete`,
     ).then((r) => {
       const { layouts, cells } = r.data

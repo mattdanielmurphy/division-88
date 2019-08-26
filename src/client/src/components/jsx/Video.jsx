@@ -5,8 +5,14 @@ import Image from './Image'
 import ReactResizeDetector from 'react-resize-detector'
 
 export default class Video extends React.Component {
+  getVideoId = () => {
+    if (this.props.videoSrc) {
+      const matches = /\?v=(.*)/.exec(this.props.videoSrc)
+      return matches ? matches[1] : ''
+    } else return ''
+  }
   state = {
-    videoId: this.props.videoSrc ? /\?v=(.*)/.exec(this.props.videoSrc)[1] : '',
+    videoId: this.getVideoId(),
     opts: {
       playerVars: {
         // https://developers.google.com/youtube/player_parameters
