@@ -31,5 +31,6 @@
   },
   "browserslist": [
     "defaults"
-  ]
+  ],
+  "license": "UNLICENSED"
 }

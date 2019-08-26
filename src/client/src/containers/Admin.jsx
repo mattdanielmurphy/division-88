@@ -295,7 +295,10 @@ class Admin extends React.Component {
   }
   componentDidUpdate = (prevProps) => {
     if (this.props.user !== prevProps.user) {
-      if (this.props.user) this.setToken()
+      if (this.props.user) {
+        this.setToken()
+        this.setState({ userVerified: this.verifyUser(this.props.user) })
+      }
       this.setState({ loading: false })
     }
     if (this.props.match.params.page !== prevProps.match.params.page) {
@@ -325,10 +328,67 @@ class Admin extends React.Component {
     this.setKeyBindings()
     this.setBodyBackground()
   }
+  verifyToken = async (token) => {
+    // return await firebase
+    //   .auth()
+    //   .verifyIdToken(token)
+    //   .then((decodedToken) => decodedToken)
+    //   .catch((error) => console.log(error))
+  }
+  verifyUser = (user) => {
+    console.log('verifying user', user && user.uid)
+    const admins = [
+      {
+        name: 'Matt',
+        uid: 'a7rpLoSNreZDcIFvmmQfTCNM60F2',
+      },
+      {
+        name: 'Billy',
+        uid: 'a7rpLoSNreZDcIFvmmQfTCNM60F2',
+      },
+    ]
+    const isAdmin = user && admins.find((admin) => admin.uid === user.uid)
+    // && (await this.verifyToken(user.getIdToken()))
+
+    if (isAdmin) {
+      if (this.state.signInFailed) this.setState({ signInFailed: false })
+    } else {
+      console.log('not isAdmin', isAdmin)
+      this.setState({ signInFailed: true })
+    }
+
+    return isAdmin
+  }
   render = () =>
     this.state.loading ? (
       <Spinner className='loading text-center' name='ball-clip-rotate' />
-    ) : this.props.user === null ? (
+    ) : this.props.user && this.state.signInFailed ? (
+      <Page heading='Authentication Failed'>
+        <section className='text sign-in-prompt'>
+          <p>
+            The account <em>{this.props.user.email}</em> is not one of our admin
+            accounts. Sign out at{' '}
+            <a target='_blank' href='https://google.com'>
+              google.com
+            </a>{' '}
+            and sign in with another account to try again.
+          </p>
+          <p>
+            <button
+              onClick={(e) => {
+                this.setState({ signInFailed: false }, () => {
+                  this.props.signOut()
+                  // Location.reload()
+                  this.handleClickSignIn(e)
+                })
+              }}
+            >
+              Try again to sign in with Google
+            </button>
+          </p>
+        </section>
+      </Page>
+    ) : !this.props.user || !this.state.userVerified ? (
       <Page heading='Authorization Required'>
         <section className='text sign-in-prompt'>
           <p>

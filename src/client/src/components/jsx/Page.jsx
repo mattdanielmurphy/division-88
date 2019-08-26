@@ -123,6 +123,11 @@ export default class Page extends React.Component {
         headingBackgroundImage: this.props.headingBackgroundImage,
       })
     }
+    if (
+      JSON.stringify(this.props.heading) !== JSON.stringify(prevProps.heading)
+    ) {
+      this.setState({ heading: this.getHeading() })
+    }
   }
   componentDidMount = async () => {
     if (!this.props.isPreview) this.setParentElementsTo100PercentHeight()
