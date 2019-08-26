@@ -32,12 +32,12 @@
       max-width: 100%;
     }
     .description {
-      font-size: 1rem;
+      font-size: 0.7rem;
       padding: 2rem 1rem;
       display: grid;
       color: black;
       align-content: center;
-      height: 18rem;
+      height: 12rem;
       .artist-name {
         font-weight: 600;
         font-size: 2rem;
@@ -45,6 +45,7 @@
       }
       .bio {
         margin: 1rem 0 0.8rem 0;
+        max-width: 30rem;
       }
       .see-releases {
         text-transform: uppercase;

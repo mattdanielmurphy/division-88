@@ -57,8 +57,7 @@ export default class extends React.Component {
         headingSelected={this.props.headingSelected}
         id='producer-tool'
         heading={{
-          text: `${this.state.tool.name}: `,
-          spanText: 'producer tool',
+          text: `${this.state.tool.name}`,
         }}
         selectHeading={() => this.props.selectHeading(this.props.pageName)}
         isPreview={this.props.isPreview}

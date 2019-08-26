@@ -6,10 +6,10 @@ cd src/client
 yarn build
 cd ../../
 
-if test -d 'dist'; then
+if test -d 'build'; then
   echo 'Removing existing build...'
-  rm -r 'dist'
+  rm -r 'build'
 fi
 
 echo 'Moving new build...'
-mv 'src/client/dist' .
+mv 'src/client/build' .

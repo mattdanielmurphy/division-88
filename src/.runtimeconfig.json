@@ -1,0 +1,18 @@
+{
+  "client": {
+    "id": "kp2273iqykx8esz",
+    "secret": "jalij6ftqjyymjt,"
+  },
+  "db": {
+    "password": "5KpAbljKT1cfwp5R0xzWYNv0pUbdp31rwWXInr8Mhm0zUpW9FhMNg4xlW0rMRu3FyCVxEx0aQr20G5mc3d5wCDJoMikKsD7bhNnX"
+  },
+  "token": {
+    "secret": "K828NCGcXNpbqF8zD33OZ6Sv8fECgYaH"
+  },
+  "messagingsender": {
+    "id": "1059847851928"
+  },
+  "api": {
+    "key": "AIzaSyBSdDsj2JJuAI_9V-z5-qwW45YDdQmBoyE"
+  }
+}

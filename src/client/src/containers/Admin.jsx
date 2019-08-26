@@ -4,6 +4,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import Spinner from 'react-spinkit'
 import env from 'client-env'
+
 import axios from 'axios/index'
 
 import Page from '../components/jsx/Page'
@@ -35,8 +36,8 @@ const pages = {
 }
 
 const firebaseConfig = {
-  apiKey: env.firebaseconfig.apikey,
-  messagingSenderId: env.firebaseconfig.messagingsenderid,
+  apiKey: env.apiKey,
+  messagingSenderId: env.messagingSenderId,
   authDomain: 'division-88-6430e.firebaseapp.com',
   databaseURL: 'https://division-88-6430e.firebaseio.com',
   projectId: 'division-88-6430e',

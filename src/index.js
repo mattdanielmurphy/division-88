@@ -2,7 +2,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const cors = require('cors')
-const bearerToken = require('express-bearer-token')
 
 const routes = require('./routes')
 const { env } = require('./server-env')
@@ -22,7 +21,6 @@ mongoose
 
 mongoose.Promise = global.Promise // override deprecated promise
 
-app.use(bearerToken())
 app.use(cors({ origin: true }), bodyParser.json())
 app.use('/api', routes)
 
