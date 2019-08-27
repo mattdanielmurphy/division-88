@@ -94,7 +94,7 @@ export default class Video extends React.Component {
               className='video'
               style={{
                 position: 'relative',
-                height: '100%',
+                height: this.props.height || '100%',
               }}
             >
               <YouTube

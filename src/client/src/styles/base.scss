@@ -14,7 +14,7 @@ main {
 }
 
 .main-container {
-  margin-top: 7rem;
+  // margin-top: 7rem;
   min-height: calc(100% - 10rem);
   overflow: hidden;
 }
@@ -23,7 +23,7 @@ main {
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
   text-transform: uppercase;
   width: 100%;
-  padding: 6rem 0 2rem 0;
+  padding: 5rem 0 3rem 0;
   &.selected {
     border: 2px solid red;
   }
@@ -33,8 +33,10 @@ main {
     padding: 0 1rem;
   }
   text-align: right;
-  font-family: 'Josefin Sans', serif;
-  font-weight: 700;
+  font-family: 'Josefin Sans', 'HelveticaNeue-Light',
+      'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
+      'Lucida Grande', sans-serif;
+  font-weight: 400;
   span {
     text-transform: lowercase;
     font-weight: 300;
@@ -63,7 +65,7 @@ main {
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Barlow Semi Condensed', 'HelveticaNeue-Light',
+  font-family: 'Josefin Sans', 'HelveticaNeue-Light',
     'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande',
     sans-serif;
   font-size: 16px;
@@ -105,7 +107,7 @@ section.text {
 button {
   background: #444;
   padding: 1em;
-  font-family: 'Barlow Semi Condensed', 'HelveticaNeue-Light',
+  font-family: 'Josefin Sans', 'HelveticaNeue-Light',
     'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande',
     sans-serif;
   text-transform: uppercase;
@@ -150,9 +152,10 @@ section.text a.button {
 }
 
 .background-image {
-  background-position: center center;
+  background-position: top center;
   background-size: cover;
   background-repeat: no-repeat;
+  padding: 6rem 0;
 }
 // 	width: 100%;
 // 	height: 50vw;

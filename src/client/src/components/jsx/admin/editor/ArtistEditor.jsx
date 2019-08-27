@@ -170,6 +170,26 @@ export default class ArtistEditor extends React.Component {
             />
           </div>
           <div className='property-input'>
+            <label>artist video</label>
+            <input
+              onChange={(e) => this.handleInputChange({ e })}
+              id='videoUrl'
+              value={
+                this.state.artist.videoUrl || ''
+              }
+            />
+          </div>
+          <div className='property-input'>
+            <label>video placeholder image</label>
+            <ImageUploader
+              AdminAPI={this.props.AdminAPI}
+              image={this.state.artist.videoImg}
+              setImage={(url) =>
+                this.handleInputChange({ path: 'videoImg', value: url })
+              }
+            />
+          </div>
+          <div className='property-input'>
             <label>artist image</label>
             <ImageUploader
               AdminAPI={this.props.AdminAPI}
@@ -198,26 +218,26 @@ export default class ArtistEditor extends React.Component {
             />
           </div>
           <br />
-          <div className='property-input'>
-            <label>description background color</label>
-            <ColorPicker
-              color={
-                (this.state.artist.description &&
-                  this.state.artist.description.style &&
-                  this.state.artist.description.style.backgroundColor) ||
-                'darkgrey'
-              }
-              setColor={(color) => {
-                const { r, g, b, a } = color.rgb
-                const rgbaString = `rgba(${r},${g},${b},${a})`
-                this.handleInputChange({
-                  path: 'description.style.backgroundColor',
-                  value: rgbaString,
-                  colorChange: true,
-                })
-              }}
-            />
-          </div>
+          {/*<div className='property-input'>
+                      <label>description background color</label>
+                      <ColorPicker
+                        color={
+                          (this.state.artist.description &&
+                            this.state.artist.description.style &&
+                            this.state.artist.description.style.backgroundColor) ||
+                          'darkgrey'
+                        }
+                        setColor={(color) => {
+                          const { r, g, b, a } = color.rgb
+                          const rgbaString = `rgba(${r},${g},${b},${a})`
+                          this.handleInputChange({
+                            path: 'description.style.backgroundColor',
+                            value: rgbaString,
+                            colorChange: true,
+                          })
+                        }}
+                      />
+                    </div>*/}
           <div className='property-input'>
             <label>description text color</label>
             <ColorPicker

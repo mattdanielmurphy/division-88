@@ -11,6 +11,9 @@
       border: 2px solid red;
     }
   }
+  .top-heading {
+    padding: 6rem 0 0 0;
+  }
   .artist {
     position: relative;
     align-items: center;
@@ -39,7 +42,9 @@
       align-content: center;
       height: 5rem;
       .artist-name {
-        font-family: 'Josefin Sans', sans-serif;
+        font-family: 'Josefin Sans', 'HelveticaNeue-Light',
+      'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
+      'Lucida Grande', sans-serif;
         text-transform: uppercase;
         font-weight: 400;
         font-size: 2rem;
@@ -76,6 +81,9 @@
   main {
     grid-template-columns: 50% 50%;
   }
+  .top-heading {
+    padding: 19rem 0 0 0;
+  }
   .artist {
     .description-outer-wrapper {
       width: 100%;
@@ -96,6 +104,9 @@
 #artists.desktop {
   main {
     grid-template-columns: 50% 50%;
+  }
+  .top-heading {
+    padding: 19rem 0 0 0;
   }
   .artist {
     display: grid;

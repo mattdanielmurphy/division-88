@@ -4,6 +4,7 @@ import Page from '../components/jsx/Page'
 import API from 'components/js/api'
 import Spinner from 'react-spinkit'
 import FourOhFour from 'pages/404'
+import StaticVideo from 'components/jsx/StaticVideo'
 
 class SpotifyPlayer extends React.Component {
   state = { loading: true }
@@ -35,7 +36,7 @@ class SpotifyPlayer extends React.Component {
           className='spotify-iframe'
           src={src}
           width='300'
-          height='380'
+          height='410'
           frameBorder='0'
           allowtransparency='true'
           allow='encrypted-media'
@@ -97,12 +98,17 @@ export default class extends React.Component {
       >
         <div className='left'>
           <TopTen artist={this.state.artist} />
-          {this.state.artist.releases.length > 0 && (
+          {/*{this.state.artist.releases.length > 0 && (
             <Releases artist={this.state.artist} />
-          )}
+          )}*/}
         </div>
         <div className='right'>
           <div className='bio'>{this.state.artist.description.bio}</div>
+          {this.state.artist.videoUrl && this.state.artist.videoImg && 
+            <div className='video' style={{width: '100%', height: '300px'}}>
+              <StaticVideo height='300px' videoSrc={this.state.artist.videoUrl} imgSrc={this.state.artist.videoImg} />
+            </div>
+          }
         </div>
       </Page>
     ) : (

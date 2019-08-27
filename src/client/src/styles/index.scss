@@ -10,7 +10,6 @@
   overflow: hidden;
   text-transform: uppercase;
   margin: 0 auto;
-  margin-top: 3.5rem;
   img {
     height: 100%;
     width: 100%;
@@ -18,14 +17,12 @@
     max-width: 100%;
   }
   .layout {
-    &.grid-item-hovered-upon {
-      .grid-item {
-        a {
-          color: white;
-          &:hover {
-            .background {
-              @include grid-item-hover;
-            }
+    .grid-item {
+      a {
+        color: white;
+        &:hover {
+          .background {
+            @include grid-item-hover;
           }
         }
       }
@@ -42,9 +39,11 @@
     .heading {
       text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
       font-size: 2rem;
-      font-weight: 700;
-      font-family: 'Libre Baskerville', serif;
-      text-transform: initial;
+      font-weight: 400;
+      font-family: 'Josefin Sans', 'HelveticaNeue-Light',
+      'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
+      'Lucida Grande', sans-serif;
+      text-transform: uppercase;
     }
     .subheading {
       font-weight: 600;
