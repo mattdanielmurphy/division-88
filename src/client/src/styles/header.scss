@@ -1,8 +1,4 @@
 .header-wrapper {
-  // position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
   z-index: 999;
 }
 header {
@@ -11,7 +7,7 @@ header {
   text-align: center;
   text-transform: uppercase;
   margin: 0 auto;
-  padding: 1.5rem 2rem 1rem 2rem;
+  padding: 1.5rem 2rem .5rem 2rem;
   font-family: 'Josefin Sans', 'HelveticaNeue-Light',
       'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
       'Lucida Grande', sans-serif;
@@ -21,7 +17,6 @@ header {
     padding: 0 2rem;
     a {
       height: 100%;
-      // width: 100%;
       color: inherit;
       .icon {
         max-width: 100%;
@@ -34,7 +29,6 @@ header {
   }
   #nav-wrapper {
     display: inline-grid;
-    // max-width: 500px;
     nav {
       display: inline-grid;
       grid-template-columns: 1fr .3fr 1fr;
@@ -43,7 +37,6 @@ header {
       grid-column-gap: 1.3rem;
       margin-bottom: 1rem;
       width: 100%;
-      // max-width: 450px;
       font-size: 1rem;
       .left-side {
         justify-self: end;
@@ -57,23 +50,22 @@ header {
         align-items: center;
         display: inline-grid;
         grid-column-gap: 3rem;
-        grid-template-columns: 12rem auto;
+        grid-template-columns: auto auto;
       }
       #logo a:hover {
-        background: none;
-        opacity: .8;
-
+        border-bottom: 1px solid black;
       }
       a {
         text-shadow: 0.5px 0.5px 3px rgba(0, 0, 0, 0.2);
         font-weight: 300;
         display: inline-block;
         color: inherit;
-        padding: .4rem .5rem .2rem .5rem;
-        transition: .3s ease-in-out;
+        padding: .4rem .4rem .2rem .4rem;
+        transition: .15s ease-in-out;
+        border-bottom: 1px solid black;
 
         &:hover {
-          background: #242424;
+          border-bottom: 1px solid white;
         }
       }
     }
