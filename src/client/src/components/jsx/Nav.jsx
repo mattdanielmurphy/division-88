@@ -28,7 +28,7 @@ export default class Nav extends React.Component {
     ],
     adminVersion: false,
   }
-  getAdminLink = (url) => '/admin' + url
+  getLink = (url) => (this.state.adminVersion ? `/admin${url}` : url)
   componentDidMount() {
     this.setState({
       adminVersion: /\/admin/.test(window.location.pathname),
@@ -37,10 +37,12 @@ export default class Nav extends React.Component {
   }
   componentDidUpdate() {
     if (this.state.mounted) {
+      // if adminVersion is set in state but no longer applies
       if (
         this.state.adminVersion &&
         this.state.adminVersion !== /\/admin/.test(window.location.pathname)
       ) {
+        console.log('admin state removed')
         this.setState({
           adminVersion: /\/admin/.test(window.location.pathname),
         })
@@ -54,37 +56,38 @@ export default class Nav extends React.Component {
           <Link
             key='Artists'
             onClick={this.props.toggleOpenClose}
-            to={this.state.adminVersion ? this.getAdminLink('/') : '/artists'}
+            to={this.getLink('/artists')}
           >
             Artists
           </Link>
           <Link
             key='About'
             onClick={this.props.toggleOpenClose}
-            to={this.state.adminVersion ? this.getAdminLink('/') : '/about'}
+            to={this.getLink('/about')}
           >
             About
           </Link>
         </div>
         {!this.props.toggleOpenClose && (
-          <Logo width='70px' fill='#242424' hoverFill='#343434' />
+          <Logo
+            width='70px'
+            fill='#242424'
+            hoverFill='#343434'
+            adminVersion={this.state.adminVersion}
+          />
         )}
         <div className='right-side'>
           <Link
             key='Producer Tools'
             onClick={this.props.toggleOpenClose}
-            to={
-              this.state.adminVersion
-                ? this.getAdminLink('/')
-                : '/producer-tools'
-            }
+            to={this.getLink('/producer-tools')}
           >
             Producer Tools
           </Link>
           <Link
             key='Posts'
             onClick={this.props.toggleOpenClose}
-            to={this.state.adminVersion ? this.getAdminLink('/') : '/posts'}
+            to={this.getLink('/posts')}
           >
             Posts
           </Link>

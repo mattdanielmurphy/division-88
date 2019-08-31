@@ -131,10 +131,6 @@ class Admin extends React.Component {
       headingBackgroundImage: heading.headingBackgroundImage,
     })
   }
-  addSpaceToTopOfBody() {
-    const body = document.getElementsByTagName('body')[0]
-    body.style.marginTop = '6rem'
-  }
   selectCell = (index) => {
     console.log('select cell - Admin.jsx')
     this.setState({ selectedCell: index, selectedHeading: undefined })
@@ -153,7 +149,7 @@ class Admin extends React.Component {
   }
   updateCell = (index, cell) => this.setState({ updatedCell: { index, cell } })
   setBodyBackground = () =>
-    (document.getElementsByTagName('body')[0].style.backgroundColor = '#222')
+    (document.getElementsByTagName('body')[0].style.backgroundColor = '#151515')
   // grid-specific
   undoLayoutChange() {
     const layouts = this.layoutsHistory[this.layoutsHistory.length - 2]
@@ -324,16 +320,8 @@ class Admin extends React.Component {
   }
   componentDidMount() {
     this.getDataForPage()
-    this.addSpaceToTopOfBody()
     this.setKeyBindings()
     this.setBodyBackground()
-  }
-  verifyToken = async (token) => {
-    // return await firebase
-    //   .auth()
-    //   .verifyIdToken(token)
-    //   .then((decodedToken) => decodedToken)
-    //   .catch((error) => console.log(error))
   }
   verifyUser = (user) => {
     console.log('verifying user', user && user.uid)

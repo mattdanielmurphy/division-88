@@ -3,6 +3,7 @@ import React from 'react'
 import PostsTable from '../components/jsx/admin/PostsTable'
 import Page from '../components/jsx/Page'
 import { Redirect } from 'react-router'
+import HeadingEditor from 'components/jsx/admin/editor/HeadingEditor'
 
 export default class AdminPosts extends React.Component {
   state = {}
@@ -57,6 +58,12 @@ export default class AdminPosts extends React.Component {
       ) : (
         <div>Loading...</div>
       )}
+      <HeadingEditor
+        AdminAPI={this.props.AdminAPI}
+        pageName='posts'
+        selectedHeading='posts'
+        updateHeading={(heading) => this.props.updateHeading(heading)}
+      />
     </Page>
   )
 }

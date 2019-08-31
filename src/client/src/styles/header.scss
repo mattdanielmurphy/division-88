@@ -1,5 +1,9 @@
 .header-wrapper {
   z-index: 999;
+  &.mobile {
+    position: fixed;
+    width: 100%;
+  }
 }
 header {
   max-width: 2560px;
@@ -14,6 +18,10 @@ header {
     text-align: center;
     color: inherit;
     padding: 0 2rem;
+    &.mobile-header-logo {
+      text-align: left;
+      padding: 0;
+    }
     a {
       height: 100%;
       color: inherit;
@@ -51,8 +59,8 @@ header {
         grid-column-gap: 3rem;
         grid-template-columns: auto auto;
       }
-      #logo a:hover {
-        border-bottom: 1px solid black;
+      #logo a {
+        border: none;
       }
       a {
         text-shadow: 0.5px 0.5px 3px rgba(0, 0, 0, 0.2);
@@ -61,7 +69,7 @@ header {
         color: inherit;
         padding: 0.4rem 0.4rem 0.2rem 0.4rem;
         transition: 0.15s ease-in-out;
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid transparent;
 
         &:hover {
           border-bottom: 1px solid white;

@@ -17,7 +17,7 @@ export default class extends React.Component {
       }}
       onMouseLeave={() => this.setState({ fill: this.props.fill || '#242424' })}
     >
-      <Link to={this.state.adminVersion ? this.getAdminLink('/') : '/'}>
+      <Link to={this.props.adminVersion ? '/admin' : '/'}>
         <svg
           width={this.state.width}
           viewBox='0 0 921 921'

@@ -2,8 +2,27 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import OffCanvas from './OffCanvas'
 import Nav from './Nav'
-import MediaQuery from 'react-responsive'
+import { MediaQuery, useMediaQuery } from 'react-responsive'
 import Logo from 'components/jsx/Logo'
+
+class HeaderWrapper extends React.Component {
+  render = () =>
+    this.props.mobilePreview ? (
+      <div className='header-wrapper mobile' children={this.props.children} />
+    ) : (
+      <div>
+        <MediaQuery maxWidth={440}>
+          <div
+            className='header-wrapper mobile'
+            children={this.props.children}
+          />
+        </MediaQuery>
+        <MediaQuery minWidth={440}>
+          <div className='header-wrapper' children={this.props.children} />
+        </MediaQuery>
+      </div>
+    )
+}
 
 export default class extends React.Component {
   state = {
@@ -28,26 +47,36 @@ export default class extends React.Component {
       }
     }
   }
-  render = () => (
-    <div className='header-wrapper'>
-      {this.props.mobilePreview ? (
-        <OffCanvas previewWidth={this.props.previewWidth} />
-      ) : (
-        <MediaQuery maxWidth={440}>
-          <OffCanvas />
-        </MediaQuery>
-      )}
-
-      <header>
-        <MediaQuery maxWidth={440}>
-          <Logo width='50px' className='mobile-header-logo' />
-        </MediaQuery>
-        {!this.props.mobilePreview && (
-          <MediaQuery minWidth={440}>
-            <Nav />
-          </MediaQuery>
+  render = () => {
+    return (
+      // change this whole mess: mobile or mobile-preview ? MobileHeader : Header
+      // get rid of HeaderWrapper
+      <HeaderWrapper mobilePreview={this.props.mobilePreview}>
+        {this.props.mobilePreview ? (
+          // mobile preview
+          <div>
+            <OffCanvas previewWidth={this.props.previewWidth} />
+            <header>
+              <Logo width='50px' className='mobile-header-logo' />
+            </header>
+          </div>
+        ) : (
+          // non preview
+          <div>
+            <MediaQuery maxWidth={440}>
+              <OffCanvas />
+              <header>
+                <Logo width='50px' className='mobile-header-logo' />
+              </header>
+            </MediaQuery>
+            <MediaQuery minWidth={440}>
+              <header>
+                <Nav />
+              </header>
+            </MediaQuery>
+          </div>
         )}
-      </header>
-    </div>
-  )
+      </HeaderWrapper>
+    )
+  }
 }
