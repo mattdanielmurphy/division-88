@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="372e8f02-1852-4470-a097-269783ae3e38" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/matthewmurphy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/matthewmurphy.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/src/components/jsx/Logo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/jsx/Logo.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/src/components/jsx/Nav.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/jsx/Nav.jsx" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="division-88" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/client/src/components/jsx/Header.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="741">
+              <caret line="59" column="32" lean-forward="true" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="32" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/client/src/components/jsx/Nav.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="862">
+              <caret line="68" column="64" lean-forward="true" selection-start-line="68" selection-start-column="64" selection-end-line="68" selection-end-column="64" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/client/src/components/jsx/Logo.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="336">
+              <caret line="16" column="75" selection-start-line="16" selection-start-column="75" selection-end-line="16" selection-end-column="75" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="tsconfig.json" />
+        <option value="JavaScript File" />
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>keypress</find>
+      <find>index.jsx</find>
+      <find>to=</find>
+      <find>handle</find>
+      <find>colorChange</find>
+      <find>updategrid</find>
+      <find>.link</find>
+      <find>link.text</find>
+      <find>link</find>
+      <find>API.get</find>
+      <find>AdminAPI.post</find>
+      <find>.description</find>
+      <find>font-size</find>
+      <find>user</find>
+      <find>verify</find>
+      <find>if (is</find>
+      <find>signout</find>
+      <find>.main</find>
+      <find>body</find>
+      <find>background: black</find>
+      <find>&lt;svg</find>
+      <find>admins =</find>
+      <find>desktop</find>
+      <find>height</find>
+      <find>right</find>
+      <find>50% 50</find>
+      <find>top-heading</find>
+      <find>a</find>
+      <find>apiurl:</find>
+      <find>fill</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>API.</replace>
+      <replace>import API from '/api.js'</replace>
+      <replace>$1API</replace>
+      <replace>import '</replace>
+      <replace>import API from 'api'</replace>
+      <replace>from 'api.js'</replace>
+      <replace>api.js'</replace>
+      <replace>api</replace>
+      <replace>$1'$2'</replace>
+      <replace>$1`$2`</replace>
+      <replace>$1</replace>
+      <replace>import { API } from 'containers/Admin'</replace>
+      <replace>\.post\($1, isUserAuthenticated, $2\)</replace>
+      <replace>\.Router\(\)\nconst isUserAuthenticated = require('../authMiddleware')</replace>
+      <replace>const isUserAuthenticated = require('../authMiddleware')</replace>
+      <replace>this.props.AdminAPI.post</replace>
+      <replace>import API from 'components/js/api'</replace>
+      <replace>this</replace>
+      <replace>req.body</replace>
+      <replace>r.length</replace>
+      <replace>get\('/', delete</replace>
+      <replace>delete\('/', delete</replace>
+      <replace />
+      <replace>Barlow Semi Condensed</replace>
+      <replace>$1rgba\(0\, 0\, 0\, 0.2\);</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/src/client/src/components/jsx</dir>
+      <dir>$PROJECT_DIR$/src/routes/about</dir>
+      <dir>$PROJECT_DIR$/src/routes/grids/layouts</dir>
+      <dir>$PROJECT_DIR$/src/client/src/components/jsx/admin/editor</dir>
+      <dir>$PROJECT_DIR$/src/client/src/components/</dir>
+      <dir>$PROJECT_DIR$/src/</dir>
+      <dir>$PROJECT_DIR$/src/routes</dir>
+      <dir>$PROJECT_DIR$/src/client/src/</dir>
+      <dir>$PROJECT_DIR$/src/client/src/styles</dir>
+      <dir>$PROJECT_DIR$/src</dir>
+      <dir>$PROJECT_DIR$/src/client/src</dir>
+      <dir>$PROJECT_DIR$/src/node_modules/@types/body-parser</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Matt Murphy &lt;matt@mattmurphy.ca&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/client/src/components/jsx/admin/editor/ImageUploader.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/components/jsx/Image.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/components/jsx/admin/editor/ToolEditor.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/components/jsx/admin/editor/ArtistEditor.jsx" />
+        <option value="$PROJECT_DIR$/src/routes/posts/updatePost.js" />
+        <option value="$PROJECT_DIR$/src/client/src/pages/admin-post.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/styles/admin-index.scss" />
+        <option value="$PROJECT_DIR$/src/client/src/components/jsx/admin/editor/text-editor/TextEditor.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/components/jsx/admin/editor/TextEditor.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/pages/posts.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/styles/posts.scss.css" />
+        <option value="$PROJECT_DIR$/src/client/src/styles/app.scss" />
+        <option value="$PROJECT_DIR$/src/client/src/pages/post.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/pages/about.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/styles/about.scss" />
+        <option value="$PROJECT_DIR$/src/client/src/components/jsx/admin/editor/Editor.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/pages/admin-about.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/styles/posts.scss" />
+        <option value="$PROJECT_DIR$/scripts/build-client.sh" />
+        <option value="$PROJECT_DIR$/firebase.json" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/src/index.js" />
+        <option value="$PROJECT_DIR$/src/server-env.js" />
+        <option value="$PROJECT_DIR$/src/package.json" />
+        <option value="$PROJECT_DIR$/src/client/src/client-env-d.js" />
+        <option value="$PROJECT_DIR$/src/client/src/pages/producer-tool.jsx" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.json" />
+        <option value="$PROJECT_DIR$/src/client/src/components/jsx/Video.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/components/jsx/admin/editor/HeadingEditor.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/components/jsx/admin/editor/CellEditor.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/components/jsx/admin/NonVideoOptions.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/components/jsx/index/Index.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/components/jsx/index/GridItem.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/components/js/api.js" />
+        <option value="$PROJECT_DIR$/src/client/src/styles/producer-tools.scss" />
+        <option value="$PROJECT_DIR$/src/routes/grids/layouts/deleteCell.js" />
+        <option value="$PROJECT_DIR$/src/client/src/components/jsx/Page.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/styles/index.scss" />
+        <option value="$PROJECT_DIR$/src/client/src/client-env.js" />
+        <option value="$PROJECT_DIR$/src/client/src/styles/header.scss" />
+        <option value="$PROJECT_DIR$/src/client/src/components/jsx/Header.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/containers/Admin.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/pages/artists.jsx" />
+        <option value="$PROJECT_DIR$/src/client/public/index.html" />
+        <option value="$PROJECT_DIR$/src/client/src/components/jsx/Artist.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/styles/artists.scss" />
+        <option value="$PROJECT_DIR$/src/client/src/styles/base.scss" />
+        <option value="$PROJECT_DIR$/src/client/src/pages/artist.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/styles/artist.scss" />
+        <option value="$PROJECT_DIR$/src/client/src/components/jsx/Nav.jsx" />
+        <option value="$PROJECT_DIR$/src/client/src/components/jsx/Logo.jsx" />
+      </list>
+    </option>
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="NamedScopeManager">
+    <scope name="files to make prettier" pattern="file:src/*.js||file:*/styles/*.scss||file:src/*.jsx||file:*.json&amp;&amp;!file:src/client/build//*" />
+    <scope name="asdf" pattern="file[division-88]:src/routes//*&amp;&amp;!file[division-88]:src/routes/grids/layouts//*" />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="853" />
+    <option name="y" value="23" />
+    <option name="width" value="1707" />
+    <option name="height" value="1417" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="division-88" type="b2602c69:ProjectViewProjectNode" />
+              <item name="division-88" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="division-88" type="b2602c69:ProjectViewProjectNode" />
+              <item name="division-88" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="division-88" type="b2602c69:ProjectViewProjectNode" />
+              <item name="division-88" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="division-88" type="b2602c69:ProjectViewProjectNode" />
+              <item name="division-88" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="division-88" type="b2602c69:ProjectViewProjectNode" />
+              <item name="division-88" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="division-88" type="b2602c69:ProjectViewProjectNode" />
+              <item name="division-88" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="division-88" type="b2602c69:ProjectViewProjectNode" />
+              <item name="division-88" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+              <item name="page-info" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="division-88" type="b2602c69:ProjectViewProjectNode" />
+              <item name="division-88" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+              <item name="producer-tools" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="division-88" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="NewWatcherDialog.advanced.open" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JSON&#10;Markdown&#10;Angular2Html" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="prettierjs.PrettierConfiguration.NodeInterpreter" value="project" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="" />
+    <property name="settings.editor.selected.configurable" value="watcher.settings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/client/src/components/jsx/admin/editor" />
+      <recent name="$PROJECT_DIR$/src/routes" />
+      <recent name="$PROJECT_DIR$/src/client/src" />
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/client/src/pages" />
+      <recent name="$PROJECT_DIR$/src/routes" />
+      <recent name="$PROJECT_DIR$/src/client/src" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="372e8f02-1852-4470-a097-269783ae3e38" name="Default Changelist" comment="" />
+      <created>1565926329228</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1565926329228</updated>
+      <workItem from="1565926331485" duration="1436000" />
+      <workItem from="1565937837959" duration="800000" />
+      <workItem from="1565938664033" duration="107000" />
+      <workItem from="1565938787662" duration="531000" />
+      <workItem from="1565939358458" duration="249000" />
+      <workItem from="1565939625009" duration="5366000" />
+      <workItem from="1566240768462" duration="489000" />
+      <workItem from="1566241410976" duration="2181000" />
+      <workItem from="1566245082136" duration="9749000" />
+      <workItem from="1566298024265" duration="52579000" />
+      <workItem from="1566702017276" duration="377000" />
+      <workItem from="1566702561548" duration="126000" />
+      <workItem from="1566702793056" duration="13052000" />
+      <workItem from="1566842508647" duration="10920000" />
+      <workItem from="1567076258602" duration="18000" />
+      <workItem from="1567216297050" duration="1019000" />
+    </task>
+    <task id="LOCAL-00001" summary="WebStorm files added">
+      <created>1565938081331</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1565938081332</updated>
+    </task>
+    <task id="LOCAL-00002" summary="WebStorm files added">
+      <created>1565944159702</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1565944159702</updated>
+    </task>
+    <task id="LOCAL-00003" summary="start API authentication">
+      <created>1566281222180</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1566281222180</updated>
+    </task>
+    <task id="LOCAL-00004" summary="- add API authentication for admin functions&#10;- fix Youtube player not working, add automatic player resizing in&#10;  response to window resizing">
+      <created>1566452002897</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1566452002897</updated>
+    </task>
+    <task id="LOCAL-00005" summary="- add forgotten semicolon to comment">
+      <created>1566452379799</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1566452379799</updated>
+    </task>
+    <task id="LOCAL-00006" summary="- change react-sizeme to react-resize-detector (better)">
+      <created>1566453379924</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1566453379924</updated>
+    </task>
+    <task id="LOCAL-00007" summary="- replace text editor with a much better one&#10;- fix lots of bugs&#10;- add barebones styles to posts page&#10;- add admin-post and admin-about for better text editing&#10;- something else probably">
+      <created>1566474269334</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1566474269334</updated>
+    </task>
+    <task id="LOCAL-00008" summary="- rename hosting directory from 'dist' to 'build' so its easier to move&#10;build from create-react-app&#10;- move env variables into client-env.js because you can't access them&#10;from firebase and they weren't sensitive anyway&#10;- other stuff I'm sure">
+      <created>1566792909380</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1566792909380</updated>
+    </task>
+    <task id="LOCAL-00009" summary="- remove unnecessary cellFromDatabase, onKeyPress, cellsUpToDate&#10;- fix Video for incomplete Youtube URLs&#10;- store font-size for artists and producer-tools">
+      <created>1566804124108</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1566804124108</updated>
+    </task>
+    <task id="LOCAL-00010" summary="- update styles, other stuff">
+      <created>1566857077241</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1566857077241</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="98999000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="853" y="23" width="1707" height="1417" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49925706" weight="0.11224892" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="npm" order="2" side_tool="true" />
+      <window_info id="Favorites" order="3" sideWeight="0.5007429" side_tool="true" weight="0.26767275" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32912332" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.7060703" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.32986626" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="WebStorm files added" />
+    <MESSAGE value="start API authentication" />
+    <MESSAGE value="- add API authentication for admin functions&#10;- fix Youtube player not working, add automatic player resizing in&#10;  response to window resizing" />
+    <MESSAGE value="- add forgotten semicolon to comment" />
+    <MESSAGE value="- change react-sizeme to react-resize-detector (better)" />
+    <MESSAGE value="- replace text editor with a much better one&#10;- fix lots of bugs&#10;- add barebones styles to posts page&#10;- add admin-post and admin-about for better text editing&#10;- something else probably" />
+    <MESSAGE value="- rename hosting directory from 'dist' to 'build' so its easier to move&#10;build from create-react-app&#10;- move env variables into client-env.js because you can't access them&#10;from firebase and they weren't sensitive anyway&#10;- other stuff I'm sure" />
+    <MESSAGE value="- remove unnecessary cellFromDatabase, onKeyPress, cellsUpToDate&#10;- fix Video for incomplete Youtube URLs&#10;- store font-size for artists and producer-tools" />
+    <MESSAGE value="- update styles, other stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="- update styles, other stuff" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/client/src/styles/about.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/build-client.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="11" column="2" lean-forward="true" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server-env-d.js" />
+    <entry file="file://$PROJECT_DIR$/src/client/src/client-env-p.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="26" lean-forward="true" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="3" column="51" selection-start-line="3" selection-start-column="51" selection-end-line="3" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server-env-p.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="1" column="16" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/firebase.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="356">
+          <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server-env.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-75">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index-d.js" />
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="20" column="38" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="12" column="21" lean-forward="true" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/client-env-d.js" />
+    <entry file="file://$PROJECT_DIR$/src/client/src/pages/producer-tool.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="25" column="64" lean-forward="true" selection-start-line="25" selection-start-column="64" selection-end-line="25" selection-end-column="64" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="8" column="36" lean-forward="true" selection-end-line="73" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/images/div-88-logo-shadow.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/pages/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="14" column="3" lean-forward="true" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/components/jsx/admin/editor/HeadingEditor.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="36" column="22" selection-start-line="36" selection-start-column="22" selection-end-line="36" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/components/jsx/admin/editor/Editor.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="13" column="25" selection-start-line="13" selection-start-column="25" selection-end-line="13" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="356">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/grids/layouts/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/grids/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/components/jsx/admin/editor/CellEditor.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="447">
+          <caret line="51" column="28" selection-start-line="51" selection-start-column="28" selection-end-line="51" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/components/jsx/index/Index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="761">
+          <caret line="109" column="36" lean-forward="true" selection-start-line="109" selection-start-column="36" selection-end-line="109" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/components/jsx/index/GridItem.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/grids/layouts/deleteCell.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="12" column="30" lean-forward="true" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/styles/producer-tools.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="35" column="18" selection-start-line="35" selection-start-column="18" selection-end-line="35" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/cra-default-stuff/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="10" column="67" selection-start-line="10" selection-start-column="67" selection-end-line="10" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/components/js/api.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/components/jsx/Video.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="16" column="19" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/components/jsx/admin/NonVideoOptions.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="18" column="22" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/client-env.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/components/jsx/Page.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2604">
+          <caret line="158" column="13" lean-forward="true" selection-start-line="158" selection-start-column="13" selection-end-line="158" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes/authMiddleware.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/logo.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/images/logo.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/images/logo-outline-black.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/styles/base.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="659">
+          <caret line="32" column="20" lean-forward="true" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/styles/header.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="454">
+          <caret line="13" column="28" lean-forward="true" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/styles/artist.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="20" column="31" lean-forward="true" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/styles/artists.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1244">
+          <caret line="93" column="1" selection-start-line="93" selection-start-column="1" selection-end-line="93" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/styles/index.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="12" column="7" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/pages/artist.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1244">
+          <caret line="102" column="14" selection-start-line="102" selection-start-column="14" selection-end-line="102" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/components/jsx/Artist.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1244">
+          <caret line="78" column="17" selection-start-line="78" selection-start-column="17" selection-end-line="78" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/pages/artists.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/containers/Admin.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1244">
+          <caret line="333" column="30" selection-start-line="333" selection-start-column="30" selection-end-line="333" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/public/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1244">
+          <caret line="80" column="6" selection-start-line="80" selection-start-column="6" selection-end-line="80" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1244">
+          <caret line="351" column="48" selection-start-line="349" selection-start-column="4" selection-end-line="351" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/components/jsx/Header.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="741">
+          <caret line="59" column="32" lean-forward="true" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/components/jsx/Nav.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="862">
+          <caret line="68" column="64" lean-forward="true" selection-start-line="68" selection-start-column="64" selection-end-line="68" selection-end-column="64" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/src/components/jsx/Logo.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="16" column="75" selection-start-line="16" selection-start-column="75" selection-end-line="16" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <last-edited>files to make prettier</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+          <order>
+            <scope name="files to make prettier" />
+            <scope name="asdf" />
+          </order>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
