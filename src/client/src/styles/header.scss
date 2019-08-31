@@ -7,10 +7,9 @@ header {
   text-align: center;
   text-transform: uppercase;
   margin: 0 auto;
-  padding: 1.5rem 2rem .5rem 2rem;
-  font-family: 'Josefin Sans', 'HelveticaNeue-Light',
-      'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
-      'Lucida Grande', sans-serif;
+  padding: 1.5rem 2rem 0.5rem 2rem;
+  font-family: 'Josefin Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light',
+    'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
   #logo {
     text-align: center;
     color: inherit;
@@ -31,7 +30,7 @@ header {
     display: inline-grid;
     nav {
       display: inline-grid;
-      grid-template-columns: 1fr .3fr 1fr;
+      grid-template-columns: 1fr 0.3fr 1fr;
       justify-items: stretch;
       align-items: center;
       grid-column-gap: 1.3rem;
@@ -60,8 +59,8 @@ header {
         font-weight: 300;
         display: inline-block;
         color: inherit;
-        padding: .4rem .4rem .2rem .4rem;
-        transition: .15s ease-in-out;
+        padding: 0.4rem 0.4rem 0.2rem 0.4rem;
+        transition: 0.15s ease-in-out;
         border-bottom: 1px solid black;
 
         &:hover {

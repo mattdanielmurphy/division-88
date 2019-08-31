@@ -10,6 +10,7 @@ export default class extends React.Component {
   render = () => (
     <div
       id='logo'
+      className={this.props.className}
       onMouseOver={() => {
         console.log('mover')
         this.setState({ fill: this.props.hoverFill || '#343434' })
@@ -22,9 +23,9 @@ export default class extends React.Component {
           viewBox='0 0 921 921'
           xmlns='http://www.w3.org/2000/svg'
         >
-          <g stroke='none' strokeWidth='1' fill='none' fillRule='evenodd'>
+          <g stroke='none'>
             <circle
-              id='Oval'
+              style={{ transition: 'fill .4s ease' }}
               fill={this.state.fill}
               cx='460.5'
               cy='460.5'
