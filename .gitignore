@@ -1,3 +1,24 @@
+# Webstorm
+.idea/workspace.xml
+
+# dependencies
+src/client/node_modules
+src/client/.pnp
+src/client/.pnp.js
+
+# testing
+src/client/coverage
+
+# production
+src/client/build
+/build
+
+# misc
+src/client/.env.local
+src/client/.env.development.local
+src/client/.env.test.local
+src/client/src.env.production.local
+
 # Logs
 logs
 *.log
@@ -7,7 +28,7 @@ yarn-error.log*
 firebase-debug.log*
 
 # DS_Store
-*/.DS_Store
+**/.DS_Store
 
 # Firebase cache
 .firebase/
