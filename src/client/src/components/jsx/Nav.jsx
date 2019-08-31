@@ -66,7 +66,9 @@ export default class Nav extends React.Component {
             About
           </Link>
         </div>
-        <Logo width='70px' fill='#242424' hoverFill='#343434' />
+        {!this.props.toggleOpenClose && (
+          <Logo width='70px' fill='#242424' hoverFill='#343434' />
+        )}
         <div className='right-side'>
           <Link
             key='Producer Tools'
