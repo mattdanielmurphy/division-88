@@ -27,11 +27,6 @@ export default class CellEditor extends React.Component {
       `/grids/index/cells/${this.state.index}`,
       this.state.cell,
     ).then((r) => {
-      const cells = this.state.cells.slice()
-      cells[this.state.index] = this.state.cell
-      this.setState({
-        cells,
-      })
       return r.data
     })
     return result
@@ -45,7 +40,6 @@ export default class CellEditor extends React.Component {
     return await new Promise((resolve) => {
       const cell = Object.assign({}, this.state.cell)
 
-      console.table({ cell })
       function set(path, value) {
         let schema = cell // a moving reference to internal objects within obj
         let pList = path.split('.')
@@ -61,8 +55,10 @@ export default class CellEditor extends React.Component {
       }
       set(path, value)
       let updatedCell = cell
-      console.table({ updatedCell })
-      this.setState({ cell, unsavedChanges: true }, () => resolve())
+      const cells = this.state.cells.slice()
+      cells[this.state.index] = updatedCell
+      this.setState({ cells, cell, unsavedChanges: true }, () => resolve())
+      this.props.updateGrid({ cells })
     })
   }
   handleInputChange = async ({ e, path, value, colorChange }) => {
@@ -153,7 +149,11 @@ export default class CellEditor extends React.Component {
     })
   }
   toggleVideoMode = () => {
-    this.updateCellValue('video', !this.state.cell.video)
+    this.handleInputChange({
+      path: 'video',
+      value: !this.state.cell.video,
+      colorChange: true,
+    })
   }
   componentDidUpdate = async (prevProps) => {
     // update index when a new cell is selected
