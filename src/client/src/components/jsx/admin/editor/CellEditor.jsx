@@ -32,8 +32,8 @@ export default class CellEditor extends React.Component {
     return result
   }
   handleKeyPress = (e) => {
-    if (e.key !== 'Enter') return
-    this.handleSubmit(e)
+    // if (e.key !== 'Enter') return
+    // this.handleSubmit(e)
   }
 
   updateCellValue = async (path, value) => {

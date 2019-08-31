@@ -32,18 +32,16 @@ export default class extends Component {
         noHeading
         // pageName='artists'
       >
-        {this.state.artists.map((artist, index) => {
-          return (
-            <Artist
-              key={index}
-              index={index}
-              isPreview={this.props.isPreview}
-              {...artist}
-              selectArtist={() => this.props.selectArtist(index)}
-              selected={this.props.selectedArtist === index}
-            />
-          )
-        })}
+        {this.state.artists.map((artist, index) => (
+          <Artist
+            key={index}
+            index={index}
+            isPreview={this.props.isPreview}
+            {...artist}
+            selectArtist={() => this.props.selectArtist(index)}
+            selected={this.props.selectedArtist === index}
+          />
+        ))}
       </Page>
     ) : (
       <div />

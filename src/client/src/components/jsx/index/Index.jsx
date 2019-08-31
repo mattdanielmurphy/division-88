@@ -55,9 +55,20 @@ export default class Index extends React.Component {
     this.watchWindowResizing()
   }
   componentDidUpdate(prevProps, prevState) {
+    if (this.willReRender) {
+      // workaround for stupid bullshit
+      const inputId = document.activeElement
+      inputId.blur()
+      inputId.focus()
+      this.willReRender = false
+    }
+    // prevProps is only different from props the first time
+    // for some reason assigning state.cells to props.cells the first time only is sufficient to keep them in sync
     if (prevProps.gridWidth !== this.props.gridWidth)
       this.setState({ rowHeight: this.rowHeight() })
     if (JSON.stringify(this.props.cells) !== JSON.stringify(prevProps.cells)) {
+      this.willReRender = true
+      console.log('cells have changed', document.activeElement.id)
       // this.forceUpdate()
 
       this.setState({ cellsUpToDate: false, cells: this.props.cells })
