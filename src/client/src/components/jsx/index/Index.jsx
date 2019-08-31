@@ -2,25 +2,30 @@ import React from 'react'
 import GridItem from './GridItem'
 
 export default class Index extends React.Component {
+  rowHeight = () => {
+    let vW = this.props.gridWidth
+      ? this.props.gridWidth / 100
+      : window.innerWidth / 100
+    // disabling because view prop is not always passed. easier to just have static rowHeight
+    // const rowHeight =
+    //   this.props.view === 'mobile'
+    //     ? 10 * vW
+    //     : this.props.view === 'tablet'
+    //     ? 8 * vW
+    //     : 4 * vW
+    return vW * 8
+  }
   state = {
     layoutClassName: `layout ${
       this.gridItemHoveredUpon !== undefined ? 'grid-item-hovered-upon' : ''
     }`,
     cellsUpToDate: true,
-  }
-  get rowHeight() {
-    let vW = this.props.gridWidth
-      ? this.props.gridWidth / 100
-      : window.innerWidth / 100
-    return this.props.view === 'mobile'
-      ? 10 * vW
-      : this.props.view === 'tablet'
-      ? 8 * vW
-      : 4 * vW
+    rowHeight: this.rowHeight(),
+    cells: this.props.cells,
   }
   watchWindowResizing() {
     window.onresize = () => {
-      this.setState({ rowHeight: this.rowHeight })
+      this.setState({ rowHeight: this.rowHeight() })
       if (!this.buffering) {
         setTimeout(() => {
           this.buffering = false
@@ -48,12 +53,10 @@ export default class Index extends React.Component {
   }
   componentDidMount = async () => {
     this.watchWindowResizing()
-
-    this.setState({ rowHeight: this.rowHeight, cells: this.props.cells })
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.gridWidth !== this.props.gridWidth)
-      this.setState({ rowHeight: this.rowHeight })
+      this.setState({ rowHeight: this.rowHeight() })
     if (JSON.stringify(this.props.cells) !== JSON.stringify(prevProps.cells)) {
       // this.forceUpdate()
 
