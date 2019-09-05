@@ -21,7 +21,6 @@ export default class ArtistEditor extends React.Component {
     ).then((r) => {
       this.setState({
         artistFromDatabase: this.state.artist,
-        unsavedChanges: false,
       })
       if (this.state.colorChange) {
         this.props.refreshArtists(this.state.index, this.state.artist)
@@ -50,7 +49,7 @@ export default class ArtistEditor extends React.Component {
         schema[pList[length - 1]] = value
       }
       set(path, value)
-      this.setState({ artist, unsavedChanges: true }, () => resolve())
+      this.setState({ artist }, () => resolve())
     })
   }
   handleInputChange = async ({ e, path, value, colorChange }) => {
@@ -69,7 +68,6 @@ export default class ArtistEditor extends React.Component {
       index,
       artist,
       artistFromDatabase: artist,
-      unsavedChanges: false,
     })
   }
   validateArtist() {
@@ -105,14 +103,7 @@ export default class ArtistEditor extends React.Component {
   }
   componentDidUpdate = async (prevProps) => {
     // update index when a new artist is selected
-    if (this.props.index !== prevProps.index) {
-      if (this.state.unsavedChanges) {
-        const discardChanges = window.confirm(
-          "You've made unsaved changes for this artist. Proceed and discard?",
-        )
-        if (discardChanges) this.changeIndex()
-      } else this.changeIndex(this.props.index)
-    }
+    if (this.props.index !== prevProps.index) this.changeIndex(this.props.index)
   }
   componentDidMount = async () => {
     const artist = await this.getArtist(this.props.index)

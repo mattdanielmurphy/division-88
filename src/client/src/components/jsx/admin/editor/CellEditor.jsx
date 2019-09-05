@@ -57,7 +57,7 @@ export default class CellEditor extends React.Component {
       let updatedCell = cell
       const cells = this.state.cells.slice()
       cells[this.state.index] = updatedCell
-      this.setState({ cells, cell, unsavedChanges: true }, () => resolve())
+      this.setState({ cells, cell }, () => resolve())
       this.props.updateGrid({ cells })
     })
   }
@@ -157,14 +157,7 @@ export default class CellEditor extends React.Component {
   }
   componentDidUpdate = async (prevProps) => {
     // update index when a new cell is selected
-    if (this.props.index !== prevProps.index) {
-      if (this.state.unsavedChanges) {
-        const discardChanges = window.confirm(
-          "You've made unsaved changes for this cell. Proceed and discard?",
-        )
-        if (discardChanges) this.changeIndex()
-      } else this.changeIndex(this.props.index)
-    }
+    if (this.props.index !== prevProps.index) this.changeIndex(this.props.index)
   }
   render = () =>
     this.state.cell ? (

@@ -55,20 +55,20 @@ export default class Nav extends React.Component {
         <div className='left-side'>
           <Link
             key='Artists'
-            onClick={this.props.toggleOpenClose}
+            onClick={() => this.props.closeMenu()}
             to={this.getLink('/artists')}
           >
             Artists
           </Link>
           <Link
             key='About'
-            onClick={this.props.toggleOpenClose}
+            onClick={() => this.props.closeMenu()}
             to={this.getLink('/about')}
           >
             About
           </Link>
         </div>
-        {!this.props.toggleOpenClose && (
+        {!this.props.closeMenu && (
           <Logo
             width='70px'
             fill='#242424'
@@ -79,14 +79,14 @@ export default class Nav extends React.Component {
         <div className='right-side'>
           <Link
             key='Producer Tools'
-            onClick={this.props.toggleOpenClose}
+            onClick={() => this.props.closeMenu()}
             to={this.getLink('/producer-tools')}
           >
             Producer Tools
           </Link>
           <Link
             key='Posts'
-            onClick={this.props.toggleOpenClose}
+            onClick={() => this.props.closeMenu()}
             to={this.getLink('/posts')}
           >
             Posts

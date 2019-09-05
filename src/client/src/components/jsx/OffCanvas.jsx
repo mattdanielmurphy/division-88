@@ -3,7 +3,7 @@ import Nav from './Nav'
 import React from 'react'
 
 export default class OffCanvas extends React.Component {
-  state = { isOpen: false, width: 30, opacity: '0' }
+  state = { menuOpen: false, width: 30, opacity: '0' }
   getStyles = () => ({
     bmBurgerButton: {
       position: 'absolute',
@@ -58,8 +58,11 @@ export default class OffCanvas extends React.Component {
       display: this.props.previewWidth ? 'none' : 'inline',
     },
   })
-  toggleOpenClose(e) {
-    if (!this.props.previewWidth) this.setState({ isOpen: !this.state.isOpen })
+  handleStateChange(state) {
+    this.setState({ menuOpen: state.isOpen })
+  }
+  closeMenu() {
+    this.setState({ menuOpen: false })
   }
   componentDidMount() {
     const button = document.getElementsByClassName('bm-burger-button')[0]
@@ -67,13 +70,13 @@ export default class OffCanvas extends React.Component {
     button.onclick = (e) => e.preventDefault()
   }
   render = () => (
-    <Menu right styles={this.getStyles()} isOpen={this.state.isOpen}>
-      <Nav
-        toggleOpenClose={() => {
-          console.log('toggleOpenCloser at OffCanvas')
-          this.toggleOpenClose()
-        }}
-      />
+    <Menu
+      right
+      styles={this.getStyles()}
+      isOpen={this.state.menuOpen}
+      onStateChange={(state) => this.handleStateChange(state)}
+    >
+      <Nav closeMenu={() => this.closeMenu()} />
     </Menu>
   )
 }
