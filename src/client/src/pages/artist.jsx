@@ -70,7 +70,7 @@ const Releases = ({ artist }) => (
 
 const TopTen = ({ artist }) => (
   <div id='top-ten'>
-    <h2>Top ten tracks</h2>
+    <h2>Top Tracks</h2>
     <SpotifyPlayer spotifyUrl={artist.spotifyUrl} />
   </div>
 )
@@ -104,11 +104,15 @@ export default class extends React.Component {
         </div>
         <div className='right'>
           <div className='bio'>{this.state.artist.description.bio}</div>
-          {this.state.artist.videoUrl && this.state.artist.videoImg && 
-            <div className='video' style={{width: '100%', height: '300px'}}>
-              <StaticVideo height='300px' videoSrc={this.state.artist.videoUrl} imgSrc={this.state.artist.videoImg} />
+          {this.state.artist.videoUrl && this.state.artist.videoImg && (
+            <div className='video' style={{ width: '100%', height: '300px' }}>
+              <StaticVideo
+                height='300px'
+                videoSrc={this.state.artist.videoUrl}
+                imgSrc={this.state.artist.videoImg}
+              />
             </div>
-          }
+          )}
         </div>
       </Page>
     ) : (

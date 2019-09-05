@@ -31,7 +31,7 @@
   text-align: center;
   padding: 4rem 2rem;
   margin-bottom: 1rem;
-  background: #802020;
+  background: #800c14;
   position: fixed;
   z-index: 999;
   top: 0;
@@ -49,14 +49,6 @@
   margin: 0 auto;
 }
 
-#change-view {
-  display: inline-grid;
-  grid-template-columns: auto auto;
-  justify-items: stretch;
-  justify-self: stretch;
-  width: 38rem;
-}
-
 #preview-wrapper {
   background: black;
   border: 10px solid #333;
@@ -68,22 +60,137 @@
     position: relative;
   }
 }
+//.changes-made {
+//  position: fixed;
+//  z-index: 9999;
+//  top: 0;
+//  left: 0;
+//  right: 0;
+//  background: #2a59bc;
+//  font-size: 1.25rem;
+//  margin-bottom: 1rem;
+//  font-weight: 400;
+//  .wrapper {
+//    padding: 0.7rem 1rem 0.5rem 1rem;
+//    max-width: 1600px;
+//    position: relative;
+//    width: calc(100% - 4rem);
+//    margin: 0 auto;
+//  }
+//  .buttons {
+//    position: absolute;
+//    right: 0;
+//    top: 0;
+//    bottom: 0;
+//  }
+//  p {
+//    display: block;
+//    text-align: center;
+//    margin: 0 auto;
+//  }
+//}
 
 .change-scale {
   margin-left: 0.6rem;
   display: inline-block;
 }
 
-#admin-panel {
-  margin-bottom: 1rem;
+#change-view {
+  //width: 100%;
+  display: inline-block;
   text-align: center;
+  //position: absolute;
+  div {
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: stretch;
+    align-items: center;
+  }
+  button {
+    height: 100%;
+  }
 }
-.undo-redo {
-  width: 14rem;
-  display: inline-block;
-}
-.sign-out {
-  display: inline-block;
+
+#admin-panel {
+  text-align: center;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: #000;
+  font-size: 1.2rem;
+  button {
+    margin: 0;
+    height: 100%;
+    border: none;
+    background: none;
+    padding: 1.1rem 1rem 1rem 1rem;
+    font-weight: 300;
+    font-size: 1rem;
+    strong {
+      font-weight: 500;
+    }
+    &.primary {
+      font-weight: 700;
+      background: #0151f7;
+      &:hover {
+        background: #0248cd;
+      }
+    }
+    &.active {
+      background: #151515;
+      &:hover {
+        background: #151515;
+        cursor: default;
+      }
+    }
+    &.undo {
+      background: #2c2c2c;
+    }
+    &.redo {
+      background: #404040;
+    }
+    &.sign-out:hover {
+      background: #800c14;
+    }
+    &.disabled {
+      background: none;
+      color: #666;
+      &:hover {
+        background: none;
+        cursor: default;
+      }
+    }
+    &:hover {
+      background: #254ea1;
+    }
+  }
+  .wrapper {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1600px;
+    position: relative;
+  }
+  .right-side {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  .undo-redo {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+  }
+  #changes-made {
+    display: inline-block;
+    margin-right: 3rem;
+  }
+  #sign-out {
+    display: inline-block;
+  }
 }
 
 #property-editor {
@@ -101,9 +208,8 @@
     width: 100%;
     padding: 0.6rem;
     font-size: 1rem;
-    font-family: 'Josefin Sans', 'HelveticaNeue-Light',
-      'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
-      'Lucida Grande', sans-serif;
+    font-family: 'Josefin Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light',
+      'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
     background: #111;
     color: #fff;
     border: none;
@@ -140,9 +246,8 @@ br {
     padding: 0.3rem 0;
   }
   input {
-    font-family: 'Josefin Sans', 'HelveticaNeue-Light',
-      'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
-      'Lucida Grande', sans-serif;
+    font-family: 'Josefin Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light',
+      'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
     font-size: 0.8rem !important;
     text-align: center;
     background: #111;

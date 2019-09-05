@@ -33,7 +33,9 @@
     }
     .description-outer-wrapper {
       max-width: 100%;
-      background: #000;
+      //background: #000;
+      background: rgba(0, 0, 0, 0.5);
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 1);
     }
     .description {
       font-size: 1rem;
@@ -43,8 +45,8 @@
       height: 5rem;
       .artist-name {
         font-family: 'Josefin Sans', 'HelveticaNeue-Light',
-      'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
-      'Lucida Grande', sans-serif;
+          'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
+          'Lucida Grande', sans-serif;
         text-transform: uppercase;
         font-weight: 400;
         font-size: 2rem;
@@ -109,181 +111,33 @@
     padding: 19rem 0 0 0;
   }
   .artist {
-    display: grid;
-    grid-template-columns: auto auto;
     .img {
       height: 22rem;
     }
     .description {
     }
+    .artist-name {
+      font-size: 2.5rem;
+    }
+    .see-releases {
+      font-size: 1.3rem;
+      font-weight: 500;
+    }
     .description-outer-wrapper {
-      width: 100%;
       overflow: hidden;
       position: absolute;
-      margin-top: 10rem;
-      // max-width: 500px;
+      bottom: 0;
+      padding: 0.75rem;
+      padding-bottom: 0.75rem;
       &.align-left {
-        grid-column: 1 / span 1;
-        // left: 1%;
-        justify-self: start;
+        left: 0;
+        padding-left: 0.75rem;
       }
       &.align-right {
+        right: 0;
+        padding-right: 0.875em;
         text-align: right;
-        grid-column: 2;
-        justify-self: end;
-        // right: 1%;
       }
     }
   }
 }
-
-// // DESKTOP-EXCLUSIVE
-// @media (min-width: 530px) {
-// 	#artists .artist {
-// 		&.first {
-// 			grid-column: 1 / span 2;
-
-// 			.img {
-// 				min-height: 400px;
-// 				height: 40%;
-// 			}
-
-// 			.description {
-// 				height: 30%;
-// 			}
-// 			display: relative;
-// 			.description-outer-wrapper {
-// 				top: auto;
-// 				bottom: 5%;
-// 				&.align-left {
-// 					bottom: 3vh;
-// 					left: 5%;
-// 				}
-// 				&.align-right {
-// 					bottom: 8%;
-// 					right: 5%;
-// 				}
-// 				.description {
-// 					// width: 100%;
-// 					padding: 2% 2% 3% 2%;
-// 				}
-// 			}
-// 		}
-// 	}
-// }
-
-// #artists .artist {
-// 	grid-column-gap: 1%;
-// 	&.first {
-// 		.img {
-// 			height: 50%;
-// 		}
-// 	}
-// 	.description-outer-wrapper {
-// 		height: 100%;
-// 		position: absolute;
-// 		&.align-left {
-// 			left: 0;
-// 		}
-// 		&.align-right {
-// 			right: 0;
-// 		}
-// 		.description {
-// 			height: 100%;
-// 		}
-// 	}
-// }
-
-// @media (max-width: 1250px) {
-// 	#artists .artist .description-outer-wrapper {
-// 		position: absolute;
-// 		&.align-left {
-// 			bottom: 0;
-// 			left: 0;
-// 		}
-// 		&.align-right {
-// 			bottom: 0;
-// 			right: 0;
-// 		}
-// 	}
-// }
-
-// @media (min-width: 1400px) {
-// 	#artists .artist {
-// 		display: grid;
-// 		align-items: center;
-// 		.description {
-// 			padding: 0 2%;
-// 		}
-// 	}
-// }
-
-// @media (min-width: 1200px) and (max-width: 1400px) {
-// 	#artists {
-// 		.artist {
-// 			.description {
-// 				width: 20%;
-// 				padding: 0 2%;
-// 			}
-// 		}
-// 	}
-// }
-
-// // TABLET
-
-// @media (max-width: 1200px) {
-// 	#artists {
-// 		main {
-// 			display: block;
-// 		}
-// 		.artist {
-// 			.description-outer-wrapper {
-// 				&.align-left {
-// 					left: 0;
-// 				}
-// 				&.align-right {
-// 					right: 0;
-// 				}
-// 			}
-// 			.description {
-// 				align-content: center;
-// 			}
-// 		}
-// 	}
-// }
-
-// // MOBILE
-
-// @media (max-width: 530px) {
-// 	#artists {
-// 		.artist {
-// 			display: block;
-// 			&.first {
-// 				.img {
-// 					position: static;
-// 					height: 90%;
-// 				}
-// 			}
-// 			margin-bottom: .5rem;
-// 			&:last-of-type {
-// 				margin-bottom: none;
-// 			}
-// 			.description-outer-wrapper {
-// 				position: static;
-// 				width: 100%;
-// 				&.align-left {
-// 					left: 4%;
-// 				}
-// 				&.align-right {
-// 					right: 4%;
-// 				}
-// 			}
-// 			.description {
-// 				align-content: start;
-// 				padding-top: 5%;
-// 				padding-bottom: 7%;
-// 				width: auto;
-// 			}
-// 		}
-// 	}
-// }

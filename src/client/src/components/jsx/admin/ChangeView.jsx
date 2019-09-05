@@ -8,12 +8,24 @@ export default class AdminControls extends React.Component {
   // }
   render = () => (
     <div id='change-view'>
-      <h3>Change view</h3>
       <div>
-        <button onClick={() => this.props.setView('mobile')}>Mobile [m]</button>
-        <button onClick={() => this.props.setView('tablet')}>Tablet [t]</button>
-        <button onClick={() => this.props.setView('desktop')}>
-          Desktop [d]
+        <button
+          className={this.props.view === 'mobile' ? 'active' : ''}
+          onClick={() => this.props.setView('mobile')}
+        >
+          <strong>M</strong>obile
+        </button>
+        <button
+          className={this.props.view === 'tablet' ? 'active' : ''}
+          onClick={() => this.props.setView('tablet')}
+        >
+          <strong>T</strong>ablet
+        </button>
+        <button
+          className={this.props.view === 'desktop' ? 'active' : ''}
+          onClick={() => this.props.setView('desktop')}
+        >
+          <strong>D</strong>esktop
         </button>
         {/*<div className='change-scale'>*/}
         {/*	<label>Scale: </label>*/}

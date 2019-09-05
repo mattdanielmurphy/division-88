@@ -1,13 +1,14 @@
 import React from 'react'
 import ColorPicker from '../ColorPicker'
-import API from 'components/js/api'
 
 import ImageUploader from './ImageUploader'
 
 export default class ArtistEditor extends React.Component {
   state = {}
   getArtist = async (index) => {
-    return await API.get(`/producer-tools/index/${index}`).then((r) => r.data)
+    return await this.props.AdminAPI.get(`/producer-tools/index/${index}`).then(
+      (r) => r.data,
+    )
   }
   handleSubmit = async (e) => {
     if (e) e.preventDefault()

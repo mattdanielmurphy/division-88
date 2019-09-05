@@ -1,14 +1,15 @@
 import React from 'react'
 import ColorPicker from '../ColorPicker'
 import ReleasesTable from '../ReleasesTable'
-import API from 'components/js/api'
 
 import ImageUploader from './ImageUploader'
 
 export default class ArtistEditor extends React.Component {
   state = {}
   getArtist = async (index) => {
-    return await API.get(`/artists/index/${index}`).then((r) => r.data)
+    return await this.props.AdminAPI.get(`/artists/index/${index}`).then(
+      (r) => r.data,
+    )
   }
   handleSubmit = async (e) => {
     if (e) e.preventDefault()
@@ -174,9 +175,7 @@ export default class ArtistEditor extends React.Component {
             <input
               onChange={(e) => this.handleInputChange({ e })}
               id='videoUrl'
-              value={
-                this.state.artist.videoUrl || ''
-              }
+              value={this.state.artist.videoUrl || ''}
             />
           </div>
           <div className='property-input'>

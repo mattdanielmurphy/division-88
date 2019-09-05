@@ -1,6 +1,4 @@
 const env = require('firebase-functions').config()
-console.log(env)
+env.mode = 'production'
 
-module.exports = {
-  env,
-}
+module.exports = { env }

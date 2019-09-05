@@ -1,7 +1,6 @@
 import React from 'react'
 import TextEditor from 'components/jsx/admin/editor/TextEditor'
 import Page from '../components/jsx/Page'
-import API from 'components/js/api'
 import { Link, Redirect } from 'react-router-dom'
 import { Textfit } from 'react-textfit-17'
 
@@ -19,9 +18,12 @@ export default class extends React.Component {
     this.props.AdminAPI.post(`/posts/${this.state.post.index}`, post)
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
+    this.props.setChangesMade(true)
   }
   getPost = async (postTitle) => {
-    const post = await API.get(`/posts/${postTitle}`).then((r) => r.data)
+    const post = await this.props.AdminAPI.get(`/posts/${postTitle}`).then(
+      (r) => r.data,
+    )
 
     if (typeof post === 'object') {
       this.setState({ post, category: post.category })
@@ -35,6 +37,7 @@ export default class extends React.Component {
     await this.getPost(this.state.link)
   }
   handleTitleChange = (e) => {
+    this.props.setChangesMade(true)
     const title = e.target.value
     const post = this.state.post
     post.title = title

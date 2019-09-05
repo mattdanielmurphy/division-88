@@ -1,12 +1,13 @@
 import React from 'react'
-import API from 'components/js/api'
 
 import ImageUploader from './ImageUploader'
 
 export default class HeadingEditor extends React.Component {
   state = {}
   getHeading = async () =>
-    await API.get(`/page-info/${this.props.pageName}`).then((r) => r.data)
+    await this.props.AdminAPI.get(`/page-info/${this.props.pageName}`).then(
+      (r) => r.data,
+    )
   handleSubmit = async (e) => {
     if (e) e.preventDefault()
     // just submit this modified value

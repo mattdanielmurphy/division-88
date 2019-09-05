@@ -9,12 +9,16 @@ import HeadingEditor from 'components/jsx/admin/editor/HeadingEditor'
 export default class extends React.Component {
   state = {}
   updateValue = (value) => {
+    this.props.setChangesMade(true)
     this.props.AdminAPI.post('/about', { text: value })
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
   }
   getAboutText = async () => {
-    const text = await API.get('/about/text').then((r) => r.data)
+    const text = await API.get('/admin/about/text').then((r) => {
+      console.log(r)
+      return r.data
+    })
     this.setState({ text })
   }
   componentDidMount() {

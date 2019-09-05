@@ -1,6 +1,6 @@
 const admin = require('firebase-admin')
-
 const serviceAccount = require('../division-88-6430e-firebase-adminsdk-2xkkv-1f71869bce.json')
+const env = require('../server-env')
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -9,7 +9,7 @@ admin.initializeApp({
 
 const isUserAuthenticated = (req, res, next) => {
   let token = req.headers['access-token']
-  console.log(token)
+  console.log('token', token)
 
   if (token) {
     return admin
@@ -29,24 +29,6 @@ const isUserAuthenticated = (req, res, next) => {
           message: 'UNAUTHORIZED',
         })
       })
-    // return verifyTokenAndGetUID(token)
-    //   .then((userId) => {
-    //     // ------------------------------------
-    //     // HI I'M THE UPDATED CODE BLOCK, LOOK AT ME
-    //     // ------------------------------------
-    //     res.locals.auth = {
-    //       userId,
-    //     }
-    //     next()
-    //   })
-    //   .catch((err) => {
-    //     logger.logError(err)
-    //
-    //     return res.status(401).json({
-    //       status: 401,
-    //       message: 'UNAUTHORIZED',
-    //     })
-    //   })
   } else {
     return res.status(403).json({
       status: 403,
@@ -55,8 +37,5 @@ const isUserAuthenticated = (req, res, next) => {
   }
 }
 
-// module.exports = isUserAuthenticated
-// DEVMODE: no token needed:
-module.exports = (req, res, next) => {
-  next()
-}
+if (env.mode === 'production') module.exports = isUserAuthenticated
+else module.exports = (req, res, next) => next()

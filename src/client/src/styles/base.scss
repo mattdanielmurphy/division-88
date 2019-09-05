@@ -20,7 +20,7 @@ main {
 }
 
 .top-heading {
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   text-transform: uppercase;
   width: 100%;
   padding: 5rem 0 3rem 0;
@@ -32,9 +32,8 @@ main {
     max-width: 1200px;
     padding: 0 1rem;
   }
-  font-family: 'Josefin Sans', 'HelveticaNeue-Light',
-    'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
-    'Lucida Grande', sans-serif;
+  font-family: 'Josefin Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light',
+    'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
   font-weight: 400;
   span {
     text-transform: lowercase;
@@ -64,9 +63,8 @@ main {
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Josefin Sans', 'HelveticaNeue-Light',
-    'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande',
-    sans-serif;
+  font-family: 'Josefin Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light',
+    'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
@@ -101,26 +99,27 @@ section.text {
   margin: 0 auto;
   max-width: 800px;
   padding: 1rem;
+  font-size: 1.2rem;
 }
 
 button {
-  background: #444;
-  padding: 1em;
-  font-family: 'Josefin Sans', 'HelveticaNeue-Light',
-    'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande',
-    sans-serif;
+  background: #222;
+  padding: 1em 1em 0.8em 1em;
+  font-family: 'Josefin Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light',
+    'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
   text-transform: uppercase;
-  font-size: 16px;
+  font-size: 0.7em;
   color: white;
   border: none;
   margin: 0.2em;
-  transition: background 0.3s ease-in-out;
+  font-weight: 400;
+  transition: background 0.4s ease;
   &.enabled {
     background: red;
   }
   &:hover {
     cursor: pointer;
-    background: #555;
+    background: #152c8f;
   }
 }
 

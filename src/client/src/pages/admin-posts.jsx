@@ -13,12 +13,14 @@ export default class AdminPosts extends React.Component {
     )
     const posts = [...this.state.posts, post]
     this.setState({ posts })
+    this.props.setChangesMade(true)
   }
   updatePost = (post) => {
     const posts = this.state.posts
     posts[post.index] = post
     this.setState({ posts })
     this.props.AdminAPI.post(`/posts/${post.index}`, post)
+    this.props.setChangesMade(true)
   }
   deletePost = async (post) => {
     await this.props.AdminAPI.delete('/posts', { data: post }).then(
@@ -28,6 +30,7 @@ export default class AdminPosts extends React.Component {
     const index = posts.findIndex((v) => v['_id'] === post['_id'])
     posts.splice(index, 1)
     this.setState({ posts })
+    this.props.setChangesMade(true)
   }
   handleInputChange = ({ e, path, value }) => {
     if (e) {

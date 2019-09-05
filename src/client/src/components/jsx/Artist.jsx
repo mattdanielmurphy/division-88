@@ -38,7 +38,7 @@ export default class Artist extends React.Component {
       },
       this.props.description.style,
     )
-    style.background = 'black'
+    style.background = 'none'
     return style
   }
 
