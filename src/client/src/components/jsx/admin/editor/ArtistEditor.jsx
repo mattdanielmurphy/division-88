@@ -161,6 +161,16 @@ export default class ArtistEditor extends React.Component {
               }
             />
           </div>
+          <br />
+          <div className='property-input'>
+            <label>Spotify URL (artist page)</label>
+            <input
+              onChange={(e) => this.handleInputChange({ e })}
+              id='spotifyUrl'
+              value={this.state.artist.spotifyUrl || ''}
+            />
+          </div>
+          <br />
           <div className='property-input'>
             <label>artist video</label>
             <input

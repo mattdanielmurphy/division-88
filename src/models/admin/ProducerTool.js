@@ -18,6 +18,11 @@ const ProducerToolSchema = new Schema({
     },
     required: true,
   },
+  blocks: {
+    type: Array,
+    required: true,
+    default: [{ type: 'soundcloud', content: {}, id: 'asdfbcasdf' }],
+  },
 })
 const ProducerTool = mongoose.model('admin-producerTool', ProducerToolSchema)
 

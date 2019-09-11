@@ -7,7 +7,7 @@ export default class Editable extends React.Component {
     this.state = {
       columns: [
         { title: 'Title', field: 'title' },
-        { title: 'Category', field: 'category' },
+        // { title: 'Category', field: 'category' },
       ],
     }
   }

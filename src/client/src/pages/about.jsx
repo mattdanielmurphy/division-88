@@ -2,22 +2,18 @@ import React from 'react'
 import Page from '../components/jsx/Page'
 import TextEditor from 'components/jsx/admin/editor/TextEditor'
 import API from 'components/js/api'
+import PostRenderer from 'components/jsx/PostRenderer'
 
 export default class extends React.Component {
   state = {}
-  updateValue = (value) => {
-    this.props.AdminAPI.post('/about', {
-      text: JSON.stringify(value.toJSON()),
-    })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err))
-  }
-  getAboutText = async () => {
-    const text = await API.get('/about/text').then((r) => r.data)
-    this.setState({ text })
+  getAboutBlocks = async () => {
+    const data = await API.get('/about/text').then((r) => r.data)
+    console.log(data)
+    const blocks = data.blocks
+    this.setState({ blocks })
   }
   componentDidMount() {
-    this.getAboutText()
+    this.getAboutBlocks()
   }
   render = () => (
     <Page
@@ -25,13 +21,7 @@ export default class extends React.Component {
       headingSelected={this.props.headingSelected}
       selectHeading={() => this.props.selectHeading()}
     >
-      {this.state.text ? (
-        <section className='text'>
-          <div dangerouslySetInnerHTML={{ __html: this.state.text }} />
-        </section>
-      ) : (
-        <div>Loading...</div>
-      )}
+      <PostRenderer blocks={this.state.blocks} />
     </Page>
   )
 }

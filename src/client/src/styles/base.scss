@@ -1,191 +1,214 @@
 .image-uploader-preview {
-  max-width: 150px;
+	max-width: 150px;
+}
+
+.video > div {
+	height: 100%;
+}
+.video-link.wrapper {
+	height: 100%;
+	.img {
+		height: 100%;
+	}
+	.icon-wrapper {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		display: grid;
+		align-content: center;
+		justify-content: center;
+	}
 }
 
 html,
 body,
 #root {
-  height: 100%;
+	height: 100%;
 }
 
 main {
-  max-width: 100%;
-  overflow-x: hidden;
+	max-width: 100%;
+	overflow-x: hidden;
 }
 
 .main-container {
-  // margin-top: 7rem;
-  min-height: calc(100% - 10rem);
-  overflow: hidden;
+	// margin-top: 7rem;
+	min-height: calc(100% - 10rem);
+	overflow: hidden;
 }
 
 .top-heading {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  text-transform: uppercase;
-  width: 100%;
-  padding: 5rem 0 3rem 0;
-  &.selected {
-    border: 2px solid red;
-  }
-  div {
-    margin: 0 auto;
-    max-width: 1200px;
-    padding: 0 1rem;
-  }
-  font-family: 'Josefin Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light',
-    'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-  font-weight: 400;
-  span {
-    text-transform: lowercase;
-    font-weight: 300;
-  }
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+	text-transform: uppercase;
+	width: 100%;
+	padding: 5rem 0 3rem 0;
+	&.selected {
+		border: 2px solid red;
+	}
+	div {
+		margin: 0 auto;
+		max-width: 1200px;
+		padding: 0 1rem;
+	}
+	font-family: 'Josefin Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
+		'Lucida Grande', sans-serif;
+	font-weight: 400;
+	span {
+		text-transform: lowercase;
+		font-weight: 300;
+	}
 }
 
 .desktop {
-  .top-heading {
-    padding: 11rem 0 4rem 0;
-  }
+	.top-heading {
+		padding: 11rem 0 4rem 0;
+	}
 }
 
 .tablet {
-  .top-heading {
-    padding: 8rem 0 3rem 0;
-  }
-  section.text {
-    max-width: 500px;
-  }
+	.top-heading {
+		padding: 8rem 0 3rem 0;
+	}
+	section.text {
+		max-width: 500px;
+	}
 }
 
 main {
-  margin: 0 auto;
+	margin: 0 auto;
 }
 
 body {
-  padding: 0;
-  margin: 0;
-  font-family: 'Josefin Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light',
-    'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.5;
-  color: white;
-  background: black;
+	padding: 0;
+	margin: 0;
+	font-family: 'Josefin Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
+		'Lucida Grande', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.5;
+	color: white;
+	background: black;
 }
 
 a {
-  color: white;
-  text-decoration: none;
-  &:visited {
-    color: white;
-  }
+	color: white;
+	text-decoration: none;
+	&:visited {
+		color: white;
+	}
 }
 
 section.text a {
-  text-decoration: none;
-  color: #4a91e4;
-  &[aria-current='page'] {
-    &:hover {
-      color: white;
-    }
-  }
-  &:hover {
-    cursor: pointer;
-    color: #1f88ff;
-  }
+	text-decoration: none;
+	color: #4a91e4;
+	&[aria-current='page'] {
+		&:hover {
+			color: white;
+		}
+	}
+	&:hover {
+		cursor: pointer;
+		color: #1f88ff;
+	}
 }
 
 section.text {
-  // max-width: 800px;
-  margin: 0 auto;
-  max-width: 800px;
-  padding: 1rem;
-  font-size: 1.2rem;
+	// max-width: 800px;
+	margin: 0 auto;
+	max-width: 800px;
+	padding: 1rem;
+	font-size: 1.2rem;
 }
 
 button {
-  background: #222;
-  padding: 1em 1em 0.8em 1em;
-  font-family: 'Josefin Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light',
-    'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-  text-transform: uppercase;
-  font-size: 0.7em;
-  color: white;
-  border: none;
-  margin: 0.2em;
-  font-weight: 400;
-  transition: background 0.4s ease;
-  &.enabled {
-    background: red;
-  }
-  &:hover {
-    cursor: pointer;
-    background: #152c8f;
-  }
+	background: #222;
+	padding: 1em 1em 0.8em 1em;
+	font-family: 'Josefin Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
+		'Lucida Grande', sans-serif;
+	text-transform: uppercase;
+	font-size: 0.7em;
+	color: white;
+	border: none;
+	margin: 0.2em;
+	font-weight: 400;
+	transition: background 0.4s ease;
+	&.enabled {
+		background: red;
+	}
+	&.danger:hover {
+		background: #800c14 !important;
+	}
+	&:hover {
+		cursor: pointer;
+		background: #152c8f;
+	}
 }
 
 .spotify-iframe {
-  margin-bottom: 2rem;
+	margin-bottom: 2rem;
 }
 
 span.arrow {
-  position: relative;
-  top: 0.05rem;
-  font-size: 1.5em;
-  font-weight: 400;
+	position: relative;
+	top: 0.05rem;
+	font-size: 1.5em;
+	font-weight: 400;
 }
 
 .button,
 section.text a.button {
-  color: white;
-  padding: 0.31rem 0.7rem 0.4rem 0.7rem;
-  border: 1px solid white;
-  border-radius: 0.4rem;
-  font-weight: 500;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  &:hover {
-    background: white;
-    color: black;
-  }
+	color: white;
+	padding: 0.5rem 0.7rem 0.35rem 0.7rem;
+	border: 2px solid white;
+	border-radius: 0.4rem;
+	font-weight: 700;
+	font-size: 0.8rem;
+	text-transform: uppercase;
+	&:hover {
+		cursor: pointer;
+		background: white;
+		color: black;
+	}
 }
 
 .background-image {
-  background-position: top center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  padding: 6rem 0;
+	background-position: top center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	padding: 6rem 0;
 }
-// 	width: 100%;
-// 	height: 50vw;
-// 	background-size: cover;
-// 	background-position: center;
-// 	background-repeat: no-repeat;
+
+.video-link.wrapper {
+	position: relative;
+}
 
 .page-container {
-  margin: 0 auto;
-  padding: 0;
-  width: 100%;
-  max-width: 2560px;
-  .wrapper {
-    height: 100%;
-    width: 100%;
-  }
-  .video-link {
-    &:hover {
-      cursor: pointer;
-    }
-    div {
-      height: 100%;
-    }
-    .icon {
-      color: white;
-      position: absolute;
-      left: 0;
-      width: 100%;
-      top: 50%;
-      height: 50px;
-      margin-top: -25px;
-      text-align: center;
-    }
-  }
+	margin: 0 auto;
+	padding: 0;
+	width: 100%;
+	max-width: 2560px;
+	.wrapper {
+		height: 100%;
+		width: 100%;
+	}
+	.video-link {
+		&:hover {
+			cursor: pointer;
+		}
+		div {
+			height: 100%;
+		}
+		.icon {
+			color: white;
+			position: absolute;
+			left: 0;
+			width: 100%;
+			top: 50%;
+			height: 50px;
+			margin-top: -25px;
+			text-align: center;
+		}
+	}
 }

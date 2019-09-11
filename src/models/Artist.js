@@ -17,8 +17,8 @@ const ArtistSchema = new Schema({
 		},
 		required: true
 	},
-	videoUrl: { type: String, required: true },
-	videoImg: { type: String, required: true },
+	videoUrl: { type: String },
+	videoImg: { type: String },
 	spotifyUrl: { type: String, required: true },
 	releases: {
 		type: Array,

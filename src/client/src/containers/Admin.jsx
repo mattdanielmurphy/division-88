@@ -23,7 +23,7 @@ import Post from '../pages/post'
 import AdminPost from '../pages/admin-post'
 import AdminAbout from '../pages/admin-about'
 import AdminPosts from '../pages/admin-posts'
-import AdminWrapper from '../components/jsx/admin/AdminWrapper'
+import AdminProducerTool from 'pages/admin-producer-tool'
 import Publish from 'pages/publish'
 
 const pages = {
@@ -160,7 +160,6 @@ class Admin extends React.Component {
   updateCell = (index, cell) =>
     this.setState({ updatedCell: { index, cell }, changesMade: true })
   selectCell = (index) => {
-    console.log('select cell - Admin.jsx')
     this.setState({ selectedCell: index, selectedHeading: undefined })
   }
   selectArtist = (index) =>
@@ -178,7 +177,7 @@ class Admin extends React.Component {
   setBodyStyle = () => {
     const bodyStyle = document.getElementsByTagName('body')[0].style
     bodyStyle.backgroundColor = '#151515'
-    bodyStyle.marginTop = '4rem'
+    bodyStyle.marginTop = '3.5rem'
   }
   // grid-specific
   undoLayoutChange() {
@@ -348,6 +347,7 @@ class Admin extends React.Component {
   signOut = () => firebase.auth().signOut()
   getPageName = () => this.props.match.params.page
   getPostName = () => this.props.match.params.post
+  getToolName = () => this.props.match.params.tool
   handleClickSignIn(e) {
     e.preventDefault()
     this.props.signInWithGoogle()
@@ -452,6 +452,13 @@ class Admin extends React.Component {
             AdminAPI={this.props.AdminAPI}
             postName={this.props.match.params.post}
           />
+        ) : this.getPageName() === 'producer-tool' ? (
+          <AdminProducerTool
+            setChangesMade={(changesMade) => this.setChangesMade(changesMade)}
+            history={this.props.history}
+            AdminAPI={this.props.AdminAPI}
+            toolName={this.props.match.params.tool}
+          />
         ) : this.getPageName() === 'about' ? (
           <AdminAbout
             setChangesMade={(changesMade) => this.setChangesMade(changesMade)}
@@ -466,7 +473,6 @@ class Admin extends React.Component {
             {this.state.dataReady ? (
               <PagePreview
                 AdminAPI={this.props.AdminAPI}
-                postName={this.getPostName()}
                 pageName={this.getPageName()}
                 page={pages[this.getPageName()]}
                 view={this.state.view}
@@ -491,6 +497,9 @@ class Admin extends React.Component {
                 selectTool={(tool) => this.selectTool(tool)}
                 selectedTool={this.state.selectedTool}
                 tools={this.state.tools}
+                toolName={this.getToolName()}
+                // Posts
+                postName={this.getPostName()}
                 // About
                 aboutText={this.state.aboutText}
               />
@@ -498,9 +507,11 @@ class Admin extends React.Component {
               <div>loading...</div>
             )}
             <Editor
+							setChangesMade={(changesMade) => this.setChangesMade(changesMade)}
               AdminAPI={this.props.AdminAPI}
               {...this.props}
               {...this.state}
+              selectCell={(index) => this.selectCell(index)}
               selectedHeading={this.state.selectedHeading}
               updateHeading={(heading) => this.updateHeading(heading)}
               updateArtists={(index, artist) =>

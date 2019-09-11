@@ -59,6 +59,20 @@ export default class extends React.Component {
               />
             )}
           />
+          <Route
+            path='/admin/producer-tools/:tool'
+            render={(props) => (
+              <Admin
+                {...props}
+                match={{
+                  params: {
+                    page: 'producer-tool',
+                    tool: props.match.params.tool,
+                  },
+                }}
+              />
+            )}
+          />
           <Route exact path='/posts' component={Posts} />
           <Route exact path='/posts/:post' component={Post} />
           <Route component={FourOhFour} />

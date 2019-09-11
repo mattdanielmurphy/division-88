@@ -12,6 +12,6 @@ producerTools.get('/:name', fetchProducerToolByName)
 producerTools.get('/index/:index', fetchProducerToolByIndex)
 producerTools.delete('/', deleteProducerTool)
 producerTools.post('/new', isUserAuthenticated, newProducerTool)
-producerTools.post('/:index', isUserAuthenticated, updateProducerTool)
+producerTools.post('/', isUserAuthenticated, updateProducerTool)
 
 module.exports = producerTools

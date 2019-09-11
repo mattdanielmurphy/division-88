@@ -4,6 +4,7 @@ import Page from '../components/jsx/Page'
 import API from 'components/js/api'
 import Spinner from 'react-spinkit'
 import FourOhFour from 'pages/404'
+import PostRenderer from 'components/jsx/PostRenderer'
 
 class ProducerTool extends React.Component {
   state = {
@@ -19,16 +20,21 @@ class ProducerTool extends React.Component {
   componentDidMount() {
     this.setDropboxDirectUrl(this.props.dropboxUrl)
   }
-  render = () => {
-    return (
-      <section className='text'>
-        <p>{this.props.description.text}</p>
+  render = () => (
+    <section className='text'>
+      <div style={{ margin: '1rem 0' }}>
         <a href={this.state.dropboxDirectUrl} className='button'>
           Download
         </a>
-      </section>
-    ) /**/
-  }
+      </div>
+      <PostRenderer blocks={this.props.blocks} />
+      <div style={{ marginTop: '1rem' }}>
+        <a href={this.state.dropboxDirectUrl} className='button'>
+          Download
+        </a>
+      </div>
+    </section>
+  )
 }
 
 export default class extends React.Component {

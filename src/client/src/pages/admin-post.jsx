@@ -1,8 +1,38 @@
 import React from 'react'
-import TextEditor from 'components/jsx/admin/editor/TextEditor'
 import Page from '../components/jsx/Page'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Textfit } from 'react-textfit-17'
+import BlockEditor from 'components/jsx/admin/editor/BlockEditor'
+
+class AdminPostHeading extends React.Component {
+  render = () => (
+    <div>
+      <div className='top-heading admin-post-heading'>
+        <div className='heading'>
+          <Textfit mode='single' max={50}>
+            <input
+              type='text'
+              className='title-input'
+              value={this.props.title}
+              onChange={(e) => this.handleTitleChange(e)}
+            />
+          </Textfit>
+        </div>
+      </div>
+
+      {this.props.titleRenamed && (
+        <div className='title-renamed-warning'>
+          WARNING: Title has been renamed. This page URL is based on the title.
+          Refreshing this page will result in a 404 error.{' '}
+          <Link to={`../${this.props.getPostUrl()}`} className='link'>
+            Click here
+          </Link>{' '}
+          to navigate to the new page now.
+        </div>
+      )}
+    </div>
+  )
+}
 
 export default class extends React.Component {
   state = {
@@ -12,10 +42,11 @@ export default class extends React.Component {
       : this.props.match.params.post.split('-').join(' '),
     category: 'miscellaneous',
   }
-  updateValue = (value) => {
+  updateBlocks = (blocks) => {
+    console.log('update blocks', blocks)
     const post = this.state.post
-    post.text = value
-    this.props.AdminAPI.post(`/posts/${this.state.post.index}`, post)
+    post.blocks = blocks
+    this.props.AdminAPI.post('/posts', post)
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
     this.props.setChangesMade(true)
@@ -26,7 +57,7 @@ export default class extends React.Component {
     )
 
     if (typeof post === 'object') {
-      this.setState({ post, category: post.category })
+      this.setState({ post })
     } else {
       console.log(`post not found`)
       this.setState({ title: 'Post not found' })
@@ -34,7 +65,7 @@ export default class extends React.Component {
     return post
   }
   componentDidMount = async () => {
-    await this.getPost(this.state.link)
+    this.getPost(this.state.link)
   }
   handleTitleChange = (e) => {
     this.props.setChangesMade(true)
@@ -48,41 +79,38 @@ export default class extends React.Component {
   }
   getPostUrl = () => this.state.title.split(' ').join('-')
   render = () => (
-    <Page noHeading isPreview>
-      <div className='top-heading admin-post-heading'>
-        <div className='heading'>
-          <Textfit mode='single' max={50}>
-            <input
-              type='text'
-              className='title-input'
-              value={this.state.title}
-              onChange={(e) => this.handleTitleChange(e)}
-            />
-          </Textfit>
-        </div>
-      </div>
+    <div>
+      <Page noHeading isPreview id='admin-post'>
+        <AdminPostHeading
+          titleRenamed={this.state.titleRenamed}
+          getPostUrl={this.getPostUrl()}
+          title={this.state.title}
+        />
 
-      {this.state.titleRenamed && (
-        <div className='title-renamed-warning'>
-          WARNING: Title has been renamed. This page URL is based on the title.
-          Refreshing this page will result in a 404 error.{' '}
-          <Link to={`../${this.getPostUrl()}`} className='link'>
-            Click here
-          </Link>{' '}
-          to navigate to the new page now.
-        </div>
-      )}
-      {this.state.post ? (
-        <section className='text'>
-          {/*<div className='category'>category: {this.state.category}</div>*/}
-          <TextEditor
-            text={this.state.post.text}
-            updateValue={(value) => this.updateValue(value)}
+        {this.state.post ? (
+          <BlockEditor
+            blocks={this.state.post.blocks}
+            updateBlocks={(content) => this.updateBlocks(content)}
+            AdminAPI={this.props.AdminAPI}
           />
-        </section>
-      ) : (
-        <div />
-      )}
-    </Page>
+        ) : (
+          <div>Loading</div>
+        )}
+      </Page>
+    </div>
   )
 }
+// {/*  <Page noHeading isPreview>*/}
+//
+// {/*    {this.state.post && this.state.post.blocks ? (*/}
+// {/*      <section className='text'>*/}
+// {/*        /!*<div className='category'>category: {this.state.category}</div>*!/*/}
+// {/*        <TextEditor*/}
+// {/*          blocks={this.state.post.blocks}*/}
+// {/*          updateBlocks={(content) => this.updateBlocks(content)}*/}
+// {/*        />*/}
+// {/*      </section>*/}
+// {/*    ) : (*/}
+// {/*      <div />*/}
+// {/*    )}*/}
+// {/*  </Page>*/}

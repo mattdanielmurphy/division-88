@@ -101,7 +101,7 @@ export default class Page extends React.Component {
     const parentElements = this.getParentElementsBeforeBody(
       document.querySelector('.main-container'),
     )
-    parentElements.forEach((element) => (element.style.height = '100%'))
+    parentElements.forEach((element) => (element.style.minHeight = '100%'))
   }
   getHeadingBackgroundImage = async () => {
     const headingBackgroundImage = await API.get(

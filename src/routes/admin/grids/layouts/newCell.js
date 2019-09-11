@@ -9,10 +9,9 @@ module.exports = async (req, res) => {
     const { layouts, cells } = page
     let index
     Object.entries(newLayouts).forEach(([size, layout]) => {
-      const lastIndex = layouts[size][layouts[size].length - 1].i
+      const index = layouts[size].length
       const lastY = layouts[size][layouts[size].length - 1].y
       const lastHeight = layouts[size][layouts[size].length - 1].h
-      index = Number(lastIndex) + 1
       layout.i = String(index)
       layout.y = lastY + lastHeight
       layouts[size].push(layout)
@@ -32,6 +31,12 @@ module.exports = async (req, res) => {
         res.status(500).res.json(rej)
       })
   })
+  console.log(
+    layouts.mobile.length,
+    layouts.mobile[layouts.mobile.length - 1],
+    cells.length,
+    cells[cells.length - 1],
+  )
 }
 
 l = {

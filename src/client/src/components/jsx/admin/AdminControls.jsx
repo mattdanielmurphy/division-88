@@ -46,7 +46,7 @@ export default class AdminControls extends React.Component {
           )}
 
           <div id='sign-out'>
-            <button className='sign-out' onClick={this.props.signOut}>
+            <button className='danger' onClick={this.props.signOut}>
               Sign out
             </button>
           </div>

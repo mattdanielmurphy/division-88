@@ -89,6 +89,7 @@ export default class CellEditor extends React.Component {
     this.setKeyBindings()
   }
   changeIndex = async (index) => {
+    this.props.selectCell(index)
     const cell = await this.getCell(index)
     this.setState({
       index,
@@ -120,6 +121,16 @@ export default class CellEditor extends React.Component {
     }
   }
   newCell = async () => {
+    console.log(
+      'creating new cell. state of layouts before anything happens:',
+      this.state.layouts,
+    )
+    const result = await this.props.AdminAPI.get('/grids/index/layouts')
+    console.log(
+      'creating new cell. db layouts before anything happens:',
+      result,
+    )
+
     if (this.validateCell()) {
       // const layouts = await this.props.AdminAPI.get('/grids/index/layouts').then((r) => r.data)
       const obj = {
@@ -133,6 +144,7 @@ export default class CellEditor extends React.Component {
       this.props.AdminAPI.post('/grids/index/layouts/newCell', obj).then(
         (r) => {
           const { layouts, cells } = r.data
+          console.log(layouts.mobile)
           this.props.updateGrid({ layouts, cells })
           this.changeIndex(r.data.index)
         },
@@ -146,6 +158,14 @@ export default class CellEditor extends React.Component {
     ).then((r) => {
       const { layouts, cells } = r.data
       this.props.updateGrid({ layouts, cells })
+
+      // set index to cell that's now in its place or one previous
+      if (cells[this.state.index]) {
+        this.changeIndex(this.state.index)
+      } else {
+        const newIndex = this.state.index ? this.state.index - 1 : 0
+        this.changeIndex(newIndex)
+      }
     })
   }
   toggleVideoMode = () => {
