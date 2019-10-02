@@ -7,7 +7,8 @@ const pageInfo = require('./page-info')
 const about = require('./about')
 const images = require('./images')
 const posts = require('./posts')
-// admin work-in-progress database
+const products = require('./products')
+// admin routes (GETs retrieve from WIP admin database)
 const admin = require('./admin')
 
 routes.get('/', (req, res) => res.status(200).json('All good'))
@@ -20,6 +21,7 @@ routes.use('/about', about)
 routes.use('/page-info', pageInfo)
 routes.use('/images', images)
 routes.use('/posts', posts)
+routes.use('/products', products)
 routes.use('/admin', admin)
 
 module.exports = routes

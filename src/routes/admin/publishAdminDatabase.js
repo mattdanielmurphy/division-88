@@ -1,5 +1,6 @@
 const models = [
 	[ require('../../models/About'), require('../../models/admin/About') ],
+	[ require('../../models/Product'), require('../../models/admin/Product') ],
 	[ require('../../models/Artist'), require('../../models/admin/Artist') ],
 	[ require('../../models/Grid'), require('../../models/admin/Grid') ],
 	[ require('../../models/PageInfo'), require('../../models/admin/PageInfo') ],
@@ -28,16 +29,6 @@ const updateAllSubdocuments = async (AdminModel, Model, name) =>
 	})
 
 module.exports = async (req, res) => {
-	// About (will only ever be just the one document)
-	// const about = await About.findOne()
-	// console.log('original about', about)
-	// const newAbout = await AdminAbout.findOne().then((about) => JSON.parse(JSON.stringify(about)))
-	// delete newAbout._id
-	// Object.assign(about, newAbout)
-	// await About.findOneAndUpdate({}, newAbout, (result) => {
-	// 	console.log('result of replace', result)
-	// })
-
 	const replaceAllModels = new Promise(async (resolve, reject) => {
 		const tryAllModels = await models.map(async ([ PublicModel, AdminModel ]) => {
 			// keep original models in case insert fails due to invalidation

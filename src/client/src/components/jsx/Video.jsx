@@ -77,6 +77,11 @@ export default class Video extends React.Component {
 		this.setVideoDimensions()
 	}
 	componentDidUpdate(prevProps, prevState, snapshot) {
+		const currentWidth = this.getWidth()
+		if (currentWidth !== this.state.outerWidth) {
+			this.setVideoDimensions()
+		}
+
 		if (this.props.videoSrc !== prevProps.videoSrc) this.setState({ videoId: this.getVideoId() })
 
 		if (this.props.imgSrc !== prevProps.imgSrc) {

@@ -54,9 +54,7 @@ export default class Nav extends React.Component {
 			<nav>
 				<div className="store-link">
 					<div className="store-link-wrapper">
-						<a href="https://brave-nobel-7b1c92.netlify.com" target="_blank" rel="noopener noreferrer">
-							Store
-						</a>
+						<Link to="/store">Store</Link>
 					</div>
 				</div>
 				<div className="left-side">

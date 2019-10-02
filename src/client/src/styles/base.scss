@@ -24,7 +24,8 @@
 
 html,
 body,
-#root {
+#root,
+#root > div {
 	height: 100%;
 }
 
@@ -34,8 +35,7 @@ main {
 }
 
 .main-container {
-	// margin-top: 7rem;
-	min-height: calc(100% - 10rem);
+	min-height: calc(100% - 19rem);
 	overflow: hidden;
 }
 
