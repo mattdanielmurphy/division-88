@@ -89,6 +89,7 @@ export default class Index extends React.Component {
 								mobile: 12
 							}}
 							containerPadding={[ 0, 0 ]}
+							margin={[ 0, 0 ]}
 							onLayoutChange={(layout, layouts) =>
 								this.props.onLayoutChange ? this.props.onLayoutChange(layout, layouts) : {}}
 						>

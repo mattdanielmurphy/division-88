@@ -7,7 +7,7 @@ import ReactResizeDetector from 'react-resize-detector'
 export default class Video extends React.Component {
 	getVideoId = () => {
 		if (this.props.videoSrc) {
-			const matches = /\?v=(.*)/.exec(this.props.videoSrc)
+			const matches = /\?v=(.*)\?/.exec(this.props.videoSrc)
 			return matches ? matches[1] : ''
 		} else return ''
 	}
@@ -73,10 +73,12 @@ export default class Video extends React.Component {
 		}
 	}
 	componentDidMount = () => {
+		console.log('Video.jsx has mounted')
 		this.setState({ mounted: true })
 		this.setVideoDimensions()
 	}
 	componentDidUpdate(prevProps, prevState, snapshot) {
+		console.log('Video.jsx updated')
 		const currentWidth = this.getWidth()
 		if (currentWidth !== this.state.outerWidth) {
 			this.setVideoDimensions()

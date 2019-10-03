@@ -4,28 +4,6 @@ import Logo from 'components/jsx/Logo'
 
 export default class Nav extends React.Component {
 	state = {
-		links: [
-			{
-				name: 'Artists',
-				url: '/artists'
-			},
-			{
-				name: 'Producer Tools',
-				url: '/producer-tools'
-			},
-			{
-				name: 'Index',
-				url: '/'
-			},
-			{
-				name: 'About',
-				url: '/about'
-			},
-			{
-				name: 'Posts',
-				url: '/posts'
-			}
-		],
 		adminVersion: false
 	}
 	getLink = (url) => (this.state.adminVersion ? `/admin${url}` : url)
@@ -60,15 +38,13 @@ export default class Nav extends React.Component {
 						About
 					</NavLink>
 				</div>
-				{!this.props.closeMenu && (
-					<Logo width="70px" fill="#242424" hoverFill="#353535" adminVersion={this.state.adminVersion} />
-				)}
+				{!this.props.closeMenu && <Logo width="70px" adminVersion={this.state.adminVersion} />}
 				<div className="right-side">
 					<NavLink onClick={() => this.handleClick()} to={this.getLink('/producer-tools')}>
 						Producer Tools
 					</NavLink>
-					<NavLink onClick={() => this.handleClick()} to={this.getLink('/posts')}>
-						Posts
+					<NavLink onClick={() => this.handleClick()} to={this.getLink('/store')}>
+						Store
 					</NavLink>
 				</div>
 			</nav>
