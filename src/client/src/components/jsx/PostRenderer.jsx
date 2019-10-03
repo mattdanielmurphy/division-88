@@ -20,24 +20,26 @@ export default class PostRenderer extends React.Component {
 							<div key={index} className="content-block-soundcloud">
 								<SoundCloudWidget url={block.content.src} />
 							</div>
-						) : // ) : block.type === 'dropboxDownloadButton' ? (
-										//   <div key={index} className='content-block-dropbox-download-button'>
-										//     <Dropbox url={block.content.src} />
-										//   </div>
-										block.type === 'video' ? (
-											<div
-												key={index}
-												className="content-block-video"
-												ref={(vidCont) => (this.videoContainer = vidCont)}
-											>
-												<Video videoSrc={block.content.videoSrc} imgSrc={block.content.imgSrc} />
-											</div>
-										) : (
-												<div />
-											)
+						) : block.type === 'downloadLink' ? (
+							<div key={index} className="content-block-download-link">
+								<a href={block.content.directDropboxDownloadLink} className="button">
+									{block.content.downloadButtonText || 'Download'}
+								</a>
+							</div>
+						) : block.type === 'video' ? (
+							<div
+								key={index}
+								className="content-block-video"
+								ref={(vidCont) => (this.videoContainer = vidCont)}
+							>
+								<Video videoSrc={block.content.videoSrc} imgSrc={block.content.imgSrc} />
+							</div>
+						) : (
+							<div />
+						)
 				)}
 			</section>
 		) : (
-				<div>Loading...</div>
-			)
+			<div>Loading...</div>
+		)
 }

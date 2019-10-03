@@ -1,8 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import OffCanvas from './OffCanvas'
 import Nav from './Nav'
-import { MediaQuery, useMediaQuery } from 'react-responsive'
+import { MediaQuery } from 'react-responsive'
 import Logo from 'components/jsx/Logo'
 
 class HeaderWrapper extends React.Component {

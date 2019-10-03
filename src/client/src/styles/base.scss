@@ -83,7 +83,7 @@ main {
 body {
 	padding: 0;
 	margin: 0;
-	font-family: 'Josefin Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
+	font-family: 'Open Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
 		'Lucida Grande', sans-serif;
 	font-size: 16px;
 	font-weight: 400;
@@ -157,19 +157,27 @@ span.arrow {
 	font-weight: 400;
 }
 
+.content-block-download-link {
+	text-align: right;
+}
+
 .button,
 section.text a.button {
-	color: white;
-	padding: 0.5rem 0.7rem 0.35rem 0.7rem;
-	border: 2px solid white;
+	display: inline-block;
+	color: black;
+	background: white;
+	padding: 0.68rem 0.9rem 0.55rem 1.1rem;
 	border-radius: 0.4rem;
+	border: 2px solid white;
+	margin: .5rem 0;
 	font-weight: 700;
-	font-size: 0.8rem;
+	font-size: 1rem;
 	text-transform: uppercase;
+	transition: .2s ease;
 	&:hover {
 		cursor: pointer;
-		background: white;
-		color: black;
+		background: #ff3c00;
+		color: white;
 	}
 }
 

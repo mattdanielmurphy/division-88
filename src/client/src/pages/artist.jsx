@@ -46,24 +46,6 @@ class SpotifyPlayer extends React.Component {
 	render = () => <div>{this.getIFrame()}</div>
 }
 
-const Releases = ({ artist }) => (
-	<div id="releases">
-		<div className="right">
-			{artist.releases.map((release, index) => (
-				<div key={index} className="release">
-					<h2>{release.name}</h2>
-					<div className="left">
-						<img src={release.cover} alt={`${release.name} album cover artwork`} />
-					</div>
-					<div className="right">
-						<SpotifyPlayer spotifyUrl={release.spotifyUrl} />
-					</div>
-				</div>
-			))}
-		</div>
-	</div>
-)
-
 const TopTen = ({ artist }) => (
 	<div id="top-ten">
 		<h2>Top Tracks</h2>

@@ -102,20 +102,20 @@ export default class AdminProducerTool extends React.Component {
 						blocks={this.state.tool.blocks}
 						updateBlocks={(content) => this.updateBlocks(content)}
 						AdminAPI={this.props.AdminAPI}
-						beforePostRenderer={
-							<div style={{ marginBottom: '1rem' }}>
-								<a href={this.state.tool.dropboxDirectUrl} className="button">
-									Download
-								</a>
-							</div>
-						}
-						afterPostRenderer={
-							<div style={{ marginTop: '1rem' }}>
-								<a href={this.state.tool.dropboxDirectUrl} className="button">
-									Download
-								</a>
-							</div>
-						}
+						// beforePostRenderer={
+						// 	<div style={{ marginBottom: '1rem' }}>
+						// 		<a href={this.state.tool.dropboxDirectUrl} className="button">
+						// 			Download
+						// 		</a>
+						// 	</div>
+						// }
+						// afterPostRenderer={
+						// 	<div style={{ marginTop: '1rem' }}>
+						// 		<a href={this.state.tool.dropboxDirectUrl} className="button">
+						// 			Download
+						// 		</a>
+						// 	</div>
+						// }
 					/>
 				) : (
 					<div>Loading</div>

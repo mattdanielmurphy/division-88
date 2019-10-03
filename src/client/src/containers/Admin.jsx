@@ -391,7 +391,7 @@ class Admin extends React.Component {
           <p>
             The account <em>{this.props.user.email}</em> is not one of our admin
             accounts. Sign out at{' '}
-            <a target='_blank' href='https://google.com'>
+            <a href='https://google.com' target='_blank' without rel="noopener noreferrer">
               google.com
             </a>{' '}
             and sign in with another account to try again.

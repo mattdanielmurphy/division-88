@@ -173,7 +173,6 @@ export default class ArtistEditor extends React.Component {
 									path: 'imgSrc',
 									value: url
 								})
-								// this.handleSubmit()
 							}}
 						/>
 					</div>
@@ -192,35 +191,6 @@ export default class ArtistEditor extends React.Component {
 						/>
 					</div>
 					<br />
-					<div className="property-input">
-						<label>Dropbox file link (for download)</label>
-						<input
-							onChange={(e) => this.handleInputChange({ e })}
-							id="dropboxUrl"
-							value={this.state.artist.dropboxUrl || ''}
-						/>
-					</div>
-					<br />
-					{/*<div className='property-input'>*/}
-					{/*  <label>description background color</label>*/}
-					{/*  <ColorPicker*/}
-					{/*    color={*/}
-					{/*      (this.state.artist.description &&*/}
-					{/*        this.state.artist.description.style &&*/}
-					{/*        this.state.artist.description.style.backgroundColor) ||*/}
-					{/*      'darkgrey'*/}
-					{/*    }*/}
-					{/*    setColor={(color) => {*/}
-					{/*      const { r, g, b, a } = color.rgb*/}
-					{/*      const rgbaString = `rgba(${r},${g},${b},${a})`*/}
-					{/*      this.handleInputChange({*/}
-					{/*        path: 'description.style.backgroundColor',*/}
-					{/*        value: rgbaString,*/}
-					{/*        colorChange: true,*/}
-					{/*      })*/}
-					{/*    }}*/}
-					{/*  />*/}
-					{/*</div>*/}
 					<div className="property-input">
 						<label>description text color</label>
 						<ColorPicker
@@ -260,10 +230,6 @@ export default class ArtistEditor extends React.Component {
 					AdminAPI={this.props.AdminAPI}
 					setChangesMade={(changesMade) => this.props.setChangesMade(changesMade)}
 					tool={this.state.artist}
-					// toolName={
-					// 	this.state.artist.page ||
-					// 	(this.state.artist.name && this.state.artist.name.toLowerCase().split(' ').join('-'))
-					// }
 				/>
 			</div>
 		) : (

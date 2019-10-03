@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import Logo from 'components/jsx/Logo'
 
 export default class Nav extends React.Component {
@@ -52,29 +52,24 @@ export default class Nav extends React.Component {
 	render = () => (
 		<div id="nav-wrapper" className={!this.props.closeMenu ? 'full-nav' : 'mobile-nav'}>
 			<nav>
-				<div className="store-link">
-					<div className="store-link-wrapper">
-						<Link to="/store">Store</Link>
-					</div>
-				</div>
 				<div className="left-side">
-					<Link onClick={() => this.handleClick()} to={this.getLink('/artists')}>
+					<NavLink onClick={() => this.handleClick()} to={this.getLink('/artists')}>
 						Artists
-					</Link>
-					<Link onClick={() => this.handleClick()} to={this.getLink('/about')}>
+					</NavLink>
+					<NavLink onClick={() => this.handleClick()} to={this.getLink('/about')}>
 						About
-					</Link>
+					</NavLink>
 				</div>
 				{!this.props.closeMenu && (
-					<Logo width="70px" fill="#242424" hoverFill="#343434" adminVersion={this.state.adminVersion} />
+					<Logo width="70px" fill="#242424" hoverFill="#353535" adminVersion={this.state.adminVersion} />
 				)}
 				<div className="right-side">
-					<Link onClick={() => this.handleClick()} to={this.getLink('/producer-tools')}>
+					<NavLink onClick={() => this.handleClick()} to={this.getLink('/producer-tools')}>
 						Producer Tools
-					</Link>
-					<Link onClick={() => this.handleClick()} to={this.getLink('/posts')}>
+					</NavLink>
+					<NavLink onClick={() => this.handleClick()} to={this.getLink('/posts')}>
 						Posts
-					</Link>
+					</NavLink>
 				</div>
 			</nav>
 		</div>

@@ -1,23 +1,26 @@
 #posts {
-  #posts-list {
-    margin: 0 auto;
-    font-size: 1.3rem;
-    line-height: 1.6;
-    padding: 0 2rem;
-  }
-  &.mobile {
-    #posts-list {
-      max-width: 100%;
-    }
-  }
-  &.desktop {
-    #posts-list {
-      max-width: 600px;
-    }
-  }
-  &.tablet {
-    #posts-list {
-      max-width: 600px;
-    }
-  }
+	#posts-list {
+		margin: 0 auto;
+		font-size: 1.3rem;
+		line-height: 1.6;
+		padding: 0 2rem;
+	}
+	.top-heading {
+		padding: 2rem 0;
+	}
+	&.mobile {
+		#posts-list {
+			max-width: 100%;
+		}
+	}
+	&.desktop {
+		#posts-list {
+			max-width: 600px;
+		}
+	}
+	&.tablet {
+		#posts-list {
+			max-width: 600px;
+		}
+	}
 }

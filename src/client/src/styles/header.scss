@@ -74,7 +74,7 @@ header {
 			column-gap: 1.3rem;
 			margin-bottom: 1rem;
 			width: 100%;
-			font-size: 1.4rem;
+			font-size: 1.2rem;
 			.store-link-wrapper a {
 				top: 2.1em;
 				&:hover {
@@ -95,7 +95,7 @@ header {
 				}
 			}
 			@media screen and (max-width: 950px) {
-				font-size: 1.2rem;
+				font-size: 1.1rem;
 				column-gap: .8rem;
 				#logo {
 					padding: 0 .8rem;
@@ -108,7 +108,7 @@ header {
 				}
 			}
 			@media screen and (max-width: 900px) {
-				font-size: 1.1rem;
+				font-size: 1rem;
 				column-gap: .8rem;
 				#logo {
 					padding: 0 .8rem;
@@ -162,11 +162,17 @@ header {
 			}
 			a {
 				padding: 0.4rem 0.4rem 0.2rem 0.4rem;
-				font-weight: 300;
+				font-weight: 400;
 				display: inline-block;
 				border-bottom: 1px solid transparent;
-				transition: 0.15s ease-in-out;
+				color: #ddd;
+				// transition: font-size 0.15s ease-in-out;
+				position: relative;
 				&:hover {
+					color: #ff5762;
+				}
+				&.active {
+					color: #ffffff;
 					border-bottom: 1px solid white;
 				}
 			}
