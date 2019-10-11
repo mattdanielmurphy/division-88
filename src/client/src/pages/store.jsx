@@ -112,7 +112,8 @@ export default class Store extends Component {
 	}
 	render = () => (
 		<div>
-			<Cart
+			<h1 style={{ textAlign: 'center' }}>Store coming (very) soon.</h1>
+			{/* <Cart
 				cart={this.state.cart}
 				removeFromCart={(id) => this.removeFromCart(id)}
 				products={this.state.products}
@@ -128,7 +129,7 @@ export default class Store extends Component {
 						category={this.state.category}
 					/>
 				)}
-			</Page>
+			</Page> */}
 		</div>
 	)
 }
