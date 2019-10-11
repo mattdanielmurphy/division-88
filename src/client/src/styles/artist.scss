@@ -1,6 +1,6 @@
 #artist {
 	.top-heading {
-		text-align: right;
+		text-align: left;
 	}
 	h2 {
 		margin: 1rem 0 1rem 0;
@@ -12,7 +12,8 @@
 	}
 	.bio {
 		font-size: 1.1rem;
-		padding: 1rem;
+		padding: 0 .5rem;
+		margin: 2vw 0;
 	}
 	.video {
 		margin-top: 1rem;
@@ -90,7 +91,10 @@
 				justify-self: start;
 				max-width: 600px;
 				max-width: 100%;
-				padding: .5rem;
+				padding: .5rem 3vw;
+			}
+			.left {
+				padding: .5rem 3vw;
 			}
 		}
 		// #releases {

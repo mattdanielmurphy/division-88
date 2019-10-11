@@ -12,7 +12,7 @@
 	},
 	"scripts": {
 		"deploy": "bash scripts/set-prod-env.sh && bash scripts/build-client.sh && firebase deploy",
-		"develop": "bash scripts/set-dev-env.sh && concurrently -k \"yarn api-server-watch\" \"yarn dev-server\"",
+		"dev": "bash scripts/set-dev-env.sh && concurrently -k \"yarn api-server-watch\" \"yarn dev-server\"",
 		"api-server": "node src/index.js",
 		"api-server-watch": "supervisor src/index.js",
 		"dev-server": "cd src/client && yarn start"

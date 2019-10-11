@@ -2,7 +2,7 @@
 .sk-spinner {
 	color: white;
 	text-align: center;
-	margin-top: 10rem;
+	margin: 2rem 0;
 }
 
 .link {
@@ -37,58 +37,51 @@
 	top: 0;
 	left: 0;
 	right: 0;
+	.link {
+		color: white;
+		border-bottom: 1px solid white;
+		&:hover {
+			color: black;
+			border-bottom: 1px solid black;
+		}
+	}
 }
 
 #admin-root {
-	margin: 0 auto;
-	max-width: 1400px;
 	padding: 0 2rem;
-}
-#root-wrapper {
-	position: relative;
 	margin: 0 auto;
 }
 
+#editor-and-preview {
+	display: grid;
+	justify-content: center;
+}
+
+#editor-wrapper,
+#editor-and-preview > #property-editor {
+	grid-row: 1;
+	padding-right: 1rem;
+	box-sizing: border-box;
+}
+
+#admin-tool {
+	position: absolute;
+	margin-top: 2rem;
+	left: 0;
+	right: 0;
+}
+
 #preview-wrapper {
+	grid-column: 2;
 	background: black;
 	border: 10px solid #333;
 	position: relative;
-	margin: 0 auto;
 	padding-right: 15px;
 	overflow-x: hidden;
 	#preview {
 		position: relative;
 	}
 }
-//.changes-made {
-//  position: fixed;
-//  z-index: 9999;
-//  top: 0;
-//  left: 0;
-//  right: 0;
-//  background: #2a59bc;
-//  font-size: 1.25rem;
-//  margin-bottom: 1rem;
-//  font-weight: 400;
-//  .wrapper {
-//    padding: 0.7rem 1rem 0.5rem 1rem;
-//    max-width: 1600px;
-//    position: relative;
-//    width: calc(100% - 4rem);
-//    margin: 0 auto;
-//  }
-//  .buttons {
-//    position: absolute;
-//    right: 0;
-//    top: 0;
-//    bottom: 0;
-//  }
-//  p {
-//    display: block;
-//    text-align: center;
-//    margin: 0 auto;
-//  }
-//}
 
 .change-scale {
 	margin-left: 0.6rem;
@@ -122,6 +115,7 @@
 	background: #000;
 	font-size: 1.2rem;
 	button {
+		color: white;
 		margin: 0;
 		height: 100%;
 		border: none;
@@ -129,6 +123,7 @@
 		padding: 1.1rem 1rem 1rem 1rem;
 		font-weight: 300;
 		font-size: 1rem;
+		transition: none;
 		strong {
 			font-weight: 700;
 		}
@@ -143,6 +138,7 @@
 			background: #151515;
 			&:hover {
 				background: #151515;
+				color: white;
 				cursor: default;
 			}
 		}
@@ -161,7 +157,8 @@
 			}
 		}
 		&:hover {
-			background: #254ea1;
+			background: $yellow;
+			color: black;
 		}
 	}
 	.wrapper {
@@ -191,32 +188,50 @@
 }
 
 #property-editor {
-	margin: 2rem auto 0 auto;
+	box-sizing: border-box;
 	form {
 		max-width: 1100px;
 		margin: 0 auto;
 	}
 }
 
+.input-gap {
+	height: .5rem;
+}
+
 .property-input {
-	display: grid;
-	column-gap: 1rem;
-	grid-template-columns: 300px 1fr;
-	margin: 0.4rem;
+	margin-bottom: 0.7rem;
+	input {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 	input,
 	textarea {
+		max-width: 100%;
+		box-sizing: border-box;
+		line-height: 1.4;
 		width: 100%;
-		padding: 0.6rem;
-		font-size: 1rem;
-		font-family: 'Josefin Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
-			'Lucida Grande', sans-serif;
+		padding: 0.2rem .5rem;
+		font-size: .85rem;
+		font-family: $openSans;
 		background: #111;
 		color: #fff;
 		border: none;
+		border-bottom: 1px solid transparent;
+		&:focus {
+			outline: none;
+			border-bottom: 1px solid $yellow;
+		}
 	}
 	label {
-		padding: 0.6rem;
-		font-size: 1rem;
+		padding: .1rem .5rem;
+		// margin-bottom: .1rem;
+		display: inline-block;
+		font-size: .7rem;
+		letter-spacing: 1px;
+		color: #ccc;
+		text-transform: uppercase;
 		text-align: right;
 	}
 }
@@ -232,9 +247,10 @@ br {
 }
 
 .sketch-picker {
-	background: rgb(44, 44, 44) !important;
+	background: #111 !important;
 	border: none !important;
 	box-shadow: none !important;
+	box-sizing: border-box !important;
 	width: 100% !important;
 	> div:first-of-type {
 		padding-bottom: 125px !important;
@@ -246,13 +262,16 @@ br {
 		padding: 0.3rem 0;
 	}
 	input {
-		font-family: 'Josefin Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
-			'Lucida Grande', sans-serif;
+		font-family: $josefin;
 		font-size: 0.8rem !important;
 		text-align: center;
-		background: #111;
+		background: #242424;
 		color: #fff;
 		box-shadow: none !important;
+		border-bottom: 1px solid #242424 !important;
+		&:focus {
+			border-bottom: 1px solid $yellow !important;
+		}
 	}
 	span {
 		color: white !important;
@@ -262,7 +281,7 @@ br {
 .video-link .img,
 .background {
 	&.selected {
-		border: 2px solid red;
+		box-shadow: inset 0 0 0 10px $yellow;
 	}
 }
 

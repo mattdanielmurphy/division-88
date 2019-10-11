@@ -39,13 +39,21 @@ export default class Nav extends React.Component {
 					</NavLink>
 				</div>
 				{!this.props.closeMenu && <Logo width="70px" adminVersion={this.state.adminVersion} />}
-				<div className="right-side">
+				<div
+					className="right-side"
+					style={this.props.adminVersion ? { gridTemplateColumns: 'auto auto auto' } : {}}
+				>
 					<NavLink onClick={() => this.handleClick()} to={this.getLink('/producer-tools')}>
 						Producer Tools
 					</NavLink>
 					<NavLink onClick={() => this.handleClick()} to={this.getLink('/store')}>
 						Store
 					</NavLink>
+					{this.props.adminVersion && (
+						<NavLink onClick={() => this.handleClick()} to="/admin/posts">
+							Posts
+						</NavLink>
+					)}
 				</div>
 			</nav>
 		</div>

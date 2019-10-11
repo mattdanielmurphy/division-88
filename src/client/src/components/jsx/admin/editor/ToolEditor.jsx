@@ -141,91 +141,79 @@ export default class ArtistEditor extends React.Component {
 	}
 	render = () =>
 		this.state.artist ? (
-			<div id="property-editor">
-				<form onSubmit={(e) => this.handleSubmit(e)}>
-					<div className="property-input">
-						<label>name</label>
-						<input
-							onChange={(e) => this.handleInputChange({ e })}
-							id="name"
-							value={this.state.artist.name || ''}
-						/>
+			<div id="editor-wrapper">
+				<div id="property-editor" style={{ minHeight: `${this.props.currentPageHeight}px` }}>
+					<form onSubmit={(e) => this.handleSubmit(e)}>
+						<div className="property-input">
+							<label>name</label>
+							<input
+								onChange={(e) => this.handleInputChange({ e })}
+								id="name"
+								value={this.state.artist.name || ''}
+							/>
+						</div>
+						<div className="property-input">
+							<label>page name</label>
+							<input
+								onChange={(e) => this.handleInputChange({ e })}
+								id="page"
+								value={
+									this.state.artist.page ||
+									(this.state.artist.name &&
+										this.state.artist.name.toLowerCase().split(' ').join('-')) ||
+									''
+								}
+							/>
+						</div>
+						<div className="property-input">
+							<label>image</label>
+							<ImageUploader
+								AdminAPI={this.props.AdminAPI}
+								image={this.state.artist.imgSrc}
+								setImage={async (url) => {
+									await this.handleInputChange({
+										path: 'imgSrc',
+										value: url
+									})
+								}}
+							/>
+						</div>
+						<div className="input-gap" />
+						<div className="property-input">
+							<label>description text color</label>
+							<ColorPicker
+								color={
+									(this.state.artist.description &&
+										this.state.artist.description.style &&
+										this.state.artist.description.style.color) ||
+									'#fff'
+								}
+								setColor={(color) => {
+									const { r, g, b, a } = color.rgb
+									const rgbaString = `rgba(${r},${g},${b},${a})`
+									this.handleInputChange({
+										path: 'description.style.color',
+										value: rgbaString,
+										colorChange: true
+									})
+								}}
+							/>
+						</div>
+						<div className="input-gap" />
+						{this.state.error}
+					</form>
+					<div id="create-new">
+						<button onClick={() => this.newArtist()}>Submit as new producer tool</button>
 					</div>
-					<div className="property-input">
-						<label>page name</label>
-						<input
-							onChange={(e) => this.handleInputChange({ e })}
-							id="page"
-							value={
-								this.state.artist.page ||
-								(this.state.artist.name && this.state.artist.name.toLowerCase().split(' ').join('-')) ||
-								''
-							}
-						/>
-					</div>
-					<div className="property-input">
-						<label>image</label>
-						<ImageUploader
-							AdminAPI={this.props.AdminAPI}
-							image={this.state.artist.imgSrc}
-							setImage={async (url) => {
-								await this.handleInputChange({
-									path: 'imgSrc',
-									value: url
-								})
-							}}
-						/>
-					</div>
-
-					<br />
-
-					<div className="property-input">
-						<label>description text</label>
-						<textarea
-							rows={6}
-							cols={60}
-							onKeyPress={(e) => this.handleTextareaKeyPress(e)}
-							onChange={(e) => this.handleInputChange({ e })}
-							id="description.text"
-							value={(this.state.artist.description && this.state.artist.description.text) || ''}
-						/>
-					</div>
-					<br />
-					<div className="property-input">
-						<label>description text color</label>
-						<ColorPicker
-							color={
-								(this.state.artist.description &&
-									this.state.artist.description.style &&
-									this.state.artist.description.style.color) ||
-								'#fff'
-							}
-							setColor={(color) => {
-								const { r, g, b, a } = color.rgb
-								const rgbaString = `rgba(${r},${g},${b},${a})`
-								this.handleInputChange({
-									path: 'description.style.color',
-									value: rgbaString,
-									colorChange: true
-								})
-							}}
-						/>
-					</div>
-					<br />
-					{this.state.error}
-				</form>
-				<div id="create-new">
-					<button onClick={() => this.newArtist()}>Submit as new producer tool</button>
+					<button
+						onClick={() =>
+							window.confirm(
+								"Are you sure you want to delete this producer tool? (There's no going back!)"
+							) && this.deleteArtist()}
+					>
+						Delete producer tool
+					</button>
 				</div>
-				<button
-					onClick={() =>
-						window.confirm(
-							"Are you sure you want to delete this producer tool? (There's no going back!)"
-						) && this.deleteArtist()}
-				>
-					Delete producer tool
-				</button>
-				<br />
 				<AdminProducerTool
 					AdminAPI={this.props.AdminAPI}
 					setChangesMade={(changesMade) => this.props.setChangesMade(changesMade)}

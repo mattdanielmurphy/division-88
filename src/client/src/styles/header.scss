@@ -1,8 +1,6 @@
 .header-wrapper {
 	z-index: 999;
 	&.mobile {
-		position: fixed;
-		width: 100%;
 	}
 }
 header {
@@ -12,9 +10,7 @@ header {
 	text-transform: uppercase;
 	margin: 0 auto 0 auto;
 	padding: 1.5rem 2rem 0.5rem 2rem;
-	background: #000;
-	font-family: 'Josefin Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
-		'Lucida Grande', sans-serif;
+	font-family: $josefin;
 	#logo {
 		text-align: center;
 		color: inherit;
@@ -169,13 +165,13 @@ header {
 				transition: 0.15s ease-in-out;
 				position: relative;
 				&:hover {
-					color: #ffbf00;
+					color: $yellow;
 				}
 				&.active {
-					border-bottom: 2px solid #ffbf00;
-					color: #ffbf00;
+					border-bottom: 2px solid $yellow;
+					color: $yellow;
 					&:hover {
-						color: #ffbf00;
+						color: $yellow;
 					}
 				}
 			}
@@ -184,6 +180,12 @@ header {
 }
 
 // MOBILE
+
+.mobile {
+	header {
+		padding: 1.3rem 2rem 0.9rem 2rem;
+	}
+}
 
 @media (max-width: 440px) {
 	nav a {

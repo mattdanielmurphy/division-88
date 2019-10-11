@@ -64,7 +64,7 @@ export default class extends React.Component {
 						</MediaQuery>
 						<MediaQuery minWidth={850}>
 							<header>
-								<Nav />
+								<Nav adminVersion={this.state.adminVersion} />
 							</header>
 						</MediaQuery>
 					</div>

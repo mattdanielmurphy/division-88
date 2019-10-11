@@ -23,23 +23,24 @@ export default class extends React.Component {
 				<Switch>
 					{/* enforce trailing slashes for all routes (if a user goes directly to /123 but your links are like <Link to={item}/> to go to /123/item... only works with a trailing slash) */}
 					<Route
-						path="/:url*"
+						path='/:url*'
 						exact
 						strict
 						render={(props) => <Redirect to={`${props.location.pathname}/`} />}
 					/>
-					<Route exact path="/" component={Index} />
-					<Route exact path="/artists" component={Artists} />
-					<Route exact path="/artists/:artist" component={Artist} />
-					<Route exact path="/producer-tools" component={ProducerTools} />
-					<Route exact path="/producer-tools/:tool" component={ProducerTool} />
-					<Route exact path="/store" component={Store} />
-					<Route exact path="/about" component={About} />
-					<Route exact path="/admin" render={() => <Admin match={{ params: { page: 'index' } }} />} />
-					{/*<Route exact path="/admin/posts" component={AdminPosts} />*/}
-					<Route exact path="/admin/:page" component={Admin} />
+					<Route exact path='/' component={Index} />
+					<Route exact path='/artists' component={Artists} />
+					<Route exact path='/artists/:artist' component={Artist} />
+					<Route exact path='/producer-tools' component={ProducerTools} />
+					<Route exact path='/producer-tools/:tool' component={ProducerTool} />
+					<Route exact path='/store' component={Store} />
+					<Route exact path='/store/:category/:productId' component={Store} />
+					<Route exact path='/store/:category' component={Store} />
+					<Route exact path='/about' component={About} />
+					<Route exact path='/admin' render={() => <Admin match={{ params: { page: 'index' } }} />} />
+					<Route exact path='/admin/:page' component={Admin} />
 					<Route
-						path="/admin/posts/:post"
+						path='/admin/posts/:post'
 						render={(props) => (
 							<Admin
 								{...props}
@@ -53,7 +54,7 @@ export default class extends React.Component {
 						)}
 					/>
 					<Route
-						path="/admin/producer-tools/:tool"
+						path='/admin/producer-tools/:tool'
 						render={(props) => (
 							<Admin
 								{...props}
@@ -66,8 +67,8 @@ export default class extends React.Component {
 							/>
 						)}
 					/>
-					<Route exact path="/posts" component={Posts} />
-					<Route exact path="/posts/:post" component={Post} />
+					<Route exact path='/posts' component={Posts} />
+					<Route exact path='/posts/:post' component={Post} />
 					<Route component={FourOhFour} />
 				</Switch>
 

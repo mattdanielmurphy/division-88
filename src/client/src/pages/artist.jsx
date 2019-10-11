@@ -8,7 +8,7 @@ import Video from 'components/jsx/Video'
 
 class SpotifyPlayer extends React.Component {
 	state = { loading: true }
-	getEmbedUrl() {
+	getSpotifyEmbedUrl() {
 		let regexGroups = /(.*)\/(.*)\/(.*)\?/.exec(this.props.spotifyUrl)
 		if (!regexGroups) regexGroups = /(.*)\/(.*)\/(.*)/.exec(this.props.spotifyUrl)
 		let [ , url, contentType, id ] = regexGroups
@@ -16,7 +16,7 @@ class SpotifyPlayer extends React.Component {
 		return url
 	}
 	getIFrame() {
-		let src = this.getEmbedUrl()
+		let src = this.getSpotifyEmbedUrl()
 		return (
 			<div>
 				{this.state.loading && (
@@ -76,17 +76,14 @@ export default class extends React.Component {
 			>
 				<div className="left">
 					<TopTen artist={this.state.artist} />
-					{/*{this.state.artist.releases.length > 0 && (
-            <Releases artist={this.state.artist} />
-          )}*/}
 				</div>
 				<div className="right">
 					<div className="bio">{this.state.artist.description.bio}</div>
-					{this.state.artist.videoUrl && (
+					{this.state.artist.youtubeId && (
 						<div className="video" style={{ width: '100%', height: '300px' }}>
 							<Video
 								height={300}
-								videoSrc={this.state.artist.videoUrl}
+								youtubeId={this.state.artist.youtubeId}
 								imgSrc={this.state.artist.videoImg}
 							/>
 						</div>

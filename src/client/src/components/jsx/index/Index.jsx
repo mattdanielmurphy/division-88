@@ -107,7 +107,7 @@ export default class Index extends React.Component {
 										imgSrc={cell.imgSrc}
 										backgroundText={cell.backgroundText}
 										bottomText={cell.bottomText}
-										videoSrc={cell.videoSrc}
+										youtubeId={cell.youtubeId}
 										video={cell.video}
 										isPreview={this.props.gridWidth}
 									/>

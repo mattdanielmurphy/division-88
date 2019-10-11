@@ -44,16 +44,18 @@ export default class AdminPosts extends React.Component {
 		window.onbeforeunload = null
 	}
 	render = () => (
-		<Page>
+		<Page noHeading>
 			{this.state.redirect && <Redirect push to={`${this.state.redirect}`} />}
 			{this.state.posts ? (
-				<PostsTable
-					editPost={(title) => this.editPost(title)}
-					data={this.state.posts}
-					updatePost={(post) => this.updatePost(post)}
-					deletePost={(post) => this.deletePost(post)}
-					createPost={(post) => this.createPost(post)}
-				/>
+				<div id="posts-table">
+					<PostsTable
+						editPost={(title) => this.editPost(title)}
+						data={this.state.posts}
+						updatePost={(post) => this.updatePost(post)}
+						deletePost={(post) => this.deletePost(post)}
+						createPost={(post) => this.createPost(post)}
+					/>
+				</div>
 			) : (
 				<div>Loading...</div>
 			)}

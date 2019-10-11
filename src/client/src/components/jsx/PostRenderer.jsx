@@ -22,7 +22,7 @@ export default class PostRenderer extends React.Component {
 							</div>
 						) : block.type === 'downloadLink' ? (
 							<div key={index} className="content-block-download-link">
-								<a href={block.content.directDropboxDownloadLink} className="button">
+								<a href={block.content.directDropboxDownloadLink} className="button big">
 									{block.content.downloadButtonText || 'Download'}
 								</a>
 							</div>
@@ -32,7 +32,7 @@ export default class PostRenderer extends React.Component {
 								className="content-block-video"
 								ref={(vidCont) => (this.videoContainer = vidCont)}
 							>
-								<Video videoSrc={block.content.videoSrc} imgSrc={block.content.imgSrc} />
+								<Video youtubeId={block.content.youtubeId} imgSrc={block.content.imgSrc} />
 							</div>
 						) : (
 							<div />

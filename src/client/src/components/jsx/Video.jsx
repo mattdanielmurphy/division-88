@@ -5,14 +5,7 @@ import Image from './Image'
 import ReactResizeDetector from 'react-resize-detector'
 
 export default class Video extends React.Component {
-	getVideoId = () => {
-		if (this.props.videoSrc) {
-			const matches = /\?v=(.*)\?/.exec(this.props.videoSrc)
-			return matches ? matches[1] : ''
-		} else return ''
-	}
 	state = {
-		videoId: this.getVideoId(),
 		opts: {
 			playerVars: {
 				// https://developers.google.com/youtube/player_parameters
@@ -23,12 +16,12 @@ export default class Video extends React.Component {
 	}
 	onPlayerReady(e) {
 		if (this.state.userPressedPlayButton) this.player.playVideo()
-		const playButton = document.getElementById(`play-video-${this.state.videoId}`)
+		const playButton = document.getElementById(`play-video-${this.props.youtubeId}`)
 		playButton.addEventListener('click', () => (this.props.isPreview ? null : this.player.playVideo()))
 	}
 	handlePressPlayAndLoadVideo() {
 		if (this.props.isPreview) return
-		console.log(this.state.videoId)
+		console.log(this.props.youtubeId)
 		this.setState({ userPressedPlayButton: true })
 	}
 	getStyle = () => ({
@@ -64,7 +57,7 @@ export default class Video extends React.Component {
 	})
 	getHeightOfGridItem = () => this.containerEl.parentElement.clientHeight
 	handleResize = (width) => {
-		if (this.state.mounted && this.state.videoReady) {
+		if (this.state.mounted && this.state.videoReady && this.props.youtubeId) {
 			const gridItemHeight = this.getHeightOfGridItem()
 			this.updateVideoDimensions({
 				height: gridItemHeight,
@@ -78,13 +71,13 @@ export default class Video extends React.Component {
 		this.setVideoDimensions()
 	}
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		console.log('Video.jsx updated')
+		if (!this.props.youtubeId) return
 		const currentWidth = this.getWidth()
+		console.log('Video.jsx updated', currentWidth)
 		if (currentWidth !== this.state.outerWidth) {
+			console.log('setting videoDimensions')
 			this.setVideoDimensions()
 		}
-
-		if (this.props.videoSrc !== prevProps.videoSrc) this.setState({ videoId: this.getVideoId() })
 
 		if (this.props.imgSrc !== prevProps.imgSrc) {
 			// show placeholder image again if it's been updated but the user has played the video previously
@@ -111,19 +104,19 @@ export default class Video extends React.Component {
 						this.containerEl = containerEl
 					}}
 				>
-					{!this.props.videoSrc ? (
+					{!this.props.youtubeId ? (
 						<div>Waiting for a URL</div>
 					) : !this.props.imgSrc || this.state.userPressedPlayButton ? (
 						<div
 							className="video"
 							style={{
 								position: 'relative',
-								height: this.props.height || '30rem'
+								height: this.props.height || 'auto'
 							}}
 						>
 							{this.state.mounted && (
 								<YouTube
-									videoId={this.state.videoId}
+									videoId={this.props.youtubeId}
 									opts={this.state.opts}
 									onReady={(e) => this._onReady(e)}
 									onPlay={(e) => this.onPlay(e)}
@@ -135,11 +128,11 @@ export default class Video extends React.Component {
 					) : (
 						<div
 							onClick={() => this.handlePressPlayAndLoadVideo()}
-							id={`play-video-${this.state.videoId}`}
+							id={`play-video-${this.props.youtubeId}`}
 							style={this.getStyle()}
 							className={`video-link wrapper`}
 						>
-							<Image src={this.props.imgSrc} selected={this.props.selected} />
+							<Image src={this.props.imgSrc} centerPos selected={this.props.selected} />
 							<div className="icon-wrapper">
 								<FaPlay className="icon" size="2rem" />
 							</div>

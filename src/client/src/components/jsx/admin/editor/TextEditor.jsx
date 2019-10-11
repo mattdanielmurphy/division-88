@@ -3,6 +3,7 @@ import TextBlock from './TinyMCEEditor'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import uuid from 'short-uuid'
 import ImageUploader from 'components/jsx/admin/editor/ImageUploader'
+import { FaTrash } from 'react-icons/fa'
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -13,37 +14,45 @@ const reorder = (list, startIndex, endIndex) => {
 	return result
 }
 
-const grid = 8
+const grid = 20
 
 const getItemStyle = (isDragging, draggableStyle) => ({
 	// some basic styles to make the blocks look a bit nicer
 	userSelect: 'none',
-	padding: grid * 2,
-	margin: `0 0 ${grid}px 0`,
+	padding: grid,
+	margin: `0 0 ${grid / 2}px 0`,
 
 	// change background colour if dragging
-	background: isDragging ? 'lightgreen' : 'grey',
+	background: isDragging ? '#333' : '#222',
 
 	// styles we need to apply on draggables
 	...draggableStyle
 })
 
 const getListStyle = (isDraggingOver) => ({
-	background: isDraggingOver ? 'lightblue' : 'lightgrey',
+	background: isDraggingOver ? '#111' : 'none',
 	padding: grid
 })
 
 class VideoBlock extends React.Component {
 	state = {
 		videoSrc: this.props.videoSrc || '',
+		youtubeId: this.props.youtubeId || '',
 		imgSrc: this.props.imgSrc || ''
 	}
-	handleInputChange = async ({ e, path, value }) => {
-		if (e) {
-			path = e.target.id
-			value = e.target.value
-		}
-		this.setState({ [path]: value }, () => this.props.updateContent(this.state))
+	getYoutubeId = (videoSrc) => {
+		const matches = /\?v=([^?]*)/.exec(videoSrc)
+		return matches ? matches[1] : ''
+	}
+	getYoutubeThumbnail = (videoId) => `https://i.ytimg.com/vi/${videoId}/sddefault.jpg`
+	handleVideoSrcChange = (videoSrc) => {
+		const youtubeId = this.getYoutubeId(videoSrc)
+		const imgSrc = this.getYoutubeThumbnail(youtubeId)
+		this.setState({ youtubeId, videoSrc, imgSrc }, () => this.props.updateContent(this.state))
+	}
+	handleImgSrcChange = (imgSrc) => {
+		if (!imgSrc) this.handleVideoSrcChange(this.state.videoSrc)
+		this.setState({ imgSrc }, () => this.props.updateContent(this.state))
 	}
 	render = () => (
 		<div>
@@ -51,19 +60,18 @@ class VideoBlock extends React.Component {
 			<div className="property-input">
 				<label>video URL:</label>
 				<input
-					id="videoSrc"
-					onChange={(e) => this.handleInputChange({ e })}
+					onChange={(e) => this.handleVideoSrcChange(e.target.value)}
 					type="text"
 					value={this.state.videoSrc}
 					placeholder="example: https://www.youtube.com/watch?v=zyG8Vlw5aAw"
 				/>
 			</div>
 			<div className="property-input">
-				<label>video placeholder image (optional):</label>
+				<label>video placeholder image:</label>
 				<ImageUploader
 					AdminAPI={this.props.AdminAPI}
 					image={this.state.imgSrc}
-					setImage={(url) => this.handleInputChange({ path: 'imgSrc', value: url })}
+					setImage={(url) => this.handleImgSrcChange(url)}
 				/>
 			</div>
 		</div>
@@ -177,11 +185,13 @@ class BlockChooser extends React.Component {
 	render = () => (
 		<div>
 			<h3>Choose type</h3>
-			<button onClick={() => this.props.chooseType('text')}>text</button>
-			<button onClick={() => this.props.chooseType('photo')}>photo</button>
-			<button onClick={() => this.props.chooseType('video')}>video</button>
-			<button onClick={() => this.props.chooseType('soundcloud')}>Soundcloud</button>
-			<button onClick={() => this.props.chooseType('downloadLink')}>download link</button>
+			<div className="button-group">
+				<button onClick={() => this.props.chooseType('text')}>text</button>
+				<button onClick={() => this.props.chooseType('photo')}>photo</button>
+				<button onClick={() => this.props.chooseType('video')}>video</button>
+				<button onClick={() => this.props.chooseType('soundcloud')}>Soundcloud</button>
+				<button onClick={() => this.props.chooseType('downloadLink')}>download link</button>
+			</div>
 		</div>
 	)
 }
@@ -189,7 +199,7 @@ class BlockChooser extends React.Component {
 class BlockContainer extends React.Component {
 	render = () => (
 		<div className="content-block">
-			<div className="block-options">
+			<div className="block-options button-group">
 				<button className="add-block-button" onClick={() => this.props.addBlockAbove()}>
 					Add block above
 				</button>
@@ -199,8 +209,8 @@ class BlockContainer extends React.Component {
 				<button className="move-block-button" onClick={() => this.props.moveBlockDown()}>
 					Move down
 				</button>
-				<button onClick={() => this.props.deleteBlock()} className="danger">
-					delete block
+				<button onClick={() => this.props.deleteBlock()} className="trash-button">
+					<FaTrash />
 				</button>
 			</div>
 			<div className="content-block-content">

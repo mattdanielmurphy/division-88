@@ -1,5 +1,6 @@
 import React from 'react'
 import ColorPicker from '../ColorPicker'
+import VideoPicker from './VideoPicker'
 
 import ImageUploader from './ImageUploader'
 
@@ -7,6 +8,14 @@ export default class ArtistEditor extends React.Component {
 	state = {}
 	getArtist = async (index) => {
 		return await this.props.AdminAPI.get(`/artists/index/${index}`).then((r) => r.data)
+	}
+	updateState = (artist) => {
+		console.log(artist)
+		artist.videoImg = artist.imgSrc
+		delete artist.imgSrc
+		console.log(artist)
+		artist = Object.assign(this.state.artist, artist)
+		this.setState({ artist }, () => this.handleSubmit())
 	}
 	handleSubmit = async (e) => {
 		if (e) e.preventDefault()
@@ -151,7 +160,7 @@ export default class ArtistEditor extends React.Component {
 							}
 						/>
 					</div>
-					<br />
+					<div className="input-gap" />
 					<div className="property-input">
 						<label>Spotify URL (artist page)</label>
 						<input
@@ -160,23 +169,13 @@ export default class ArtistEditor extends React.Component {
 							value={this.state.artist.spotifyUrl || ''}
 						/>
 					</div>
-					<br />
-					<div className="property-input">
-						<label>artist video</label>
-						<input
-							onChange={(e) => this.handleInputChange({ e })}
-							id="videoUrl"
-							value={this.state.artist.videoUrl || ''}
-						/>
-					</div>
-					<div className="property-input">
-						<label>video placeholder image</label>
-						<ImageUploader
-							AdminAPI={this.props.AdminAPI}
-							image={this.state.artist.videoImg}
-							setImage={(url) => this.handleInputChange({ path: 'videoImg', value: url })}
-						/>
-					</div>
+					<div className="input-gap" />
+					<VideoPicker
+						videoSrc={this.state.artist.videoSrc}
+						youtubeId={this.state.artist.youtubeId}
+						imgSrc={this.state.artist.videoImg}
+						updateState={(artist) => this.updateState(artist)}
+					/>
 					<div className="property-input">
 						<label>artist image</label>
 						<ImageUploader
@@ -185,9 +184,7 @@ export default class ArtistEditor extends React.Component {
 							setImage={(url) => this.handleInputChange({ path: 'imgSrc', value: url })}
 						/>
 					</div>
-
-					<br />
-
+					<div className="input-gap" />
 					<div className="property-input">
 						<label>bio</label>
 						<textarea
@@ -199,27 +196,7 @@ export default class ArtistEditor extends React.Component {
 							value={(this.state.artist.description && this.state.artist.description.bio) || ''}
 						/>
 					</div>
-					<br />
-					{/*<div className='property-input'>
-                      <label>description background color</label>
-                      <ColorPicker
-                        color={
-                          (this.state.artist.description &&
-                            this.state.artist.description.style &&
-                            this.state.artist.description.style.backgroundColor) ||
-                          'darkgrey'
-                        }
-                        setColor={(color) => {
-                          const { r, g, b, a } = color.rgb
-                          const rgbaString = `rgba(${r},${g},${b},${a})`
-                          this.handleInputChange({
-                            path: 'description.style.backgroundColor',
-                            value: rgbaString,
-                            colorChange: true,
-                          })
-                        }}
-                      />
-                    </div>*/}
+					<div className="input-gap" />
 					<div className="property-input">
 						<label>description text color</label>
 						<ColorPicker
@@ -240,14 +217,7 @@ export default class ArtistEditor extends React.Component {
 							}}
 						/>
 					</div>
-					<br />
-					{/* <ReleasesTable
-            data={this.state.artist.releases}
-            updateData={(data) => this.updateReleases(data)}
-          /> */}
-					{/* <PropertyInput
-						value={this.state.description && this.state.description.bio}
-					></PropertyInput> */}
+					<div className="input-gap" />
 					{this.state.error}
 				</form>
 				<div id="create-new">

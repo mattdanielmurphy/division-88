@@ -1,39 +1,6 @@
 import React from 'react'
 import Page from '../components/jsx/Page'
-import { Link } from 'react-router-dom'
-import { Textfit } from 'react-textfit-17'
 import BlockEditor from 'components/jsx/admin/editor/BlockEditor'
-
-class AdminPostHeading extends React.Component {
-	render = () => (
-		<div>
-			<div className="top-heading admin-post-heading">
-				<div className="heading">
-					<Textfit mode="single" max={50}>
-						{this.props.title}
-						{/*<input*/}
-						{/*  type='text'*/}
-						{/*  className='title-input'*/}
-						{/*  value={this.props.title}*/}
-						{/*  onChange={(e) => this.props.handleTitleChange(e)}*/}
-						{/*/>*/}
-					</Textfit>
-				</div>
-			</div>
-
-			{this.props.titleRenamed && (
-				<div className="title-renamed-warning">
-					WARNING: Title has been renamed. This page URL is based on the title. Refreshing this page will
-					result in a 404 error.{' '}
-					<Link to={`../${this.props.getPostUrl()}`} className="link">
-						Click here
-					</Link>{' '}
-					to navigate to the new page now.
-				</div>
-			)}
-		</div>
-	)
-}
 
 export default class AdminProducerTool extends React.Component {
 	state = {
@@ -88,39 +55,16 @@ export default class AdminProducerTool extends React.Component {
 	}
 	getPostUrl = () => this.state.title.split(' ').join('-')
 	render = () => (
-		<div>
-			<Page noHeading isPreview id="admin-tool">
-				<AdminPostHeading
-					titleRenamed={this.state.titleRenamed}
-					getPostUrl={() => this.getPostUrl()}
-					title={this.state.title}
-					handleTitleChange={(e) => this.handleTitleChange(e)}
+		<Page noHeading isPreview id="admin-tool">
+			{this.state.tool && this.state.tool.blocks ? (
+				<BlockEditor
+					blocks={this.state.tool.blocks}
+					updateBlocks={(content) => this.updateBlocks(content)}
+					AdminAPI={this.props.AdminAPI}
 				/>
-
-				{this.state.tool && this.state.tool.blocks ? (
-					<BlockEditor
-						blocks={this.state.tool.blocks}
-						updateBlocks={(content) => this.updateBlocks(content)}
-						AdminAPI={this.props.AdminAPI}
-						// beforePostRenderer={
-						// 	<div style={{ marginBottom: '1rem' }}>
-						// 		<a href={this.state.tool.dropboxDirectUrl} className="button">
-						// 			Download
-						// 		</a>
-						// 	</div>
-						// }
-						// afterPostRenderer={
-						// 	<div style={{ marginTop: '1rem' }}>
-						// 		<a href={this.state.tool.dropboxDirectUrl} className="button">
-						// 			Download
-						// 		</a>
-						// 	</div>
-						// }
-					/>
-				) : (
-					<div>Loading</div>
-				)}
-			</Page>
-		</div>
+			) : (
+				<div>Loading</div>
+			)}
+		</Page>
 	)
 }

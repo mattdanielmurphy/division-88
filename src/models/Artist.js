@@ -17,7 +17,8 @@ const ArtistSchema = new Schema({
 		},
 		required: true
 	},
-	videoUrl: { type: String },
+	videoSrc: { type: String },
+	youtubeId: { type: String },
 	videoImg: { type: String },
 	spotifyUrl: { type: String, required: true },
 	releases: {
@@ -36,25 +37,3 @@ const ArtistSchema = new Schema({
 const Artist = mongoose.model('artist', ArtistSchema)
 
 module.exports = Artist
-
-// const example = {
-// 	name: 'Billy Wild',
-// 	page: 'billy-wild',
-// 	imgSrc: '/images/billy.jpg',
-// 	description: {
-// 		style: {
-// 			backgroundColor: '#D2CFC1',
-// 			color: '#2C25C5'
-// 		},
-// 		bio:
-// 			'Bacon ipsum dolor amet meatloaf pig andouille kielbasa bacon picanha tenderloin. Ground round beef ribs rump, meatloaf spare ribs tongue brisket biltong leberkas pig kielbasa. Ribeye picanha sausage, tongue sirloin landjaeger flank venison ham hock tri-tip pork chop shank. Brisket fatback strip steak tail.'
-// 	},
-// 	spotifyUrl: 'https://open.spotify.com/artist/6zNQ51HIfnzskqL2R82jYD?si=rEm8CzOpQIOnzqqCJIBFYQ',
-// 	releases: [
-// 		{
-// 			name: 'All Nighters',
-// 			spotifyUrl: 'https://open.spotify.com/album/3t9S03TNKktyKlNysyJS8k?si=ZJk-l8WKRW692NLHGnPlow',
-// 			cover: '/images/all-nighters.jpg'
-// 		}
-// 	]
-// }

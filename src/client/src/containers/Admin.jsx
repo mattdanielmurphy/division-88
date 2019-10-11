@@ -10,7 +10,7 @@ import axios from 'axios/index'
 import Page from '../components/jsx/Page'
 import AdminControls from '../components/jsx/admin/AdminControls'
 import PagePreview from '../components/jsx/admin/PagePreview'
-import Editor from '../components/jsx/admin/editor/Editor'
+import EditorAndPreview from '../components/jsx/admin/editor/EditorAndPreview'
 
 import Index from './AdminIndex'
 import Artists from '../pages/artists'
@@ -63,8 +63,32 @@ class Admin extends React.Component {
     selectedTool: 0,
     loading: true,
     dataReady: false,
-    selectedHeading: undefined,
-  }
+		selectedHeading: undefined,
+		pageDimensions: {
+      mobile: {
+        width: 375,
+        height: 667,
+      },
+      tablet: {
+        width: 768,
+        height: 1024,
+      },
+      desktop: {
+        width: 1366,
+        height: 768,
+      },
+    }
+	}
+	getCurrentPageWidth = () => this.state.pageDimensions[this.state.view].width
+	getCurrentPageHeight = () => this.state.pageDimensions[this.state.view].height
+	getAdminRootStyle() {
+		const style = {
+			gridTemplateColumns: `minmax(300px, 600px) ${this.getCurrentPageWidth()}px`
+		}
+
+		console.log(style)
+		return style
+	}
   checkForChangesMade() {
     console.log('checking for chagnes made')
     this.props.AdminAPI.get('/info/changes').then((r) => {
@@ -177,7 +201,7 @@ class Admin extends React.Component {
   setBodyStyle = () => {
     const bodyStyle = document.getElementsByTagName('body')[0].style
     bodyStyle.backgroundColor = '#151515'
-    bodyStyle.marginTop = '3.5rem'
+    bodyStyle.marginTop = '3.1rem'
   }
   // grid-specific
   undoLayoutChange() {
@@ -470,13 +494,39 @@ class Admin extends React.Component {
           />
         ) : (
           <div id='admin-root'>
-            {this.state.dataReady ? (
+            <EditorAndPreview
+							style={this.getAdminRootStyle()}
+							setChangesMade={(changesMade) => this.setChangesMade(changesMade)}
+              AdminAPI={this.props.AdminAPI}
+              {...this.props}
+              {...this.state}
+              selectCell={(index) => this.selectCell(index)}
+              selectedHeading={this.state.selectedHeading}
+              updateHeading={(heading) => this.updateHeading(heading)}
+              updateArtists={(index, artist) =>
+                this.updateArtists(index, artist)
+              }
+              refreshArtists={(index, artist, newIndex) =>
+                this.refreshArtists(index, artist, newIndex)
+              }
+              updateGrid={({ layouts, cells }) =>
+                this.updateGrid({ layouts, cells })
+              }
+              refreshGrid={({ cells }) => this.refreshGrid({ cells })}
+              updateTools={(index, tool) => this.updateTools(index, tool)}
+              refreshTools={(index, tool, newIndex) =>
+                this.refreshTools(index, tool, newIndex)
+              }
+							currentPageHeight={this.getCurrentPageHeight()}
+            >
+						{this.state.dataReady ? (
               <PagePreview
                 AdminAPI={this.props.AdminAPI}
                 pageName={this.getPageName()}
                 page={pages[this.getPageName()]}
                 view={this.state.view}
                 scale={this.state.scale}
+								pageDimensions={this.state.pageDimensions}
                 // Heading
                 headingBackgroundImage={this.state.headingBackgroundImage}
                 selectHeading={(pageName) => this.selectHeading(pageName)}
@@ -506,29 +556,7 @@ class Admin extends React.Component {
             ) : (
               <div>loading...</div>
             )}
-            <Editor
-							setChangesMade={(changesMade) => this.setChangesMade(changesMade)}
-              AdminAPI={this.props.AdminAPI}
-              {...this.props}
-              {...this.state}
-              selectCell={(index) => this.selectCell(index)}
-              selectedHeading={this.state.selectedHeading}
-              updateHeading={(heading) => this.updateHeading(heading)}
-              updateArtists={(index, artist) =>
-                this.updateArtists(index, artist)
-              }
-              refreshArtists={(index, artist, newIndex) =>
-                this.refreshArtists(index, artist, newIndex)
-              }
-              updateGrid={({ layouts, cells }) =>
-                this.updateGrid({ layouts, cells })
-              }
-              refreshGrid={({ cells }) => this.refreshGrid({ cells })}
-              updateTools={(index, tool) => this.updateTools(index, tool)}
-              refreshTools={(index, tool, newIndex) =>
-                this.refreshTools(index, tool, newIndex)
-              }
-            />
+						</EditorAndPreview>
           </div>
         )}
       </div>

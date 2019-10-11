@@ -24,3 +24,48 @@
 		}
 	}
 }
+
+#posts-table {
+	max-width: 800px;
+	margin: 2rem auto;
+}
+
+.MuiTableCell-body {
+	color: white !important;
+}
+
+.MuiPaper-root {
+	color: white !important;
+	background: #111 !important;
+}
+
+.MTableHeader-header-144 {
+	background: none !important;
+	color: white !important;
+}
+
+.MuiInputBase-root {
+	color: white !important;
+}
+
+.MuiInput-underline:before {
+	border-bottom: 1px solid white !important;
+}
+
+.MuiInput-underline:after {
+	border-bottom: 1px solid $yellow !important;
+}
+
+.MTableToolbar-actions-35 {
+	color: #aaa !important;
+}
+
+#post .top-heading,
+#admin-post .top-heading {
+	div {
+		bottom: 0;
+	}
+	padding: 1rem 0 0 0;
+	height: 8rem;
+	text-align: center;
+}
