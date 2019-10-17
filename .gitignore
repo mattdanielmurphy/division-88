@@ -18,6 +18,7 @@ src/client/.env.local
 src/client/.env.development.local
 src/client/.env.test.local
 src/client/src.env.production.local
+build
 
 # Logs
 logs

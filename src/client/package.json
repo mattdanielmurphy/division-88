@@ -28,6 +28,7 @@
     "react-scripts": "3.0.1",
     "react-simple-soundcloud-widget": "^0.0.5",
     "react-spinkit": "^3.0.0",
+    "react-stripe-elements": "^5.0.1",
     "react-textfit-17": "^1.1.1",
     "react-with-firebase-auth": "^1.0.3",
     "react-youtube": "^7.9.0",
