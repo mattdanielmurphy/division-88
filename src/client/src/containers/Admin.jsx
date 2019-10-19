@@ -63,8 +63,8 @@ class Admin extends React.Component {
     selectedTool: 0,
     loading: true,
     dataReady: false,
-		selectedHeading: undefined,
-		pageDimensions: {
+    selectedHeading: undefined,
+    pageDimensions: {
       mobile: {
         width: 375,
         height: 667,
@@ -78,53 +78,57 @@ class Admin extends React.Component {
         height: 768,
       },
     }
-	}
-	getCurrentPageWidth = () => this.state.pageDimensions[this.state.view].width
-	getCurrentPageHeight = () => this.state.pageDimensions[this.state.view].height
-	getAdminRootStyle() {
-		const style = {
-			gridTemplateColumns: `minmax(300px, 600px) ${this.getCurrentPageWidth()}px`
-		}
+  }
+  getCurrentPageWidth = () => this.state.pageDimensions[this.state.view].width
+  getCurrentPageHeight = () => this.state.pageDimensions[this.state.view].height
 
-		console.log(style)
-		return style
-	}
+  getAdminRootStyle() {
+    const style = {
+      gridTemplateColumns: `minmax(300px, 600px) ${this.getCurrentPageWidth()}px`
+    }
+
+    console.log(style)
+    return style
+  }
+
   checkForChangesMade() {
     console.log('checking for chagnes made')
     this.props.AdminAPI.get('/info/changes').then((r) => {
       if (r.data && r.data.changesMade) this.setChangesMade(true)
     })
   }
+
   setChangesMade(changesMade) {
     console.log('setting changes made to', changesMade)
-    this.setState({ changesMade })
+    this.setState({changesMade})
   }
-  setScale = (scale) => this.setState({ scale })
-  setView = (view) => this.setState({ view })
-  updateGrid = ({ layouts, cells }) => {
-    if (layouts && cells) this.setState({ layouts, cells, changesMade: true })
-    else if (layouts) this.setState({ layouts, changesMade: true })
-    else if (cells) this.setState({ cells, changesMade: true })
+
+  setScale = (scale) => this.setState({scale})
+  setView = (view) => this.setState({view})
+  updateGrid = ({layouts, cells}) => {
+    if (layouts && cells) this.setState({layouts, cells, changesMade: true})
+    else if (layouts) this.setState({layouts, changesMade: true})
+    else if (cells) this.setState({cells, changesMade: true})
   }
-  refreshGrid = ({ cells }) => {
-    const { cellsTemp } = this.state
+  refreshGrid = ({cells}) => {
+    const {cellsTemp} = this.state
     // only refresh if not currently refreshing (otherwise will wipe out value)
     if (cellsTemp)
-      this.setState({ cellsTemp: {}, cells: cellsTemp, changesMade: true })
-    else this.setState({ cells: {}, cellsTemp: cells, changesMade: true })
+      this.setState({cellsTemp: {}, cells: cellsTemp, changesMade: true})
+    else this.setState({cells: {}, cellsTemp: cells, changesMade: true})
   }
   updateArtists = (index, artist) => {
-    const { artists, artistsTemp } = this.state
+    const {artists, artistsTemp} = this.state
     if (artistsTemp) {
       artistsTemp[index] = artist
-      this.setState({ artistsTemp, artists: artists, changesMade: true })
+      this.setState({artistsTemp, artists: artists, changesMade: true})
     } else {
       artists[index] = artist
-      this.setState({ artists, artistsTemp, changesMade: true })
+      this.setState({artists, artistsTemp, changesMade: true})
     }
   }
   refreshArtists = (index, artist, newIndex) => {
-    const { artists, artistsTemp } = this.state
+    const {artists, artistsTemp} = this.state
     // only refresh if not currently refreshing (otherwise will wipe out value)
     if (artistsTemp) {
       artistsTemp[index] = artist
@@ -143,21 +147,21 @@ class Admin extends React.Component {
     }
     if (newIndex !== undefined) {
       window.location.reload()
-      this.setState({ selectedArtist: newIndex, changesMade: true })
+      this.setState({selectedArtist: newIndex, changesMade: true})
     }
   }
   updateTools = (index, tool) => {
-    const { tools, toolsTemp } = this.state
+    const {tools, toolsTemp} = this.state
     if (toolsTemp) {
       toolsTemp[index] = tool
-      this.setState({ toolsTemp, tools, changesMade: true })
+      this.setState({toolsTemp, tools, changesMade: true})
     } else {
       tools[index] = tool
-      this.setState({ tools, toolsTemp, changesMade: true })
+      this.setState({tools, toolsTemp, changesMade: true})
     }
   }
   refreshTools = (index, tool, newIndex) => {
-    const { tools, toolsTemp } = this.state
+    const {tools, toolsTemp} = this.state
     // only refresh if not currently refreshing (otherwise will wipe out value)
     if (toolsTemp) {
       toolsTemp[index] = tool
@@ -168,10 +172,10 @@ class Admin extends React.Component {
       })
     } else {
       tools[index] = tool
-      this.setState({ tools: undefined, toolsTemp: tools, changesMade: true })
+      this.setState({tools: undefined, toolsTemp: tools, changesMade: true})
     }
     if (newIndex !== undefined) {
-      this.setState({ selectedtool: newIndex, changesMade: true })
+      this.setState({selectedtool: newIndex, changesMade: true})
       window.location.reload()
     }
   }
@@ -182,14 +186,14 @@ class Admin extends React.Component {
     })
   }
   updateCell = (index, cell) =>
-    this.setState({ updatedCell: { index, cell }, changesMade: true })
+    this.setState({updatedCell: {index, cell}, changesMade: true})
   selectCell = (index) => {
-    this.setState({ selectedCell: index, selectedHeading: undefined })
+    this.setState({selectedCell: index, selectedHeading: undefined})
   }
   selectArtist = (index) =>
-    this.setState({ selectedArtist: index, selectedHeading: undefined })
+    this.setState({selectedArtist: index, selectedHeading: undefined})
   selectTool = (index) =>
-    this.setState({ selectedTool: index, selectedHeading: undefined })
+    this.setState({selectedTool: index, selectedHeading: undefined})
   selectHeading = (pageName) => {
     this.setState({
       selectedHeading: pageName,
@@ -203,6 +207,7 @@ class Admin extends React.Component {
     bodyStyle.backgroundColor = '#151515'
     bodyStyle.marginTop = '3.1rem'
   }
+
   // grid-specific
   undoLayoutChange() {
     const layouts = this.layoutsHistory[this.layoutsHistory.length - 2]
@@ -214,9 +219,10 @@ class Admin extends React.Component {
         0,
         this.layoutsHistory.length - 2,
       )
-      this.setState({ layouts })
+      this.setState({layouts})
     }
   }
+
   redoLayoutChange() {
     if (!this.layoutsUndone) return
     const layouts = this.layoutsUndone[this.layoutsUndone.length - 1]
@@ -225,17 +231,18 @@ class Admin extends React.Component {
         0,
         this.layoutsUndone.length - 1,
       )
-      this.setState({ layouts })
+      this.setState({layouts})
     }
   }
+
   onLayoutChange(layout, layouts) {
     if (JSON.stringify(layout) === JSON.stringify(this.lastLayoutChange)) return
-    this.setState({ layouts, changesMade: true })
+    this.setState({layouts, changesMade: true})
     this.lastLayoutChange = layout
     if (!this.layoutsHistory) this.layoutsHistory = [layout]
     this.layoutsHistory.push(layouts)
-    console.log('updateGrid: localhost/api/grids/index', { layouts })
-    this.props.AdminAPI.post('/grids/index', { layouts })
+    console.log('updateGrid: localhost/api/grids/index', {layouts})
+    this.props.AdminAPI.post('/grids/index', {layouts})
   }
 
   setKeyBindings = () => {
@@ -259,21 +266,21 @@ class Admin extends React.Component {
     const artists = await this.props.AdminAPI.get('/artists').then(
       (r) => r.data,
     )
-    this.setState({ artists })
+    this.setState({artists})
     return artists
   }
   getArtistFromDatabase = async (index) => {
     const artist = await this.props.AdminAPI.get(`/artist/index/${index}`).then(
       (r) => r.data,
     )
-    this.setState({ artist })
+    this.setState({artist})
     return artist
   }
   getProducerToolsFromDatabase = async (index) => {
     const tools = await this.props.AdminAPI.get('/producer-tools').then(
       (r) => r.data,
     )
-    this.setState({ tools })
+    this.setState({tools})
     return tools
   }
   getGridFromDatabase = async () => {
@@ -283,7 +290,7 @@ class Admin extends React.Component {
     const cells = await this.props.AdminAPI.get('/grids/index/cells').then(
       (r) => r.data,
     )
-    this.setState({ cells, layouts })
+    this.setState({cells, layouts})
     this.layoutsHistory = [layouts]
     this.layoutsUndone = []
     return cells
@@ -292,19 +299,19 @@ class Admin extends React.Component {
     const aboutText = await this.props.AdminAPI.get('/about/text').then(
       (r) => r.data,
     )
-    this.setState({ aboutText })
+    this.setState({aboutText})
     return aboutText
   }
   getHeadingBackgroundImage = async () => {
     const headingBackgroundImage = await this.props.AdminAPI.get(
       `/page-info/${this.props.match.params.page}`,
     ).then((r) => r.data.headingBackgroundImage)
-    this.setState({ headingBackgroundImage })
+    this.setState({headingBackgroundImage})
     return headingBackgroundImage
   }
   getPageData = async () => {
     const page = this.getPageName()
-    this.setState({ pageName: page })
+    this.setState({pageName: page})
 
     if (page === 'artists') return await this.getArtistsFromDatabase()
     else if (page === 'artist') return await this.getArtistFromDatabase()
@@ -322,17 +329,19 @@ class Admin extends React.Component {
       this.getPageData(pageName).then((r) => res(r)),
     )
     await Promise.all([getHeadingData, getPageData])
-    this.setState({ dataReady: true })
+    this.setState({dataReady: true})
   }
+
   setToken() {
     firebase
       .auth()
       .currentUser.getIdToken(/* forceRefresh */ true)
       .then((idToken) => {
-        this.setState({ idToken })
+        this.setState({idToken})
       })
       .catch((error) => console.log(error))
   }
+
   setDataNotReady = () => {
     this.setState({
       dataReady: false,
@@ -345,42 +354,45 @@ class Admin extends React.Component {
   componentDidUpdate = (prevProps, prevState) => {
     if (this.state.changesMade !== prevState.changesMade) {
       console.log('changes made has changed values')
-      this.props.AdminAPI.post('/info', { changesMade: this.state.changesMade })
+      this.props.AdminAPI.post('/info', {changesMade: this.state.changesMade})
     }
     if (this.props.user !== prevProps.user) {
       if (this.props.user) {
         this.setToken()
-        this.setState({ userVerified: this.verifyUser(this.props.user) })
+        this.setState({userVerified: this.verifyUser(this.props.user)})
       }
-      this.setState({ loading: false })
+      this.setState({loading: false})
     }
     if (this.props.match.params.page !== prevProps.match.params.page) {
       this.setDataNotReady()
       this.getDataForPage()
       // bring values back from temp storage once component updated (used to properly refresh data... unfortunately necessary)
     } else if (this.state.cellsTemp)
-      this.setState({ cells: this.state.cellsTemp, cellsTemp: undefined })
+      this.setState({cells: this.state.cellsTemp, cellsTemp: undefined})
     else if (this.state.artistsTemp)
       this.setState({
         artists: this.state.artistsTemp,
         artistsTemp: undefined,
       })
     else if (this.state.toolsTemp)
-      this.setState({ tools: this.state.toolsTemp, toolsTemp: undefined })
+      this.setState({tools: this.state.toolsTemp, toolsTemp: undefined})
   }
   signOut = () => firebase.auth().signOut()
   getPageName = () => this.props.match.params.page
   getPostName = () => this.props.match.params.post
   getToolName = () => this.props.match.params.tool
+
   handleClickSignIn(e) {
     e.preventDefault()
     this.props.signInWithGoogle()
   }
+
   componentDidMount() {
     this.getDataForPage()
     this.setKeyBindings()
     this.setBodyStyle()
   }
+
   verifyUser = (user) => {
     console.log('verifying user', user && user.uid)
     const admins = [
@@ -398,17 +410,17 @@ class Admin extends React.Component {
 
     if (isAdmin) {
       this.checkForChangesMade()
-      if (this.state.signInFailed) this.setState({ signInFailed: false })
+      if (this.state.signInFailed) this.setState({signInFailed: false})
     } else {
       console.log('not isAdmin', isAdmin)
-      this.setState({ signInFailed: true })
+      this.setState({signInFailed: true})
     }
 
     return isAdmin
   }
   render = () =>
     this.state.loading ? (
-      <Spinner className='loading text-center' name='ball-clip-rotate' />
+      <Spinner className='loading text-center' name='ball-clip-rotate'/>
     ) : this.props.user && this.state.signInFailed ? (
       <Page heading='Authentication Failed'>
         <section className='text sign-in-prompt'>
@@ -423,7 +435,7 @@ class Admin extends React.Component {
           <p>
             <button
               onClick={(e) => {
-                this.setState({ signInFailed: false }, () => {
+                this.setState({signInFailed: false}, () => {
                   this.props.signOut()
                   // Location.reload()
                   this.handleClickSignIn(e)
@@ -475,6 +487,8 @@ class Admin extends React.Component {
             history={this.props.history}
             AdminAPI={this.props.AdminAPI}
             postName={this.props.match.params.post}
+            view={this.state.view}
+            pageDimensions={this.state.pageDimensions}
           />
         ) : this.getPageName() === 'producer-tool' ? (
           <AdminProducerTool
@@ -495,8 +509,8 @@ class Admin extends React.Component {
         ) : (
           <div id='admin-root'>
             <EditorAndPreview
-							style={this.getAdminRootStyle()}
-							setChangesMade={(changesMade) => this.setChangesMade(changesMade)}
+              style={this.getAdminRootStyle()}
+              setChangesMade={(changesMade) => this.setChangesMade(changesMade)}
               AdminAPI={this.props.AdminAPI}
               {...this.props}
               {...this.state}
@@ -509,54 +523,53 @@ class Admin extends React.Component {
               refreshArtists={(index, artist, newIndex) =>
                 this.refreshArtists(index, artist, newIndex)
               }
-              updateGrid={({ layouts, cells }) =>
-                this.updateGrid({ layouts, cells })
+              updateGrid={({layouts, cells}) =>
+                this.updateGrid({layouts, cells})
               }
-              refreshGrid={({ cells }) => this.refreshGrid({ cells })}
+              refreshGrid={({cells}) => this.refreshGrid({cells})}
               updateTools={(index, tool) => this.updateTools(index, tool)}
               refreshTools={(index, tool, newIndex) =>
                 this.refreshTools(index, tool, newIndex)
               }
-							currentPageHeight={this.getCurrentPageHeight()}
+              currentPageHeight={this.getCurrentPageHeight()}
             >
-						{this.state.dataReady ? (
-              <PagePreview
-                AdminAPI={this.props.AdminAPI}
-                pageName={this.getPageName()}
-                page={pages[this.getPageName()]}
-                view={this.state.view}
-                scale={this.state.scale}
-								pageDimensions={this.state.pageDimensions}
-                // Heading
-                headingBackgroundImage={this.state.headingBackgroundImage}
-                selectHeading={(pageName) => this.selectHeading(pageName)}
-                headingSelected={this.state.selectedHeading}
-                // Grid
-                selectCell={(index) => this.selectCell(index)}
-                selectedCell={this.state.selectedCell}
-                layouts={this.state.layouts}
-                cells={this.state.cells}
-                onLayoutChange={(layout, layouts) =>
-                  this.onLayoutChange(layout, layouts)
-                }
-                // Artists
-                selectArtist={(artist) => this.selectArtist(artist)}
-                selectedArtist={this.state.selectedArtist}
-                artists={this.state.artists}
-                // Producer Tools
-                selectTool={(tool) => this.selectTool(tool)}
-                selectedTool={this.state.selectedTool}
-                tools={this.state.tools}
-                toolName={this.getToolName()}
-                // Posts
-                postName={this.getPostName()}
-                // About
-                aboutText={this.state.aboutText}
-              />
-            ) : (
-              <div>loading...</div>
-            )}
-						</EditorAndPreview>
+              {this.state.dataReady ? (
+                <PagePreview
+                  AdminAPI={this.props.AdminAPI}
+                  pageName={this.getPageName()}
+                  page={pages[this.getPageName()]}
+                  view={this.state.view}
+                  pageDimensions={this.state.pageDimensions}
+                  // Heading
+                  headingBackgroundImage={this.state.headingBackgroundImage}
+                  selectHeading={(pageName) => this.selectHeading(pageName)}
+                  headingSelected={this.state.selectedHeading}
+                  // Grid
+                  selectCell={(index) => this.selectCell(index)}
+                  selectedCell={this.state.selectedCell}
+                  layouts={this.state.layouts}
+                  cells={this.state.cells}
+                  onLayoutChange={(layout, layouts) =>
+                    this.onLayoutChange(layout, layouts)
+                  }
+                  // Artists
+                  selectArtist={(artist) => this.selectArtist(artist)}
+                  selectedArtist={this.state.selectedArtist}
+                  artists={this.state.artists}
+                  // Producer Tools
+                  selectTool={(tool) => this.selectTool(tool)}
+                  selectedTool={this.state.selectedTool}
+                  tools={this.state.tools}
+                  toolName={this.getToolName()}
+                  // Posts
+                  postName={this.getPostName()}
+                  // About
+                  aboutText={this.state.aboutText}
+                />
+              ) : (
+                <div>loading...</div>
+              )}
+            </EditorAndPreview>
           </div>
         )}
       </div>
@@ -573,32 +586,34 @@ class Auth extends React.Component {
 
   AdminAPI = axios.create({
     baseURL: `${env.apiUrl}/admin`,
-    headers: { 'access-token': this.state.idToken },
+    headers: {'access-token': this.state.idToken},
   })
+
   componentDidMount() {
     this.AdminAPI.interceptors.request.use(
       async (options) => {
         options.headers['access-token'] = await this.state.idToken
         return options
       },
-      function(error) {
+      function (error) {
         console.log('Request error: ', error)
         return Promise.reject(error)
       },
     )
   }
+
   componentDidUpdate = async (prevProps) => {
     if (this.props.user !== prevProps.user) {
       if (this.props.user) {
         const idToken = await this.getIdToken()
         console.log(idToken)
         const idTokenPromise = new Promise((resolve) => resolve(idToken))
-        this.setState({ idToken: idTokenPromise })
+        this.setState({idToken: idTokenPromise})
       }
     }
   }
 
-  render = () => <Admin {...this.props} AdminAPI={this.AdminAPI} />
+  render = () => <Admin {...this.props} AdminAPI={this.AdminAPI}/>
 }
 
 export default withFirebaseAuth({
