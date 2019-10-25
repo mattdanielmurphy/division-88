@@ -10961,13 +10961,6 @@ react-grid-layout@^0.16.6:
     react-draggable "3.x"
     react-resizable "1.x"
 
-react-grid-system@^4.4.6:
-  version "4.4.11"
-  resolved "https://registry.yarnpkg.com/react-grid-system/-/react-grid-system-4.4.11.tgz#724ae96dc30e69261d174054a0fc7ecc86720be3"
-  integrity sha512-ehaQLEi4WyX/DfjD6bUf2Y6I60T28YpJUJhcEoM+YcTeXqgNqVyp3Prq4cYryV9bYKzK046d6dff2VwnopojNg==
-  dependencies:
-    prop-types "^15.7.2"
-
 react-icons@^3.7.0:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-3.7.0.tgz#64fe46231fabfeea27895edeae6c3b78114b8c8f"

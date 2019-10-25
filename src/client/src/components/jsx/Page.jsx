@@ -1,5 +1,5 @@
 import React from 'react'
-import { Textfit } from 'react-textfit-17'
+import {Textfit} from 'react-textfit-17'
 import ReactResizeDetector from 'react-resize-detector'
 import API from 'components/js/api'
 
@@ -11,6 +11,7 @@ class Heading extends React.Component {
         : '',
     },
   }
+
   componentDidUpdate(prevProps) {
     if (
       prevProps.headingBackgroundImage !== this.props.headingBackgroundImage
@@ -23,17 +24,18 @@ class Heading extends React.Component {
         })
       else
         this.setState({
-          style: { backgroundImage: 'none', backgroundColor: '#444' },
+          style: {backgroundImage: 'none', backgroundColor: '#444'},
         })
     }
   }
+
   render = () => (
     <div
       className={`top-heading ${
         this.props.headingBackgroundImage ? 'background-image' : ''
       } ${this.props.headingSelected ? 'selected' : ''}`}
       style={this.state.style}
-      onClick={() => (this.props.isPreview ? this.props.selectHeading() : {})}
+      onClick={() => (this.props.isPreview && this.props.selectHeading ? this.props.selectHeading() : {})}
     >
       <div className='heading'>
         <Textfit mode='single' max={50}>
@@ -68,14 +70,16 @@ export default class Page extends React.Component {
     heading: '',
     pageName: '',
   }
+
   getHeading() {
     if (this.props.heading) {
       // if string provided instead of object, assume it heading text
       return typeof this.props.heading === 'object'
         ? this.props.heading
-        : { text: this.props.heading }
-    } else return { text: this.getPageName() }
+        : {text: this.props.heading}
+    } else return {text: this.getPageName()}
   }
+
   getMainContainerClassName(width) {
     const tablet = 768
     const desktop = 1366
@@ -84,6 +88,7 @@ export default class Page extends React.Component {
       width < tablet ? 'mobile' : width < desktop ? 'tablet' : 'desktop'
     return `main-container ${view}`
   }
+
   getParentElementsBeforeBody(element) {
     const parentElements = []
     const getParentElement = (element) => {
@@ -97,18 +102,21 @@ export default class Page extends React.Component {
     getParentElement(element)
     return parentElements
   }
+
   setParentElementsTo100PercentHeight() {
     const parentElements = this.getParentElementsBeforeBody(
       document.querySelector('.main-container'),
     )
     parentElements.forEach((element) => (element.style.minHeight = '100%'))
   }
+
   getHeadingBackgroundImage = async () => {
     const headingBackgroundImage = await API.get(
       `/page-info/${this.getPathName()}`,
     ).then((r) => r.data.headingBackgroundImage)
     return headingBackgroundImage
   }
+
   componentDidUpdate(prevProps, prevState) {
     if (this.state.id !== prevState.id && !this.props.isPreview)
       this.setParentElementsTo100PercentHeight()
@@ -126,9 +134,10 @@ export default class Page extends React.Component {
     if (
       JSON.stringify(this.props.heading) !== JSON.stringify(prevProps.heading)
     ) {
-      this.setState({ heading: this.getHeading() })
+      this.setState({heading: this.getHeading()})
     }
   }
+
   componentDidMount = async () => {
     if (!this.props.isPreview) this.setParentElementsTo100PercentHeight()
     let headingBackgroundImage
@@ -151,7 +160,7 @@ export default class Page extends React.Component {
   render = () => {
     return (
       <ReactResizeDetector handleWidth>
-        {({ width }) =>
+        {({width}) =>
           this.state.id ? (
             <div
               id={this.state.id}
@@ -163,14 +172,14 @@ export default class Page extends React.Component {
                   subheading={this.props.subheading}
                   headingBackgroundImage={this.state.headingBackgroundImage}
                   isPreview={this.props.isPreview}
-                  selectHeading={() => this.props.selectHeading()}
+                  selectHeading={this.props.selectHeading}
                   headingSelected={this.props.headingSelected}
                 />
               )}
               <main id='content'>{this.props.children}</main>
             </div>
           ) : (
-            <div />
+            <div/>
           )
         }
       </ReactResizeDetector>

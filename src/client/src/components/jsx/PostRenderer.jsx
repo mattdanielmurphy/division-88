@@ -38,7 +38,7 @@ const PostRenderer = ({
                         blocks,
                         layouts,
                       }) => {
-  const [rowHeight, setRowHeight] = useState(100)
+  const [rowHeight, setRowHeight] = useState(30)
   return (
     <div id='index'>
       <ResponsiveGridLayout
@@ -56,17 +56,17 @@ const PostRenderer = ({
           mobile: 0,
         }}
         cols={{
-          desktop: 12,
-          tablet: 12,
-          mobile: 12,
+          desktop: 24,
+          tablet: 24,
+          mobile: 24,
         }}
         rows={{
-          desktop: 12,
-          tablet: 12,
-          mobile: 12,
+          desktop: 24,
+          tablet: 24,
+          mobile: 24,
         }}
         containerPadding={[0, 0]}
-        margin={[0, 0]}
+        margin={[10, 10]}
       >
         {blocks.map((block, index) => (
           <div className="block" key={index} id={block.id}>

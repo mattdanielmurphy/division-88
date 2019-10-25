@@ -47,7 +47,7 @@ const BlockEditor = ({
   const [gridWidth, setGridWidth] = useState(pageDimensions[view].width)
   const [layouts, setLayouts] = useState(databaseLayouts)
   console.log('layouts', databaseLayouts)
-  const [rowHeight, setRowHeight] = useState(100)
+  const [rowHeight, setRowHeight] = useState(30)
   const [selectedBlock, selectBlock] = useState(0)
   const [clickEventTarget, setClickEventTarget] = useState()
   const handleLayoutChange = (layout, layouts) => {
@@ -104,6 +104,7 @@ const BlockEditor = ({
         rowHeight={rowHeight}
         width={gridWidth}
         nb
+        verticalCompact={false}
         isDraggable={!!gridWidth}
         isResizable={!!gridWidth}
         breakpoints={{
@@ -112,17 +113,17 @@ const BlockEditor = ({
           mobile: 0,
         }}
         cols={{
-          desktop: 12,
-          tablet: 12,
-          mobile: 12,
+          desktop: 24,
+          tablet: 24,
+          mobile: 24,
         }}
         rows={{
-          desktop: 12,
-          tablet: 12,
-          mobile: 12,
+          desktop: 24,
+          tablet: 24,
+          mobile: 24,
         }}
         containerPadding={[0, 0]}
-        margin={[0, 0]}
+        margin={[10, 10]}
         onLayoutChange={(layout, layouts) => handleLayoutChange(layout, layouts)}
       >
         {blocks.map((block, index) => (

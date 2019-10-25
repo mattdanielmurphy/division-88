@@ -496,15 +496,19 @@ class Admin extends React.Component {
             history={this.props.history}
             AdminAPI={this.props.AdminAPI}
             toolName={this.props.match.params.tool}
+            view={this.state.view}
+            pageDimensions={this.state.pageDimensions}
           />
         ) : this.getPageName() === 'about' ? (
           <AdminAbout
             setChangesMade={(changesMade) => this.setChangesMade(changesMade)}
             headingBackgroundImage={this.state.headingBackgroundImage}
+            updateHeading={(heading) => this.updateHeading(heading)}
             history={this.props.history}
             AdminAPI={this.props.AdminAPI}
             postName={this.props.match.params.post}
-            updateHeading={(heading) => this.updateHeading(heading)}
+            view={this.state.view}
+            pageDimensions={this.state.pageDimensions}
           />
         ) : (
           <div id='admin-root'>
@@ -606,7 +610,6 @@ class Auth extends React.Component {
     if (this.props.user !== prevProps.user) {
       if (this.props.user) {
         const idToken = await this.getIdToken()
-        console.log(idToken)
         const idTokenPromise = new Promise((resolve) => resolve(idToken))
         this.setState({idToken: idTokenPromise})
       }
