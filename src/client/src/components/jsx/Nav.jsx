@@ -8,7 +8,7 @@ export default class Nav extends React.Component {
 	}
 	getLink = (url) => {
 		if (this.state.adminVersion) return `/admin${url}`
-		else if (url === '/store') return 'https://division-88-store.firebaseapp.com'
+		// else if (url === '/store') return 'https://division-88-store.firebaseapp.com'
 		else return url
 	}
 	componentDidMount() {
