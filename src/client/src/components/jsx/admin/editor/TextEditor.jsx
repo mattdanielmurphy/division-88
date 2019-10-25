@@ -1,9 +1,9 @@
 import React from 'react'
 import TextBlock from './TinyMCEEditor'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import uuid from 'short-uuid'
 import ImageUploader from 'components/jsx/admin/editor/ImageUploader'
 import { FaTrash } from 'react-icons/fa'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import uuid from 'short-uuid'
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {

@@ -1,6 +1,3 @@
-# Webstorm
-.idea/workspace.xml
-
 # dependencies
 src/client/node_modules
 src/client/.pnp
@@ -18,6 +15,10 @@ src/client/.env.local
 src/client/.env.development.local
 src/client/.env.test.local
 src/client/src.env.production.local
+build
+.cache
+public
+.idea
 
 # Logs
 logs

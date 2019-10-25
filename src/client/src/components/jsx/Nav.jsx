@@ -6,7 +6,11 @@ export default class Nav extends React.Component {
 	state = {
 		adminVersion: false
 	}
-	getLink = (url) => (this.state.adminVersion ? `/admin${url}` : url)
+	getLink = (url) => {
+		if (this.state.adminVersion) return `/admin${url}`
+		else if (url === '/store') return 'https://division-88-store.firebaseapp.com'
+		else return url
+	}
 	componentDidMount() {
 		this.setState({
 			adminVersion: /\/admin/.test(window.location.pathname),

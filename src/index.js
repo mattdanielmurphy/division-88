@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 
 const routes = require('./routes')
-const { env } = require('./server-env')
+const {env} = require('./server-env')
 
 const app = express()
 
@@ -21,7 +21,7 @@ mongoose
 
 mongoose.Promise = global.Promise // override deprecated promise
 
-app.use(cors({ origin: true }), bodyParser.json())
+app.use(cors({origin: true}), bodyParser.json())
 app.use('/api', routes)
 
-app.listen(80, () => console.log(`App listening on ${'localhost'}:${80}...`)) // dev-mode specific
+app.listen(80, () => console.log(`App listening on http://localhost:80...`)) // dev-mode specific

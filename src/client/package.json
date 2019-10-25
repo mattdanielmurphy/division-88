@@ -20,7 +20,6 @@
     "react-firebase-file-uploader": "^2.4.2",
     "react-fittext": "^1.0.0",
     "react-grid-layout": "^0.16.6",
-    "react-grid-system": "^4.4.6",
     "react-icons": "^3.7.0",
     "react-resize-detector": "^4.2.0",
     "react-responsive": "^7.0.0",
@@ -28,12 +27,14 @@
     "react-scripts": "3.0.1",
     "react-simple-soundcloud-widget": "^0.0.5",
     "react-spinkit": "^3.0.0",
+    "react-stripe-elements": "^5.0.1",
     "react-textfit-17": "^1.1.1",
     "react-with-firebase-auth": "^1.0.3",
     "react-youtube": "^7.9.0",
     "simplebar-react": "^2.0.0-alpha.0",
     "slate": "^0.47.4",
     "slate-react": "^0.22.4",
+    "styled-components": "^4.4.0",
     "tinymce": "^5.0.14"
   },
   "scripts": {

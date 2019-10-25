@@ -10,19 +10,21 @@ export default class ImageUploader extends React.Component {
     progress: 0,
     imageUrl: this.props.image,
   }
+
   saveImageToDB(url, filename) {
-    this.props.AdminAPI.post('/images/new', { url, filename })
+    this.props.AdminAPI.post('/images/new', {url, filename})
       .then((result) => console.log('result', result))
       .catch((err) => console.log(err))
   }
-  handleUploadStart = () => this.setState({ isUploading: true, progress: 0 })
-  handleProgress = (progress) => this.setState({ progress })
+
+  handleUploadStart = () => this.setState({isUploading: true, progress: 0})
+  handleProgress = (progress) => this.setState({progress})
   handleUploadError = (error) => {
-    this.setState({ isUploading: false })
+    this.setState({isUploading: false})
     console.error(error)
   }
   handleUploadSuccess = (filename) => {
-    this.setState({ image: filename, progress: 100, isUploading: false })
+    this.setState({image: filename, progress: 100, isUploading: false})
     firebase
       .storage()
       .ref('images')
@@ -30,18 +32,20 @@ export default class ImageUploader extends React.Component {
       .getDownloadURL()
       .then((url) => {
         this.saveImageToDB(url, filename)
-        this.setState({ imageUrl: url })
+        this.setState({imageUrl: url})
         this.props.setImage(url)
       })
   }
+
   handleChange(e) {
     const url = e.target.value
-    this.setState({ imageUrl: url })
+    this.setState({imageUrl: url})
     this.props.setImage(url)
   }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.image !== this.props.image) {
-      this.setState({ imageUrl: this.props.image })
+      this.setState({imageUrl: this.props.image})
     }
   }
 
@@ -49,7 +53,7 @@ export default class ImageUploader extends React.Component {
     return (
       <div>
         <div>
-          {this.state.imageUrl && (
+          {this.state.imageUrl && !this.props.noPreview && (
             <img
               alt='uploader-preview'
               className='image-uploader-preview'

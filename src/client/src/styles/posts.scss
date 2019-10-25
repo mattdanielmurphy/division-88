@@ -1,71 +1,76 @@
 #posts {
-	#posts-list {
-		margin: 0 auto;
-		font-size: 1.3rem;
-		line-height: 1.6;
-		padding: 0 2rem;
-	}
-	.top-heading {
-		padding: 2rem 0;
-	}
-	&.mobile {
-		#posts-list {
-			max-width: 100%;
-		}
-	}
-	&.desktop {
-		#posts-list {
-			max-width: 600px;
-		}
-	}
-	&.tablet {
-		#posts-list {
-			max-width: 600px;
-		}
-	}
+  #posts-list {
+    margin: 0 auto;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    padding: 0 2rem;
+  }
+
+  .top-heading {
+    padding: 2rem 0;
+  }
+
+  &.mobile {
+    #posts-list {
+      max-width: 100%;
+    }
+  }
+
+  &.desktop {
+    #posts-list {
+      max-width: 600px;
+    }
+  }
+
+  &.tablet {
+    #posts-list {
+      max-width: 600px;
+    }
+  }
 }
 
 #posts-table {
-	max-width: 800px;
-	margin: 2rem auto;
+  max-width: 800px;
+  margin: 2rem auto;
 }
 
 .MuiTableCell-body {
-	color: white !important;
+  color: white !important;
 }
 
 .MuiPaper-root {
-	color: white !important;
-	background: #111 !important;
+  color: white !important;
+  background: #111 !important;
 }
 
 .MTableHeader-header-144 {
-	background: none !important;
-	color: white !important;
+  background: none !important;
+  color: white !important;
 }
 
 .MuiInputBase-root {
-	color: white !important;
+  color: white !important;
 }
 
 .MuiInput-underline:before {
-	border-bottom: 1px solid white !important;
+  border-bottom: 1px solid white !important;
 }
 
 .MuiInput-underline:after {
-	border-bottom: 1px solid $yellow !important;
+  border-bottom: 1px solid $yellow !important;
 }
 
 .MTableToolbar-actions-35 {
-	color: #aaa !important;
+  color: #aaa !important;
 }
 
 #post .top-heading,
 #admin-post .top-heading {
-	div {
-		bottom: 0;
-	}
-	padding: 1rem 0 0 0;
-	height: 8rem;
-	text-align: center;
+  div {
+    bottom: 0.3rem;
+  }
+
+  padding: 1rem 0 0 0;
+  height: 9rem;
+  text-align: center;
 }
